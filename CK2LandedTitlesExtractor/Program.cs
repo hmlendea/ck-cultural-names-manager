@@ -30,6 +30,14 @@ namespace CK2LandedTitlesExtractor
             names = new Dictionary<int, TitleName>();
 
             LoadFile(fileName);
+
+            DisplayLandedTitles();
+        }
+
+        private static void DisplayLandedTitles()
+        {
+            Console.WriteLine("{0} titles", titles.Count);
+            Console.WriteLine("{0} names", names.Count);
         }
 
         private static void LoadFile(string fileName)
@@ -42,18 +50,17 @@ namespace CK2LandedTitlesExtractor
 
         private static void LoadTitles(List<string> lines)
         {
-            Regex regex = new Regex("([bcdke](_[a-z]*)+)");
-            int i = 0;
+            Regex regex = new Regex("^([bcdke](_[a-z]*(_[a-z]*)*))");
 
-            foreach (string line in lines)
+            for (int i = 1; i < lines.Count; i++)
             {
-                MatchCollection matches = regex.Matches(line);
-
-                foreach (Match match in matches)
+                string line = lines[i].Trim();
+                Match match = regex.Match(line);
+                
+                if (match.Success)
                 {
-                    titles.Add(i, match.Value);
-
-                    i += 1;
+                    string title = match.Value.Trim();
+                    titles.Add(i, title);
                 }
             }
         }
@@ -61,14 +68,14 @@ namespace CK2LandedTitlesExtractor
         private static void LoadNames(List<string> lines)
         {
             List<string> blacklistPatterns = File.ReadAllLines("non_cultures.lst").ToList();
-            Regex regex = new Regex(@"([a-z]* = " + "\"" + @"*\p{L}+( \p{L}+)*" + "\"*)");
-            int i = 0;
+            Regex regex = new Regex(@"^([a-z]* = " + "\"" + @"*\p{L}+( \p{L}+)*" + "\"*)$");
 
-            foreach (string line in lines)
+            for (int i = 1; i < lines.Count; i++)
             {
-                MatchCollection matches = regex.Matches(line);
+                string line = lines[i].Trim();
+                Match match = regex.Match(line);
 
-                foreach (Match match in matches)
+                if (match.Success)
                 {
                     string[] split = line.Split('=');
                     string culture = split[0].Trim();
@@ -95,7 +102,6 @@ namespace CK2LandedTitlesExtractor
                         };
 
                         names.Add(i, titleName);
-                        i += 1;
                     }
                 }
             }
