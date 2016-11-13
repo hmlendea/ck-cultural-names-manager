@@ -74,7 +74,7 @@ namespace CK2LandedTitlesExtractor
             if (!string.IsNullOrWhiteSpace(outputFileName))
             {
                 Console.Write("Writing output... ");
-                SaveLandedTitles(inputFileName + ".output.txt");
+                SaveLandedTitles(outputFileName);
                 Console.WriteLine("OK");
             }
         }
