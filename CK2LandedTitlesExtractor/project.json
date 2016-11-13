@@ -1,0 +1,31 @@
+{
+  "name": "CK2LandedTitlesExtractor",
+  "version": "1.0.0-*",
+  "description": "Landed title names extractor for Crusader Kings 2",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "dependencies": {},
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        }
+      },
+      "imports": "dnxcore50"
+    }
+  },
+  "author": "Horațiu Mlendea",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HoratiuMl/CK2LandedTitlesExtractor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HoratiuMl/CK2LandedTitlesExtractor/issues"
+  },
+  "homepage": "https://github.com/HoratiuMl//CK2LandedTitlesExtractor#readme"
+}
