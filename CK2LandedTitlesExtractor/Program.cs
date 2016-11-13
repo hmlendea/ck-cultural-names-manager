@@ -41,6 +41,7 @@ namespace CK2LandedTitlesExtractor
             LinkNamesWithTitles();
 
             DisplayLandedTitles();
+            SaveLandedTitles(fileName + ".output.txt");
         }
 
         /// <summary>
@@ -57,6 +58,37 @@ namespace CK2LandedTitlesExtractor
 
                 Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Name);
             }
+        }
+
+        /// <summary>
+        /// Saves the landed titles to the specified file
+        /// </summary>
+        /// /// <param name="fileName">Path to the output landed_title file</param>
+        private static void SaveLandedTitles(string fileName)
+        {
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+
+            StreamWriter sw = new StreamWriter(File.OpenWrite(fileName));
+
+            foreach (int titleId in titles.Keys)
+            {
+                string title = titles[titleId];
+                int nameCount = names.Values.ToList().FindAll(x => x.TitleId == titleId).Count;
+
+                if (nameCount == 0)
+                    continue;
+
+                sw.WriteLine("{0} = {{", title);
+
+                foreach (TitleName titleName in names.Values)
+                    if (titleName.TitleId == titleId)
+                        sw.WriteLine("  {0} = \"{1}\"", titleName.Culture, titleName.Name);
+                
+                sw.WriteLine("}");
+            }
+
+            sw.Dispose();
         }
 
         /// <summary>
@@ -83,7 +115,7 @@ namespace CK2LandedTitlesExtractor
             {
                 string line = lines[i].Trim();
                 Match match = regex.Match(line);
-                
+
                 if (match.Success)
                 {
                     string title = match.Value.Trim();
@@ -113,11 +145,11 @@ namespace CK2LandedTitlesExtractor
                     string name = split[1].Trim().Replace("\"", "").Replace("_", " ");
                     bool valid = true;
 
-                    foreach(string pattern in blacklistPatterns)
+                    foreach (string pattern in blacklistPatterns)
                     {
                         Regex blacklistRegex = new Regex(pattern);
 
-                        if(blacklistRegex.IsMatch(culture))
+                        if (blacklistRegex.IsMatch(culture))
                         {
                             valid = false;
                             break;
@@ -148,7 +180,7 @@ namespace CK2LandedTitlesExtractor
                 TitleName name = names[nameKey];
 
                 for (int titleKey = nameKey; titleKey > 0; titleKey--)
-                    if(titles.Keys.Contains(titleKey))
+                    if (titles.Keys.Contains(titleKey))
                     {
                         name.TitleId = titleKey;
                         break;
