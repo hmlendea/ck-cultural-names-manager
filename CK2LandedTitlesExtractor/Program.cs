@@ -10,6 +10,7 @@ namespace CK2LandedTitlesExtractor
     {
         public string Culture { get; set; }
         public string Name { get; set; }
+        public int TitleId { get; set; }
     }
 
     public class Program
@@ -30,6 +31,7 @@ namespace CK2LandedTitlesExtractor
             names = new Dictionary<int, TitleName>();
 
             LoadFile(fileName);
+            AssociateNamesWithTitles();
 
             DisplayLandedTitles();
         }
@@ -38,6 +40,13 @@ namespace CK2LandedTitlesExtractor
         {
             Console.WriteLine("{0} titles", titles.Count);
             Console.WriteLine("{0} names", names.Count);
+
+            foreach (TitleName name in names.Values)
+            {
+                string title = titles[name.TitleId].PadRight(24, ' ');
+
+                Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Name);
+            }
         }
 
         private static void LoadFile(string fileName)
@@ -104,6 +113,21 @@ namespace CK2LandedTitlesExtractor
                         names.Add(i, titleName);
                     }
                 }
+            }
+        }
+
+        private static void AssociateNamesWithTitles()
+        {
+            foreach (int nameKey in names.Keys)
+            {
+                TitleName name = names[nameKey];
+
+                for (int titleKey = nameKey; titleKey > 0; titleKey--)
+                    if(titles.Keys.Contains(titleKey))
+                    {
+                        name.TitleId = titleKey;
+                        break;
+                    }
             }
         }
     }
