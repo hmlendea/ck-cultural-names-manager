@@ -14,6 +14,24 @@ namespace CK2LandedTitlesExtractor
         public string Culture { get; set; }
         public string Name { get; set; }
         public int TitleId { get; set; }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="CK2LandedTitlesExtractor.TitleName"/>.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="CK2LandedTitlesExtractor.TitleName"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
+        /// <see cref="CK2LandedTitlesExtractor.TitleName"/>; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj)
+        {
+            TitleName other = obj as TitleName;
+
+            if (this.TitleId == other.TitleId &&
+                this.Culture == other.Culture &&
+                this.Name == other.Name)
+                return true;
+
+            return false;
+        }
     }
 
     public class Program
@@ -38,10 +56,20 @@ namespace CK2LandedTitlesExtractor
             names = new Dictionary<int, TitleName>();
 
             LoadFile(fileName);
-            LinkNamesWithTitles();
 
-            DisplayLandedTitles();
+            Console.Write("Linking names with titles... ");
+            LinkNamesWithTitles();
+            Console.WriteLine("OK");
+
+            Console.Write("Cleaning titles and names... ");
+            CleanTitlesAndNames();
+            Console.WriteLine("OK");
+
+            //DisplayLandedTitles();
+
+            Console.Write("Writing output... ");
             SaveLandedTitles(fileName + ".output.txt");
+            Console.WriteLine("OK");
         }
 
         /// <summary>
@@ -49,9 +77,6 @@ namespace CK2LandedTitlesExtractor
         /// </summary>
         private static void DisplayLandedTitles()
         {
-            Console.WriteLine("{0} titles", titles.Count);
-            Console.WriteLine("{0} names", names.Count);
-
             foreach (TitleName name in names.Values)
             {
                 string title = titles[name.TitleId].PadRight(23, ' ');
@@ -84,11 +109,62 @@ namespace CK2LandedTitlesExtractor
                 foreach (TitleName titleName in names.Values)
                     if (titleName.TitleId == titleId)
                         sw.WriteLine("  {0} = \"{1}\"", titleName.Culture, titleName.Name);
-                
+
                 sw.WriteLine("}");
             }
 
             sw.Dispose();
+        }
+
+        /// <summary>
+        /// Cleans the titles and names
+        /// </summary>
+        private static void CleanTitlesAndNames()
+        {
+            List<int> titlesToRemove = new List<int>();
+            List<int> namesToRemove = new List<int>();
+
+            Dictionary<int, string> uniqueTitlesByKey = new Dictionary<int, string>();
+            Dictionary<string, int> uniqueTitlesByVal = new Dictionary<string, int>();
+            Dictionary<int, TitleName> uniqueNames = new Dictionary<int, TitleName>();
+
+            foreach (int titleKey in titles.Keys)
+            {
+                string title = titles[titleKey];
+
+                if (uniqueTitlesByVal.ContainsKey(title))
+                {
+                    int titleKeyFinal = uniqueTitlesByVal[title];
+
+                    foreach (TitleName name in names.Values.Where(x => x.TitleId == titleKey))
+                        name.TitleId = titleKeyFinal;
+
+                    titlesToRemove.Add(titleKey);
+                }
+                else
+                {
+                    uniqueTitlesByVal.Add(title, titleKey);
+                    uniqueTitlesByKey.Add(titleKey, title);
+                }
+            }
+
+            foreach (int nameKey in names.Keys)
+            {
+                TitleName name = names[nameKey];
+
+                if (uniqueNames.ContainsValue(name))
+                    namesToRemove.Add(nameKey);
+                else
+                    uniqueNames.Add(nameKey, name);
+            }
+
+            foreach (int titleKeyToRemove in titlesToRemove)
+                titles.Remove(titleKeyToRemove);
+
+            foreach (int nameKeyToRemove in namesToRemove)
+            {
+                names.Remove(nameKeyToRemove);
+            }
         }
 
         /// <summary>
@@ -99,8 +175,13 @@ namespace CK2LandedTitlesExtractor
         {
             List<string> lines = File.ReadAllLines(fileName).ToList();
 
+            Console.Write("Loading titles... ");
             LoadTitles(lines);
+            Console.WriteLine("OK ({0} titles)", titles.Count);
+
+            Console.Write("Loading names... ");
             LoadNames(lines);
+            Console.WriteLine("OK ({0} names)", names.Count);
         }
 
         /// <summary>
@@ -111,7 +192,7 @@ namespace CK2LandedTitlesExtractor
         {
             Regex regex = new Regex("^([bcdke](_[a-z]*(_[a-z]*)*))");
 
-            for (int i = 1; i < lines.Count; i++)
+            for (int i = 0; i < lines.Count; i++)
             {
                 string line = lines[i].Trim();
                 Match match = regex.Match(line);
