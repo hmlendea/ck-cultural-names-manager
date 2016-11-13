@@ -50,12 +50,16 @@ namespace CK2LandedTitlesExtractor
                 return;
 
             // TODO: Check path validity
-            string fileName = args[0];
+            string inputFileName = args[0];
+            string outputFileName = "";
+
+            if (args.Length == 2)
+                outputFileName = args[1];
 
             titles = new Dictionary<int, string>();
             names = new Dictionary<int, TitleName>();
 
-            LoadFile(fileName);
+            LoadFile(inputFileName);
 
             Console.Write("Linking names with titles... ");
             LinkNamesWithTitles();
@@ -65,11 +69,14 @@ namespace CK2LandedTitlesExtractor
             CleanTitlesAndNames();
             Console.WriteLine("OK");
 
-            //DisplayLandedTitles();
+            DisplayLandedTitles();
 
-            Console.Write("Writing output... ");
-            SaveLandedTitles(fileName + ".output.txt");
-            Console.WriteLine("OK");
+            if (!string.IsNullOrWhiteSpace(outputFileName))
+            {
+                Console.Write("Writing output... ");
+                SaveLandedTitles(inputFileName + ".output.txt");
+                Console.WriteLine("OK");
+            }
         }
 
         /// <summary>
