@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace CK2LandedTitlesExtractor
 {
+    /// <summary>
+    /// The title name class
+    /// </summary>
     public class TitleName
     {
         public string Culture { get; set; }
@@ -18,6 +21,10 @@ namespace CK2LandedTitlesExtractor
         static Dictionary<int, string> titles;
         static Dictionary<int, TitleName> names;
 
+        /// <summary>
+        /// The entry point of the program, where the program control starts and ends.
+        /// </summary>
+        /// /// <param name="args">CLI arguments</param>
         public static void Main(string[] args)
         {
             // TODO: Proper handling
@@ -31,11 +38,14 @@ namespace CK2LandedTitlesExtractor
             names = new Dictionary<int, TitleName>();
 
             LoadFile(fileName);
-            AssociateNamesWithTitles();
+            LinkNamesWithTitles();
 
             DisplayLandedTitles();
         }
 
+        /// <summary>
+        /// Outputs the title names
+        /// </summary>
         private static void DisplayLandedTitles()
         {
             Console.WriteLine("{0} titles", titles.Count);
@@ -43,12 +53,16 @@ namespace CK2LandedTitlesExtractor
 
             foreach (TitleName name in names.Values)
             {
-                string title = titles[name.TitleId].PadRight(24, ' ');
+                string title = titles[name.TitleId].PadRight(23, ' ');
 
                 Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Name);
             }
         }
 
+        /// <summary>
+        /// Loads the landed_title file
+        /// </summary>
+        /// <param name="fileName">Path to the landed_title file</param>
         private static void LoadFile(string fileName)
         {
             List<string> lines = File.ReadAllLines(fileName).ToList();
@@ -57,6 +71,10 @@ namespace CK2LandedTitlesExtractor
             LoadNames(lines);
         }
 
+        /// <summary>
+        /// Loads the titles
+        /// </summary>
+        /// <param name="lines">Lines of the landed_titles file</param>
         private static void LoadTitles(List<string> lines)
         {
             Regex regex = new Regex("^([bcdke](_[a-z]*(_[a-z]*)*))");
@@ -74,6 +92,10 @@ namespace CK2LandedTitlesExtractor
             }
         }
 
+        /// <summary>
+        /// Loads the title names
+        /// </summary>
+        /// <param name="lines">Lines of the landed_titles file</param>
         private static void LoadNames(List<string> lines)
         {
             List<string> blacklistPatterns = File.ReadAllLines("non_cultures.lst").ToList();
@@ -116,7 +138,10 @@ namespace CK2LandedTitlesExtractor
             }
         }
 
-        private static void AssociateNamesWithTitles()
+        /// <summary>
+        /// Links names with their respective titles
+        /// </summary>
+        private static void LinkNamesWithTitles()
         {
             foreach (int nameKey in names.Keys)
             {
