@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 using CK2LandedTitlesExtractor.Entities;
+using CK2LandedTitlesExtractor.Repositories;
 
 namespace CK2LandedTitlesExtractor.UI
 {
@@ -13,8 +13,8 @@ namespace CK2LandedTitlesExtractor.UI
     /// </summary>
     public class MainMenu : Menu
     {
-        static Dictionary<int, Title> titles;
-        static Dictionary<int, Name> names;
+        static TitleRepository titleRepository;
+        static NameRepository nameRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.UI.Mainmenu"/> class.
@@ -37,6 +37,9 @@ namespace CK2LandedTitlesExtractor.UI
                 "print",
                 "Display the landed titles",
                 delegate { DisplayLandedTitles(); });
+
+            titleRepository = new TitleRepository();
+            nameRepository = new NameRepository();
         }
 
         /// <summary>
@@ -44,11 +47,15 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void DisplayLandedTitles()
         {
-            foreach (Name name in names.Values)
+            foreach (Name name in nameRepository.GetAll())
             {
-                string title = titles[name.TitleId].Text.PadRight(23, ' ');
+                Title title = titleRepository.Get(name.TitleId);
 
-                Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Text);
+                Console.WriteLine(
+                    "{0} = {{ {1} = \"{2}\" }}",
+                    title.Text.PadRight(23, ' '),
+                    name.Culture,
+                    name.Text);
             }
         }
 
@@ -63,19 +70,18 @@ namespace CK2LandedTitlesExtractor.UI
 
             StreamWriter sw = new StreamWriter(File.OpenWrite(fileName));
 
-            foreach (int titleId in titles.Keys)
+            foreach (Title title in titleRepository.GetAll())
             {
-                string title = titles[titleId].Text;
-                int nameCount = names.Values.ToList().FindAll(x => x.TitleId == titleId).Count;
+                int nameCount = nameRepository.GetAll().FindAll(x => x.TitleId == title.Id).Count;
 
                 if (nameCount == 0)
                     continue;
 
                 sw.WriteLine("{0} = {{", title);
 
-                foreach (Name titleName in names.Values)
-                    if (titleName.TitleId == titleId)
-                        sw.WriteLine("  {0} = \"{1}\"", titleName.Culture, titleName.Text);
+                foreach (Name name in nameRepository.GetAll())
+                    if (name.TitleId == title.Id)
+                        sw.WriteLine("  {0} = \"{1}\"", name.Culture, name.Text);
 
                 sw.WriteLine("}");
             }
@@ -91,46 +97,42 @@ namespace CK2LandedTitlesExtractor.UI
             List<int> titlesToRemove = new List<int>();
             List<int> namesToRemove = new List<int>();
 
-            Dictionary<int, string> uniqueTitlesByKey = new Dictionary<int, string>();
-            Dictionary<string, int> uniqueTitlesByVal = new Dictionary<string, int>();
+            Dictionary<int, Title> uniqueTitlesByKey = new Dictionary<int, Title>();
+            Dictionary<Title, int> uniqueTitlesByVal = new Dictionary<Title, int>();
             Dictionary<int, Name> uniqueNames = new Dictionary<int, Name>();
 
-            foreach (int titleKey in titles.Keys)
+            foreach (Title title in titleRepository.GetAll())
             {
-                string title = titles[titleKey].Text;
-
                 if (uniqueTitlesByVal.ContainsKey(title))
                 {
                     int titleKeyFinal = uniqueTitlesByVal[title];
 
-                    foreach (Name name in names.Values.Where(x => x.TitleId == titleKey))
+                    foreach (Name name in nameRepository.GetAll().Where(x => x.TitleId == title.Id))
                         name.TitleId = titleKeyFinal;
 
-                    titlesToRemove.Add(titleKey);
+                    titlesToRemove.Add(title.Id);
                 }
                 else
                 {
-                    uniqueTitlesByVal.Add(title, titleKey);
-                    uniqueTitlesByKey.Add(titleKey, title);
+                    uniqueTitlesByVal.Add(title, title.Id);
+                    uniqueTitlesByKey.Add(title.Id, title);
                 }
             }
 
-            foreach (int nameKey in names.Keys)
+            foreach (Name name in nameRepository.GetAll())
             {
-                Name name = names[nameKey];
-
                 if (uniqueNames.ContainsValue(name))
-                    namesToRemove.Add(nameKey);
+                    namesToRemove.Add(name.Id);
                 else
-                    uniqueNames.Add(nameKey, name);
+                    uniqueNames.Add(name.Id, name);
             }
 
             foreach (int titleKeyToRemove in titlesToRemove)
-                titles.Remove(titleKeyToRemove);
+                titleRepository.Remove(titleKeyToRemove);
 
             foreach (int nameKeyToRemove in namesToRemove)
             {
-                names.Remove(nameKeyToRemove);
+                nameRepository.Remove(nameKeyToRemove);
             }
         }
 
@@ -139,19 +141,16 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void LoadFile()
         {
-            titles = new Dictionary<int, Title>();
-            names = new Dictionary<int, Name>();
-
             string fileName = Input("Input file path (absolute) = ");
             List<string> lines = File.ReadAllLines(Path.GetFullPath(fileName)).ToList();
 
             Console.Write("Loading titles... ");
-            LoadTitles(lines);
-            Console.WriteLine("OK ({0} titles)", titles.Count);
+            titleRepository.Load(fileName);
+            Console.WriteLine("OK ({0} titles)", titleRepository.Size);
 
             Console.Write("Loading names... ");
-            LoadNames(lines);
-            Console.WriteLine("OK ({0} names)", names.Count);
+            nameRepository.Load(fileName);
+            Console.WriteLine("OK ({0} names)", nameRepository.Size);
 
             Console.Write("Linking names with titles... ");
             LinkNamesWithTitles();
@@ -172,89 +171,14 @@ namespace CK2LandedTitlesExtractor.UI
         }
 
         /// <summary>
-        /// Loads the titles
-        /// </summary>
-        /// <param name="lines">Lines of the landed_titles file</param>
-        private void LoadTitles(List<string> lines)
-        {
-            Regex regex = new Regex("^([bcdke](_[a-z]*(_[a-z]*)*))");
-
-            for (int i = 0; i < lines.Count; i++)
-            {
-                string line = lines[i].Trim();
-                Match match = regex.Match(line);
-
-                if (match.Success)
-                {
-                    Title title = new Title()
-                    {
-                        Id = i,
-                        Text = match.Value.Trim(),
-                        DeJureTitleId = -1
-                    };
-
-                    titles.Add(title.Id, title);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads the title names
-        /// </summary>
-        /// <param name="lines">Lines of the landed_titles file</param>
-        private void LoadNames(List<string> lines)
-        {
-            List<string> blacklistPatterns = File.ReadAllLines("non_cultures.lst").ToList();
-            Regex regex = new Regex(@"^([a-z]* = " + "\"" + @"*\p{L}+( \p{L}+)*" + "\"*)$");
-
-            for (int i = 1; i < lines.Count; i++)
-            {
-                string line = lines[i].Trim();
-                Match match = regex.Match(line);
-
-                if (match.Success)
-                {
-                    string[] split = line.Split('=');
-                    string culture = split[0].Trim();
-                    string name = split[1].Trim().Replace("\"", "").Replace("_", " ");
-                    bool valid = true;
-
-                    foreach (string pattern in blacklistPatterns)
-                    {
-                        Regex blacklistRegex = new Regex(pattern);
-
-                        if (blacklistRegex.IsMatch(culture))
-                        {
-                            valid = false;
-                            break;
-                        }
-                    }
-
-                    if (valid)
-                    {
-                        Name titleName = new Name
-                        {
-                            Culture = culture,
-                            Text = name
-                        };
-
-                        names.Add(i, titleName);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Links names with their respective titles
         /// </summary>
         private void LinkNamesWithTitles()
         {
-            foreach (int nameKey in names.Keys)
+            foreach (Name name in nameRepository.GetAll())
             {
-                Name name = names[nameKey];
-
-                for (int titleKey = nameKey; titleKey > 0; titleKey--)
-                    if (titles.Keys.Contains(titleKey))
+                for (int titleKey = name.Id; titleKey > 0; titleKey--)
+                    if (titleRepository.Contains(titleKey))
                     {
                         name.TitleId = titleKey;
                         break;
