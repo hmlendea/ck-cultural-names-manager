@@ -17,6 +17,16 @@ namespace CK2LandedTitlesExtractor.Repositories
         }
 
         /// <summary>
+        /// Gets all titles by text.
+        /// </summary>
+        /// <returns>List of titles.</returns>
+        /// <param name="text">The title name</param>
+        public List<Title> GetAllByText(string text)
+        {
+            return GetAll().Where(x => x.Text == text).ToList();
+        }
+
+        /// <summary>
         /// Loads the titles
         /// </summary>
         /// <param name="fileName">Path to the input file</param>

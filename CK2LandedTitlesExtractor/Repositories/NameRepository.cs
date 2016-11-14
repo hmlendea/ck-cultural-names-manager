@@ -17,6 +17,26 @@ namespace CK2LandedTitlesExtractor.Repositories
         }
 
         /// <summary>
+        /// Gets all names by the title identifier.
+        /// </summary>
+        /// <returns>List of names.</returns>
+        /// <param name="titleId">The title identifier</param>
+        public List<Name> GetAllByTitleId(int titleId)
+        {
+            return GetAll().Where(x => x.TitleId == titleId).ToList();
+        }
+
+        /// <summary>
+        /// Gets all names by name.
+        /// </summary>
+        /// <returns>List of names.</returns>
+        /// <param name="text">The name</param>
+        public List<Name> GetAllByText(string text)
+        {
+            return GetAll().Where(x => x.Text == text).ToList();
+        }
+
+        /// <summary>
         /// Loads the names
         /// </summary>
         /// <param name="fileName">Path to the input file</param>
@@ -57,7 +77,7 @@ namespace CK2LandedTitlesExtractor.Repositories
                             Culture = culture,
                             Text = text
                         };
-
+                        
                         Add(name);
                     }
                 }

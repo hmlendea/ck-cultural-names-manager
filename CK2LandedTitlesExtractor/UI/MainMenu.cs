@@ -5,6 +5,7 @@ using System.Linq;
 
 using CK2LandedTitlesExtractor.Entities;
 using CK2LandedTitlesExtractor.Repositories;
+using CK2LandedTitlesExtractor.Utils;
 
 namespace CK2LandedTitlesExtractor.UI
 {
@@ -94,45 +95,36 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void CleanTitlesAndNames()
         {
-            List<int> titlesToRemove = new List<int>();
-            List<int> namesToRemove = new List<int>();
-
-            Dictionary<int, Title> uniqueTitlesByKey = new Dictionary<int, Title>();
-            Dictionary<Title, int> uniqueTitlesByVal = new Dictionary<Title, int>();
-            Dictionary<int, Name> uniqueNames = new Dictionary<int, Name>();
-
-            foreach (Title title in titleRepository.GetAll())
+            foreach (Title title in titleRepository.GetAll().GetDuplicates())
             {
-                if (uniqueTitlesByVal.ContainsKey(title))
-                {
-                    int titleKeyFinal = uniqueTitlesByVal[title];
+                List<Title> titles2 = titleRepository.GetAllByText(title.Text);
 
-                    foreach (Name name in nameRepository.GetAll().Where(x => x.TitleId == title.Id))
-                        name.TitleId = titleKeyFinal;
+                if (titles2.Count < 2)
+                    continue;
 
-                    titlesToRemove.Add(title.Id);
-                }
-                else
+                foreach (Title title2 in titles2)
                 {
-                    uniqueTitlesByVal.Add(title, title.Id);
-                    uniqueTitlesByKey.Add(title.Id, title);
+                    if (title2.Id == title.Id)
+                    {
+                        continue;
+                    }
+
+                    foreach (Name name in nameRepository.GetAllByTitleId(title2.Id))
+                        name.TitleId = title.Id;
+
+                    titleRepository.Remove(title2);
                 }
             }
 
-            foreach (Name name in nameRepository.GetAll())
-            {
-                if (uniqueNames.ContainsValue(name))
-                    namesToRemove.Add(name.Id);
-                else
-                    uniqueNames.Add(name.Id, name);
-            }
+            List<Name> names = nameRepository.GetAll();
+            List<Name> uniqueNames = names.Distinct().ToList();
 
-            foreach (int titleKeyToRemove in titlesToRemove)
-                titleRepository.Remove(titleKeyToRemove);
-
-            foreach (int nameKeyToRemove in namesToRemove)
+            foreach (Name name in names)
             {
-                nameRepository.Remove(nameKeyToRemove);
+                if (!uniqueNames.Contains(name))
+                {
+                    nameRepository.Remove(name);
+                }
             }
         }
 
@@ -161,6 +153,9 @@ namespace CK2LandedTitlesExtractor.UI
             Console.WriteLine("OK");
         }
 
+        /// <summary>
+        /// Saves the titles and names to file
+        /// </summary>
         private void SaveFile()
         {
             string fileName = Input("Output file path (absolute) = ");
