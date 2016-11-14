@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using CK2LandedTitlesExtractor.Entities;
+
 namespace CK2LandedTitlesExtractor.UI
 {
     /// <summary>
@@ -11,8 +13,8 @@ namespace CK2LandedTitlesExtractor.UI
     /// </summary>
     public class MainMenu : Menu
     {
-        static Dictionary<int, string> titles;
-        static Dictionary<int, TitleName> names;
+        static Dictionary<int, Title> titles;
+        static Dictionary<int, Name> names;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.UI.Mainmenu"/> class.
@@ -42,11 +44,11 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void DisplayLandedTitles()
         {
-            foreach (TitleName name in names.Values)
+            foreach (Name name in names.Values)
             {
-                string title = titles[name.TitleId].PadRight(23, ' ');
+                string title = titles[name.TitleId].Text.PadRight(23, ' ');
 
-                Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Name);
+                Console.WriteLine("{0} = {{ {1} = \"{2}\" }}", title, name.Culture, name.Text);
             }
         }
 
@@ -63,7 +65,7 @@ namespace CK2LandedTitlesExtractor.UI
 
             foreach (int titleId in titles.Keys)
             {
-                string title = titles[titleId];
+                string title = titles[titleId].Text;
                 int nameCount = names.Values.ToList().FindAll(x => x.TitleId == titleId).Count;
 
                 if (nameCount == 0)
@@ -71,9 +73,9 @@ namespace CK2LandedTitlesExtractor.UI
 
                 sw.WriteLine("{0} = {{", title);
 
-                foreach (TitleName titleName in names.Values)
+                foreach (Name titleName in names.Values)
                     if (titleName.TitleId == titleId)
-                        sw.WriteLine("  {0} = \"{1}\"", titleName.Culture, titleName.Name);
+                        sw.WriteLine("  {0} = \"{1}\"", titleName.Culture, titleName.Text);
 
                 sw.WriteLine("}");
             }
@@ -91,17 +93,17 @@ namespace CK2LandedTitlesExtractor.UI
 
             Dictionary<int, string> uniqueTitlesByKey = new Dictionary<int, string>();
             Dictionary<string, int> uniqueTitlesByVal = new Dictionary<string, int>();
-            Dictionary<int, TitleName> uniqueNames = new Dictionary<int, TitleName>();
+            Dictionary<int, Name> uniqueNames = new Dictionary<int, Name>();
 
             foreach (int titleKey in titles.Keys)
             {
-                string title = titles[titleKey];
+                string title = titles[titleKey].Text;
 
                 if (uniqueTitlesByVal.ContainsKey(title))
                 {
                     int titleKeyFinal = uniqueTitlesByVal[title];
 
-                    foreach (TitleName name in names.Values.Where(x => x.TitleId == titleKey))
+                    foreach (Name name in names.Values.Where(x => x.TitleId == titleKey))
                         name.TitleId = titleKeyFinal;
 
                     titlesToRemove.Add(titleKey);
@@ -115,7 +117,7 @@ namespace CK2LandedTitlesExtractor.UI
 
             foreach (int nameKey in names.Keys)
             {
-                TitleName name = names[nameKey];
+                Name name = names[nameKey];
 
                 if (uniqueNames.ContainsValue(name))
                     namesToRemove.Add(nameKey);
@@ -137,8 +139,8 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void LoadFile()
         {
-            titles = new Dictionary<int, string>();
-            names = new Dictionary<int, TitleName>();
+            titles = new Dictionary<int, Title>();
+            names = new Dictionary<int, Name>();
 
             string fileName = Input("Input file path (absolute) = ");
             List<string> lines = File.ReadAllLines(Path.GetFullPath(fileName)).ToList();
@@ -184,8 +186,14 @@ namespace CK2LandedTitlesExtractor.UI
 
                 if (match.Success)
                 {
-                    string title = match.Value.Trim();
-                    titles.Add(i, title);
+                    Title title = new Title()
+                    {
+                        Id = i,
+                        Text = match.Value.Trim(),
+                        DeJureTitleId = -1
+                    };
+
+                    titles.Add(title.Id, title);
                 }
             }
         }
@@ -224,10 +232,10 @@ namespace CK2LandedTitlesExtractor.UI
 
                     if (valid)
                     {
-                        TitleName titleName = new TitleName
+                        Name titleName = new Name
                         {
                             Culture = culture,
-                            Name = name
+                            Text = name
                         };
 
                         names.Add(i, titleName);
@@ -243,7 +251,7 @@ namespace CK2LandedTitlesExtractor.UI
         {
             foreach (int nameKey in names.Keys)
             {
-                TitleName name = names[nameKey];
+                Name name = names[nameKey];
 
                 for (int titleKey = nameKey; titleKey > 0; titleKey--)
                     if (titles.Keys.Contains(titleKey))
