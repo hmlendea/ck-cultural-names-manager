@@ -5,7 +5,7 @@ using System.Linq;
 
 using CK2LandedTitlesExtractor.Entities;
 using CK2LandedTitlesExtractor.Repositories;
-using CK2LandedTitlesExtractor.Utils;
+using CK2LandedTitlesExtractor.Utils.Extensions;
 
 namespace CK2LandedTitlesExtractor.UI
 {

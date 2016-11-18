@@ -3,6 +3,7 @@ using System.Linq;
 
 using CK2LandedTitlesExtractor.Entities;
 using CK2LandedTitlesExtractor.Exceptions;
+using CK2LandedTitlesExtractor.Utils.Extensions;
 
 namespace CK2LandedTitlesExtractor.Repositories
 {
@@ -15,15 +16,30 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// Gets or sets the entities.
         /// </summary>
         /// <value>The entities.</value>
-        protected Dictionary<int, T> Entities { get; set; }
+        protected Dictionary<int, T> DataStore { get; set; }
 
         /// <summary>
-        /// Gets the number of entities.
+        /// Gets the size.
         /// </summary>
-        /// <value>The number of entities.</value>
+        /// <value>The size.</value>
         public int Size
         {
-            get { return Entities.Count; }
+            get
+            {
+                if (DataStore.IsNullOrEmpty())
+                    return 0;
+
+                return DataStore.Count;
+            }
+        }
+
+        /// <summary>
+        /// Indicates wether the repository is empty.
+        /// </summary>
+        /// <value>True if the repository is empty, false otherwise.</value>
+        public bool Empty
+        {
+            get { return DataStore.IsNullOrEmpty(); }
         }
 
         /// <summary>
@@ -31,7 +47,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// </summary>
         public Repository()
         {
-            Entities = new Dictionary<int, T>();
+            DataStore = new Dictionary<int, T>();
         }
 
         /// <summary>
@@ -43,7 +59,7 @@ namespace CK2LandedTitlesExtractor.Repositories
             if (Contains(entity.Id))
                 throw new DuplicateEntityException();
 
-            Entities.Add(entity.Id, entity);
+            DataStore.Add(entity.Id, entity);
         }
 
         /// <summary>
@@ -55,7 +71,7 @@ namespace CK2LandedTitlesExtractor.Repositories
             if (!Contains(id))
                 throw new EntityNotFoundException();
 
-            return Entities[id];
+            return DataStore[id];
         }
 
         /// <summary>
@@ -64,7 +80,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// <returns>The all.</returns>
         public List<T> GetAll()
         {
-            return Entities.Values.ToList();
+            return DataStore.Values.ToList();
         }
 
         /// <summary>
@@ -85,7 +101,7 @@ namespace CK2LandedTitlesExtractor.Repositories
             if (!Contains(id))
                 throw new EntityNotFoundException();
 
-            Entities.Remove(id);
+            DataStore.Remove(id);
         }
 
         /// <summary>
@@ -94,7 +110,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// <param name="entity">Entity.</param>
         public bool Contains(T entity)
         {
-            return Entities.ContainsValue(entity);
+            return DataStore.ContainsValue(entity);
         }
 
         /// <summary>
@@ -103,7 +119,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// <param name="id">Identifier.</param>
         public bool Contains(int id)
         {
-            return Entities.ContainsKey(id);
+            return DataStore.ContainsKey(id);
         }
 
         /// <summary>
@@ -111,7 +127,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// </summary>
         public void Clear()
         {
-            Entities.Clear();
+            DataStore.Clear();
         }
     }
 }
