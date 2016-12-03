@@ -73,16 +73,18 @@ namespace CK2LandedTitlesExtractor.UI
 
             foreach (Title title in titleRepository.GetAll())
             {
-                int nameCount = nameRepository.GetAll().FindAll(x => x.TitleId == title.Id).Count;
+                List<Name> names = nameRepository.GetAll()
+                                                 .Where(x => x.TitleId == title.Id)
+                                                 .OrderBy(x => x.Culture)
+                                                 .ToList();
 
-                if (nameCount == 0)
+                if (names.Count == 0)
                     continue;
 
                 sw.WriteLine("{0} = {{", title);
 
-                foreach (Name name in nameRepository.GetAll())
-                    if (name.TitleId == title.Id)
-                        sw.WriteLine("  {0} = \"{1}\"", name.Culture, name.Text);
+                foreach (Name name in names)
+                    sw.WriteLine("  {0} = \"{1}\"", name.Culture, name.Text);
 
                 sw.WriteLine("}");
             }
@@ -95,35 +97,32 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         private void CleanTitlesAndNames()
         {
-            foreach (Title title in titleRepository.GetAll().GetDuplicates())
+            foreach (Title title in titleRepository.GetAll())
             {
-                List<Title> titles2 = titleRepository.GetAllByText(title.Text);
+                List<Title> titlesDupes = titleRepository.GetAllByText(title.Text)
+                                                     .Where(x => x.Id != title.Id)
+                                                     .ToList();
 
-                if (titles2.Count < 2)
-                    continue;
-
-                foreach (Title title2 in titles2)
+                foreach (Title titleDupe in titlesDupes)
                 {
-                    if (title2.Id == title.Id)
-                    {
-                        continue;
-                    }
-
-                    foreach (Name name in nameRepository.GetAllByTitleId(title2.Id))
+                    foreach (Name name in nameRepository.GetAllByTitleId(titleDupe.Id))
                         name.TitleId = title.Id;
 
-                    titleRepository.Remove(title2);
+                    titleRepository.Remove(titleDupe);
                 }
             }
 
-            List<Name> names = nameRepository.GetAll();
-            List<Name> uniqueNames = names.Distinct().ToList();
-
-            foreach (Name name in names)
+            foreach (Name name in nameRepository.GetAll())
             {
-                if (!uniqueNames.Contains(name))
+                List<Name> namesDupes = nameRepository.GetAllByTitleId(name.TitleId)
+                                                      .Where(x => x.Id != name.Id &&
+                                                                  x.Culture == name.Culture &&
+                                                                  x.Text == name.Text)
+                                                      .ToList();
+                
+                foreach (Name nameDupe in namesDupes)
                 {
-                    nameRepository.Remove(name);
+                    nameRepository.Remove(nameDupe);
                 }
             }
         }
@@ -150,7 +149,9 @@ namespace CK2LandedTitlesExtractor.UI
 
             Console.Write("Cleaning titles and names... ");
             CleanTitlesAndNames();
-            Console.WriteLine("OK");
+            Console.WriteLine("OK ");
+
+            Console.WriteLine($"{titleRepository.Size} title; {nameRepository.Size} names");
         }
 
         /// <summary>
