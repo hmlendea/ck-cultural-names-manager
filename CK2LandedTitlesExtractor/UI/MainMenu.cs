@@ -99,30 +99,20 @@ namespace CK2LandedTitlesExtractor.UI
         {
             foreach (Title title in titleRepository.GetAll())
             {
-                List<Title> titlesDupes = titleRepository.GetAllByText(title.Text)
-                                                     .Where(x => x.Id != title.Id)
-                                                     .ToList();
+                List<Name> assignedNames = nameRepository.GetAllByTitleId(title.Id);
 
-                foreach (Title titleDupe in titlesDupes)
-                {
-                    foreach (Name name in nameRepository.GetAllByTitleId(titleDupe.Id))
-                        name.TitleId = title.Id;
-
-                    titleRepository.Remove(titleDupe);
-                }
+                if (assignedNames.Count == 0)
+                    titleRepository.Remove(title);
             }
-
+            
             foreach (Name name in nameRepository.GetAll())
             {
-                List<Name> namesDupes = nameRepository.GetAllByTitleId(name.TitleId)
-                                                      .Where(x => x.Id != name.Id &&
-                                                                  x.Culture == name.Culture &&
-                                                                  x.Text == name.Text)
-                                                      .ToList();
-                
-                foreach (Name nameDupe in namesDupes)
+                if (nameRepository.GetAll().Any(x => x.Id != name.Id &&
+                                                     x.TitleId == name.TitleId &&
+                                                     x.Culture == name.Culture &&
+                                                     x.Text == name.Text))
                 {
-                    nameRepository.Remove(nameDupe);
+                    nameRepository.Remove(name);
                 }
             }
         }
@@ -176,6 +166,12 @@ namespace CK2LandedTitlesExtractor.UI
                 for (int titleKey = name.Id; titleKey > 0; titleKey--)
                     if (titleRepository.Contains(titleKey))
                     {
+                        Title title = titleRepository.Get(titleKey);
+
+                        titleKey = titleRepository.GetAll()
+                                                  .First(x => x.Text == title.Text)
+                                                  .Id;
+
                         name.TitleId = titleKey;
                         break;
                     }
