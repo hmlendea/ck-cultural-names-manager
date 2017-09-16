@@ -22,10 +22,10 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HoratiuMl/CK2LandedTitlesExtractor.git"
+    "url": "git+https://github.com/hmlendea/ck2-landed-titles-manager.git"
   },
   "bugs": {
-    "url": "https://github.com/HoratiuMl/CK2LandedTitlesExtractor/issues"
+    "url": "https://github.com/hmlendea/ck2-landed-titles-manager/issues"
   },
-  "homepage": "https://github.com/HoratiuMl//CK2LandedTitlesExtractor#readme"
+  "homepage": "https://github.com/hmlendea//ck2-landed-titles-manager#readme"
 }
