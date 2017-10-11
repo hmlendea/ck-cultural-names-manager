@@ -1,6 +1,6 @@
 using System;
 
-namespace CK2LandedTitlesManager.Exceptions
+namespace CK2LandedTitlesManager.Infrastructure.Exceptions
 {
     /// <summary>
     /// Repository exception.

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using CK2LandedTitlesManager.Utils;
+using CK2LandedTitlesManager.Infrastructure.Helpers;
 
-namespace CK2LandedTitlesManager.UI
+namespace CK2LandedTitlesManager.Menus
 {
     /// <summary>
     /// Command-line Menu.

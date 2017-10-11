@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 
 using CK2LandedTitlesManager.Models;
-using CK2LandedTitlesManager.Repositories;
+using CK2LandedTitlesManager.DataAccess.Repositories;
 
-namespace CK2LandedTitlesManager.UI
+namespace CK2LandedTitlesManager.Menus
 {
     /// <summary>
     /// Main menu.

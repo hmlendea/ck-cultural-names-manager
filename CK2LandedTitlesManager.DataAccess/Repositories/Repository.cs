@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
 using CK2LandedTitlesManager.Models;
-using CK2LandedTitlesManager.Exceptions;
-using CK2LandedTitlesManager.Utils.Extensions;
+using CK2LandedTitlesManager.Infrastructure.Exceptions;
+using CK2LandedTitlesManager.Infrastructure.Extensions;
 
-namespace CK2LandedTitlesManager.Repositories
+namespace CK2LandedTitlesManager.DataAccess.Repositories
 {
     /// <summary>
     /// Memory Repository.

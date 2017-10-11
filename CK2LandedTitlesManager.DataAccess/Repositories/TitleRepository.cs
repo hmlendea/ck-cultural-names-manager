@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 using CK2LandedTitlesManager.Models;
 
-namespace CK2LandedTitlesManager.Repositories
+namespace CK2LandedTitlesManager.DataAccess.Repositories
 {
     public class TitleRepository : Repository<Title>
     {

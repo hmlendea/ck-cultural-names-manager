@@ -1,4 +1,4 @@
-﻿using CK2LandedTitlesManager.UI;
+﻿using CK2LandedTitlesManager.Menus;
 
 namespace CK2LandedTitlesManager
 {

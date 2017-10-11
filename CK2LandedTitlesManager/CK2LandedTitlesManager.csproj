@@ -7,4 +7,9 @@
     <Company>CK2LandedTitlesManager</Company>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CK2LandedTitlesManager.DataAccess\CK2LandedTitlesManager.DataAccess.csproj" />
+    <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
+  </ItemGroup>
+
 </Project>
