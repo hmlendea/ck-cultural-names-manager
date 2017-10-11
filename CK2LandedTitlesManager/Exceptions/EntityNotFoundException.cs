@@ -1,6 +1,6 @@
 using System;
 
-namespace CK2LandedTitlesExtractor.Exceptions
+namespace CK2LandedTitlesManager.Exceptions
 {
     /// <summary>
     /// Repository exception.
@@ -8,7 +8,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
     public class EntityNotFoundException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.EntityNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
         /// </summary>
         public EntityNotFoundException()
             :base("The specified entity does not exist")
@@ -16,7 +16,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.EntityNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
         /// </summary>
         /// <param name="message">Message.</param>
         public EntityNotFoundException(string message)
@@ -25,7 +25,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.EntityNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="innerException">Inner exception.</param>

@@ -3,14 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using CK2LandedTitlesExtractor.Entities;
+using CK2LandedTitlesManager.Models;
 
-namespace CK2LandedTitlesExtractor.Repositories
+namespace CK2LandedTitlesManager.Repositories
 {
     public class TitleRepository : Repository<Title>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Repositories.TitleRepository"/> class.
+        /// Initializes a new instance of the <see cref="TitleRepository"/> class.
         /// </summary>
         public TitleRepository()
         {
@@ -21,9 +21,11 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// </summary>
         /// <returns>List of titles.</returns>
         /// <param name="text">The title name</param>
-        public List<Title> GetAllByText(string text)
+        public IEnumerable<Title> GetAllByText(string text)
         {
-            return GetAll().Where(x => x.Text == text).ToList();
+            IEnumerable<Title> titles = GetAll();
+
+            return titles.Where(x => x.Text == text);
         }
 
         /// <summary>

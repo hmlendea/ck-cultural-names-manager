@@ -3,14 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using CK2LandedTitlesExtractor.Entities;
+using CK2LandedTitlesManager.Models;
 
-namespace CK2LandedTitlesExtractor.Repositories
+namespace CK2LandedTitlesManager.Repositories
 {
     public class NameRepository : Repository<Name>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Repositories.NameRepository"/> class.
+        /// Initializes a new instance of the <see cref="NameRepository"/> class.
         /// </summary>
         public NameRepository()
         {
@@ -21,9 +21,11 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// </summary>
         /// <returns>List of names.</returns>
         /// <param name="titleId">The title identifier</param>
-        public List<Name> GetAllByTitleId(int titleId)
+        public IEnumerable<Name> GetAllByTitleId(int titleId)
         {
-            return GetAll().Where(x => x.TitleId == titleId).ToList();
+            IEnumerable<Name> names = GetAll();
+
+            return names.Where(x => x.TitleId == titleId);
         }
 
         /// <summary>
@@ -31,9 +33,11 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// </summary>
         /// <returns>List of names.</returns>
         /// <param name="text">The name</param>
-        public List<Name> GetAllByText(string text)
+        public IEnumerable<Name> GetAllByText(string text)
         {
-            return GetAll().Where(x => x.Text == text).ToList();
+            IEnumerable<Name> names = GetAll();
+
+            return names.Where(x => x.Text == text);
         }
 
         /// <summary>

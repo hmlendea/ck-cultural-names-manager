@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CK2LandedTitlesExtractor.Utils.Extensions
+namespace CK2LandedTitlesManager.Utils.Extensions
 {
     public static class EnumerableExtensions
     {

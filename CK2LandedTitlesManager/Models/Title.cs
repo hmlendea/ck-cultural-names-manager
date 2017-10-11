@@ -1,4 +1,4 @@
-namespace CK2LandedTitlesExtractor.Entities
+namespace CK2LandedTitlesManager.Models
 {
     /// <summary>
     /// The title entity
@@ -18,14 +18,14 @@ namespace CK2LandedTitlesExtractor.Entities
         public int DeJureTitleId { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="CK2LandedTitlesExtractor.Title"/>.
+        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="Title"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="CK2LandedTitlesExtractor.Title"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="CK2LandedTitlesExtractor.Title"/>; otherwise, <c>false</c>.</returns>
+        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Title"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current
+        /// <see cref="Title"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            if (obj.ToString() == this.Text)
+            if (obj.ToString() == Text)
             {
                 return true;
             }
@@ -34,7 +34,7 @@ namespace CK2LandedTitlesExtractor.Entities
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="CK2LandedTitlesExtractor.Entities.Title"/> object.
+        /// Serves as a hash function for a <see cref="Title"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -44,9 +44,9 @@ namespace CK2LandedTitlesExtractor.Entities
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="CK2LandedTitlesExtractor.Entities.Title"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="Title"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="CK2LandedTitlesExtractor.Entities.Title"/>.</returns>
+        /// <returns>A <see cref="string"/> that represents the current <see cref="Title"/>.</returns>
         public override string ToString()
         {
             return Text;

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using CK2LandedTitlesExtractor.Utils;
+using CK2LandedTitlesManager.Utils;
 
-namespace CK2LandedTitlesExtractor.UI
+namespace CK2LandedTitlesManager.UI
 {
     /// <summary>
     /// Command-line Menu.
@@ -60,7 +60,7 @@ namespace CK2LandedTitlesExtractor.UI
         public string Prompt { get; set; } = "> ";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.UI.Menu"/> class.
+        /// Initializes a new instance of the <see cref="Menu"/> class.
         /// </summary>
         public Menu()
         {
@@ -72,7 +72,7 @@ namespace CK2LandedTitlesExtractor.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.UI.Menu"/> class.
+        /// Initializes a new instance of the <see cref="Menu"/> class.
         /// </summary>
         /// <param name="title">Title.</param>
         public Menu(string title)
@@ -171,11 +171,14 @@ namespace CK2LandedTitlesExtractor.UI
         /// </summary>
         void PrintCommandList()
         {
-            int commandColumnWidth = commandTexts.Keys.Aggregate
-                ("", (max, cur) => max.Length > cur.Length ? max : cur).Length + 4;
+            int commandColumnWidth = commandTexts.Keys
+                .Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur)
+                .Length + 4;
 
             foreach (KeyValuePair<string, string> entry in commandTexts)
+            {
                 Console.WriteLine("{0} {1}", entry.Key.PadRight(commandColumnWidth), entry.Value);
+            }
         }
 
         /// <summary>
@@ -196,12 +199,14 @@ namespace CK2LandedTitlesExtractor.UI
         void HandleCommand()
         {
             foreach (string command in commandActions.Keys)
+            {
                 if (cmd == command)
                 {
                     commandActions[cmd]();
 
                     return;
                 }
+            }
 
             Console.WriteLine("Invalid command");
         }

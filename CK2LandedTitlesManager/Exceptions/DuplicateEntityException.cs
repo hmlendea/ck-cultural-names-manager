@@ -1,6 +1,6 @@
 using System;
 
-namespace CK2LandedTitlesExtractor.Exceptions
+namespace CK2LandedTitlesManager.Exceptions
 {
     /// <summary>
     /// Repository exception.
@@ -8,7 +8,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
     public class DuplicateEntityException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateEntityException"/> class.
         /// </summary>
         public DuplicateEntityException()
             : base("The specified entity already exists")
@@ -16,7 +16,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateEntityException"/> class.
         /// </summary>
         /// <param name="message">Message.</param>
         public DuplicateEntityException(string message)
@@ -25,7 +25,7 @@ namespace CK2LandedTitlesExtractor.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Exceptions.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="DuplicateEntityException"/> class.
         /// </summary>
         /// <param name="message">Message.</param>
         /// <param name="innerException">Inner exception.</param>

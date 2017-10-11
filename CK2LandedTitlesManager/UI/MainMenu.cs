@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using CK2LandedTitlesExtractor.Entities;
-using CK2LandedTitlesExtractor.Repositories;
-using CK2LandedTitlesExtractor.Utils.Extensions;
+using CK2LandedTitlesManager.Models;
+using CK2LandedTitlesManager.Repositories;
 
-namespace CK2LandedTitlesExtractor.UI
+namespace CK2LandedTitlesManager.UI
 {
     /// <summary>
     /// Main menu.
@@ -18,7 +17,7 @@ namespace CK2LandedTitlesExtractor.UI
         static NameRepository nameRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.UI.Mainmenu"/> class.
+        /// Initializes a new instance of the <see cref="MainMenu"/> class.
         /// </summary>
         public MainMenu()
         {
@@ -67,7 +66,9 @@ namespace CK2LandedTitlesExtractor.UI
         private void SaveLandedTitles(string fileName)
         {
             if (File.Exists(fileName))
+            {
                 File.Delete(fileName);
+            }
 
             StreamWriter sw = new StreamWriter(File.OpenWrite(fileName));
 
@@ -79,12 +80,16 @@ namespace CK2LandedTitlesExtractor.UI
                                                  .ToList();
 
                 if (names.Count == 0)
+                {
                     continue;
+                }
 
                 sw.WriteLine("{0} = {{", title);
 
                 foreach (Name name in names)
+                {
                     sw.WriteLine("  {0} = \"{1}\"", name.Culture, name.Text);
+                }
 
                 sw.WriteLine("}");
             }
@@ -99,10 +104,12 @@ namespace CK2LandedTitlesExtractor.UI
         {
             foreach (Title title in titleRepository.GetAll())
             {
-                List<Name> assignedNames = nameRepository.GetAllByTitleId(title.Id);
+                IEnumerable<Name> assignedNames = nameRepository.GetAllByTitleId(title.Id);
 
-                if (assignedNames.Count == 0)
+                if (assignedNames.Count() == 0)
+                {
                     titleRepository.Remove(title);
+                }
             }
             
             foreach (Name name in nameRepository.GetAll())
@@ -164,6 +171,7 @@ namespace CK2LandedTitlesExtractor.UI
             foreach (Name name in nameRepository.GetAll())
             {
                 for (int titleKey = name.Id; titleKey > 0; titleKey--)
+                {
                     if (titleRepository.Contains(titleKey))
                     {
                         Title title = titleRepository.Get(titleKey);
@@ -175,6 +183,7 @@ namespace CK2LandedTitlesExtractor.UI
                         name.TitleId = titleKey;
                         break;
                     }
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 using System;
 
-namespace CK2LandedTitlesExtractor.Utils
+namespace CK2LandedTitlesManager.Utils
 {
     /// <summary>
     /// Console extras.

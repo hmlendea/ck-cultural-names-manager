@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 
-using CK2LandedTitlesExtractor.Entities;
-using CK2LandedTitlesExtractor.Exceptions;
-using CK2LandedTitlesExtractor.Utils.Extensions;
+using CK2LandedTitlesManager.Models;
+using CK2LandedTitlesManager.Exceptions;
+using CK2LandedTitlesManager.Utils.Extensions;
 
-namespace CK2LandedTitlesExtractor.Repositories
+namespace CK2LandedTitlesManager.Repositories
 {
     /// <summary>
     /// Memory Repository.
@@ -27,7 +26,9 @@ namespace CK2LandedTitlesExtractor.Repositories
             get
             {
                 if (DataStore.IsNullOrEmpty())
+                {
                     return 0;
+                }
 
                 return DataStore.Count;
             }
@@ -43,7 +44,7 @@ namespace CK2LandedTitlesExtractor.Repositories
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CK2LandedTitlesExtractor.Repositories.Repository"/> class.
+        /// Initializes a new instance of the <see cref="Repository"/> class.
         /// </summary>
         public Repository()
         {
@@ -57,7 +58,9 @@ namespace CK2LandedTitlesExtractor.Repositories
         public virtual void Add(T entity)
         {
             if (Contains(entity.Id))
+            {
                 throw new DuplicateEntityException();
+            }
 
             DataStore.Add(entity.Id, entity);
         }
@@ -69,7 +72,9 @@ namespace CK2LandedTitlesExtractor.Repositories
         public virtual T Get(int id)
         {
             if (!Contains(id))
+            {
                 throw new EntityNotFoundException();
+            }
 
             return DataStore[id];
         }
@@ -78,9 +83,9 @@ namespace CK2LandedTitlesExtractor.Repositories
         /// Gets all entities.
         /// </summary>
         /// <returns>The all.</returns>
-        public List<T> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return DataStore.Values.ToList();
+            return DataStore.Values;
         }
 
         /// <summary>
@@ -99,7 +104,9 @@ namespace CK2LandedTitlesExtractor.Repositories
         public virtual void Remove(int id)
         {
             if (!Contains(id))
+            {
                 throw new EntityNotFoundException();
+            }
 
             DataStore.Remove(id);
         }

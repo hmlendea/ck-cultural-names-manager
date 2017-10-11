@@ -1,6 +1,6 @@
-﻿using CK2LandedTitlesExtractor.UI;
+﻿using CK2LandedTitlesManager.UI;
 
-namespace CK2LandedTitlesExtractor
+namespace CK2LandedTitlesManager
 {
     public class Program
     {
