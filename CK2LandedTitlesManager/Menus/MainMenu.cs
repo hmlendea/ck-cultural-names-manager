@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using CK2LandedTitlesManager.Models;
-using CK2LandedTitlesManager.DataAccess.Repositories;
-
 namespace CK2LandedTitlesManager.Menus
 {
     /// <summary>
@@ -13,9 +10,6 @@ namespace CK2LandedTitlesManager.Menus
     /// </summary>
     public class MainMenu : Menu
     {
-        static TitleRepository titleRepository;
-        static NameRepository nameRepository;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainMenu"/> class.
         /// </summary>
@@ -37,9 +31,6 @@ namespace CK2LandedTitlesManager.Menus
                 "print",
                 "Display the landed titles",
                 delegate { DisplayLandedTitles(); });
-
-            titleRepository = new TitleRepository();
-            nameRepository = new NameRepository();
         }
 
         /// <summary>
@@ -47,16 +38,7 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void DisplayLandedTitles()
         {
-            foreach (DynamicName name in nameRepository.GetAll())
-            {
-                LandedTitle title = titleRepository.Get(name.LandedTitleId);
-
-                Console.WriteLine(
-                    "{0} = {{ {1} = \"{2}\" }}",
-                    title.Text.PadRight(23, ' '),
-                    name.CultureId,
-                    name.Name);
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -65,36 +47,7 @@ namespace CK2LandedTitlesManager.Menus
         /// /// <param name="fileName">Path to the output landed_title file</param>
         private void SaveLandedTitles(string fileName)
         {
-            if (File.Exists(fileName))
-            {
-                File.Delete(fileName);
-            }
-
-            StreamWriter sw = new StreamWriter(File.OpenWrite(fileName));
-
-            foreach (LandedTitle title in titleRepository.GetAll())
-            {
-                List<DynamicName> names = nameRepository.GetAll()
-                                                 .Where(x => x.LandedTitleId == title.Id)
-                                                 .OrderBy(x => x.CultureId)
-                                                 .ToList();
-
-                if (names.Count == 0)
-                {
-                    continue;
-                }
-
-                sw.WriteLine("{0} = {{", title);
-
-                foreach (DynamicName name in names)
-                {
-                    sw.WriteLine("  {0} = \"{1}\"", name.CultureId, name.Name);
-                }
-
-                sw.WriteLine("}");
-            }
-
-            sw.Dispose();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -102,26 +55,12 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void CleanTitlesAndNames()
         {
-            foreach (LandedTitle title in titleRepository.GetAll())
-            {
-                IEnumerable<DynamicName> assignedNames = nameRepository.GetAllByTitleId(title.Id);
+            throw new NotImplementedException();
+        }
 
-                if (assignedNames.Count() == 0)
-                {
-                    titleRepository.Remove(title);
-                }
-            }
-            
-            foreach (DynamicName name in nameRepository.GetAll())
-            {
-                if (nameRepository.GetAll().Any(x => x.Id != name.Id &&
-                                                     x.LandedTitleId == name.LandedTitleId &&
-                                                     x.CultureId == name.CultureId &&
-                                                     x.Name == name.Name))
-                {
-                    nameRepository.Remove(name);
-                }
-            }
+        private void LoadTitles()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -133,22 +72,12 @@ namespace CK2LandedTitlesManager.Menus
             List<string> lines = File.ReadAllLines(Path.GetFullPath(fileName)).ToList();
 
             Console.Write("Loading titles... ");
-            titleRepository.Load(fileName);
-            Console.WriteLine("OK ({0} titles)", titleRepository.Size);
-
-            Console.Write("Loading names... ");
-            nameRepository.Load(fileName);
-            Console.WriteLine("OK ({0} names)", nameRepository.Size);
-
-            Console.Write("Linking names with titles... ");
-            LinkNamesWithTitles();
-            Console.WriteLine("OK");
-
+            LoadTitles();
+            Console.WriteLine("OK ({0} titles)");
+            
             Console.Write("Cleaning titles and names... ");
             CleanTitlesAndNames();
             Console.WriteLine("OK ");
-
-            Console.WriteLine($"{titleRepository.Size} title; {nameRepository.Size} names");
         }
 
         /// <summary>
@@ -168,23 +97,7 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void LinkNamesWithTitles()
         {
-            foreach (DynamicName name in nameRepository.GetAll())
-            {
-                for (int titleKey = name.Id; titleKey > 0; titleKey--)
-                {
-                    if (titleRepository.Contains(titleKey))
-                    {
-                        LandedTitle title = titleRepository.Get(titleKey);
-
-                        titleKey = titleRepository.GetAll()
-                                                  .First(x => x.Text == title.Text)
-                                                  .Id;
-
-                        name.LandedTitleId = titleKey;
-                        break;
-                    }
-                }
-            }
+            throw new NotImplementedException();
         }
     }
 }
