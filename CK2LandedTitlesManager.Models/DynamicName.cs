@@ -3,40 +3,40 @@ namespace CK2LandedTitlesManager.Models
     /// <summary>
     /// The title name entity
     /// </summary>
-    public class Name : EntityBase
+    public class DynamicName : EntityBase
     {
         /// <summary>
-        /// Gets or sets the culture.
+        /// Gets or sets the culture identifier.
         /// </summary>
-        /// <value>The culture.</value>
-        public string Culture { get; set; }
+        /// <value>The culture identifier.</value>
+        public string CultureId { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
-        public string Text { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the title identifier.
+        /// Gets or sets the landed title identifier.
         /// </summary>
-        /// <value>The title identifier.</value>
-        public int TitleId { get; set; }
+        /// <value>The landed title identifier.</value>
+        public int LandedTitleId { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="Name"/>.
+        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="DynamicName"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Name"/>.</param>
+        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="DynamicName"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current
-        /// <see cref="Name"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="LandedTitle"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            Name other = obj as Name;
+            DynamicName other = obj as DynamicName;
 
             if (other != null &&
-                TitleId == other.TitleId &&
-                Culture == other.Culture &&
-                Text == other.Text)
+                LandedTitleId == other.LandedTitleId &&
+                CultureId == other.CultureId &&
+                Name == other.Name)
             {
                 return true;
             }
@@ -45,7 +45,7 @@ namespace CK2LandedTitlesManager.Models
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="Name"/> object.
+        /// Serves as a hash function for a <see cref="DynamicName"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>

@@ -47,15 +47,15 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void DisplayLandedTitles()
         {
-            foreach (Name name in nameRepository.GetAll())
+            foreach (DynamicName name in nameRepository.GetAll())
             {
-                Title title = titleRepository.Get(name.TitleId);
+                LandedTitle title = titleRepository.Get(name.LandedTitleId);
 
                 Console.WriteLine(
                     "{0} = {{ {1} = \"{2}\" }}",
                     title.Text.PadRight(23, ' '),
-                    name.Culture,
-                    name.Text);
+                    name.CultureId,
+                    name.Name);
             }
         }
 
@@ -72,11 +72,11 @@ namespace CK2LandedTitlesManager.Menus
 
             StreamWriter sw = new StreamWriter(File.OpenWrite(fileName));
 
-            foreach (Title title in titleRepository.GetAll())
+            foreach (LandedTitle title in titleRepository.GetAll())
             {
-                List<Name> names = nameRepository.GetAll()
-                                                 .Where(x => x.TitleId == title.Id)
-                                                 .OrderBy(x => x.Culture)
+                List<DynamicName> names = nameRepository.GetAll()
+                                                 .Where(x => x.LandedTitleId == title.Id)
+                                                 .OrderBy(x => x.CultureId)
                                                  .ToList();
 
                 if (names.Count == 0)
@@ -86,9 +86,9 @@ namespace CK2LandedTitlesManager.Menus
 
                 sw.WriteLine("{0} = {{", title);
 
-                foreach (Name name in names)
+                foreach (DynamicName name in names)
                 {
-                    sw.WriteLine("  {0} = \"{1}\"", name.Culture, name.Text);
+                    sw.WriteLine("  {0} = \"{1}\"", name.CultureId, name.Name);
                 }
 
                 sw.WriteLine("}");
@@ -102,9 +102,9 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void CleanTitlesAndNames()
         {
-            foreach (Title title in titleRepository.GetAll())
+            foreach (LandedTitle title in titleRepository.GetAll())
             {
-                IEnumerable<Name> assignedNames = nameRepository.GetAllByTitleId(title.Id);
+                IEnumerable<DynamicName> assignedNames = nameRepository.GetAllByTitleId(title.Id);
 
                 if (assignedNames.Count() == 0)
                 {
@@ -112,12 +112,12 @@ namespace CK2LandedTitlesManager.Menus
                 }
             }
             
-            foreach (Name name in nameRepository.GetAll())
+            foreach (DynamicName name in nameRepository.GetAll())
             {
                 if (nameRepository.GetAll().Any(x => x.Id != name.Id &&
-                                                     x.TitleId == name.TitleId &&
-                                                     x.Culture == name.Culture &&
-                                                     x.Text == name.Text))
+                                                     x.LandedTitleId == name.LandedTitleId &&
+                                                     x.CultureId == name.CultureId &&
+                                                     x.Name == name.Name))
                 {
                     nameRepository.Remove(name);
                 }
@@ -168,19 +168,19 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void LinkNamesWithTitles()
         {
-            foreach (Name name in nameRepository.GetAll())
+            foreach (DynamicName name in nameRepository.GetAll())
             {
                 for (int titleKey = name.Id; titleKey > 0; titleKey--)
                 {
                     if (titleRepository.Contains(titleKey))
                     {
-                        Title title = titleRepository.Get(titleKey);
+                        LandedTitle title = titleRepository.Get(titleKey);
 
                         titleKey = titleRepository.GetAll()
                                                   .First(x => x.Text == title.Text)
                                                   .Id;
 
-                        name.TitleId = titleKey;
+                        name.LandedTitleId = titleKey;
                         break;
                     }
                 }

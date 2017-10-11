@@ -7,7 +7,7 @@ using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.DataAccess.Repositories
 {
-    public class NameRepository : Repository<Name>
+    public class NameRepository : Repository<DynamicName>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NameRepository"/> class.
@@ -17,15 +17,15 @@ namespace CK2LandedTitlesManager.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Gets all names by the title identifier.
+        /// Gets all names by the landed title identifier.
         /// </summary>
         /// <returns>List of names.</returns>
-        /// <param name="titleId">The title identifier</param>
-        public IEnumerable<Name> GetAllByTitleId(int titleId)
+        /// <param name="titleId">The landed title identifier</param>
+        public IEnumerable<DynamicName> GetAllByTitleId(int titleId)
         {
-            IEnumerable<Name> names = GetAll();
+            IEnumerable<DynamicName> names = GetAll();
 
-            return names.Where(x => x.TitleId == titleId);
+            return names.Where(x => x.LandedTitleId == titleId);
         }
 
         /// <summary>
@@ -33,11 +33,11 @@ namespace CK2LandedTitlesManager.DataAccess.Repositories
         /// </summary>
         /// <returns>List of names.</returns>
         /// <param name="text">The name</param>
-        public IEnumerable<Name> GetAllByText(string text)
+        public IEnumerable<DynamicName> GetAllByText(string text)
         {
-            IEnumerable<Name> names = GetAll();
+            IEnumerable<DynamicName> names = GetAll();
 
-            return names.Where(x => x.Text == text);
+            return names.Where(x => x.Name == text);
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace CK2LandedTitlesManager.DataAccess.Repositories
 
                     if (valid)
                     {
-                        Name name = new Name
+                        DynamicName name = new DynamicName
                         {
                             Id = i,
-                            Culture = culture,
-                            Text = text
+                            CultureId = culture,
+                            Name = text
                         };
                         
                         Add(name);

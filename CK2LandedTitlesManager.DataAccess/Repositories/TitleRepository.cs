@@ -7,7 +7,7 @@ using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.DataAccess.Repositories
 {
-    public class TitleRepository : Repository<Title>
+    public class TitleRepository : Repository<LandedTitle>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleRepository"/> class.
@@ -21,9 +21,9 @@ namespace CK2LandedTitlesManager.DataAccess.Repositories
         /// </summary>
         /// <returns>List of titles.</returns>
         /// <param name="text">The title name</param>
-        public IEnumerable<Title> GetAllByText(string text)
+        public IEnumerable<LandedTitle> GetAllByText(string text)
         {
-            IEnumerable<Title> titles = GetAll();
+            IEnumerable<LandedTitle> titles = GetAll();
 
             return titles.Where(x => x.Text == text);
         }
@@ -44,7 +44,7 @@ namespace CK2LandedTitlesManager.DataAccess.Repositories
 
                 if (match.Success)
                 {
-                    Title title = new Title()
+                    LandedTitle title = new LandedTitle()
                     {
                         Id = i,
                         Text = match.Value.Trim(),

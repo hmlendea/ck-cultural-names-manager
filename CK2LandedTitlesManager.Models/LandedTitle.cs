@@ -3,7 +3,7 @@ namespace CK2LandedTitlesManager.Models
     /// <summary>
     /// The title entity
     /// </summary>
-    public class Title : EntityBase
+    public class LandedTitle : EntityBase
     {
         /// <summary>
         /// Gets or sets the name.
@@ -18,11 +18,11 @@ namespace CK2LandedTitlesManager.Models
         public int DeJureTitleId { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="Title"/>.
+        /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="LandedTitle"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Title"/>.</param>
+        /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="LandedTitle"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current
-        /// <see cref="Title"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="LandedTitle"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             if (obj.ToString() == Text)
@@ -34,7 +34,7 @@ namespace CK2LandedTitlesManager.Models
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="Title"/> object.
+        /// Serves as a hash function for a <see cref="LandedTitle"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -44,9 +44,9 @@ namespace CK2LandedTitlesManager.Models
         }
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the current <see cref="Title"/>.
+        /// Returns a <see cref="string"/> that represents the current <see cref="LandedTitle"/>.
         /// </summary>
-        /// <returns>A <see cref="string"/> that represents the current <see cref="Title"/>.</returns>
+        /// <returns>A <see cref="string"/> that represents the current <see cref="LandedTitle"/>.</returns>
         public override string ToString()
         {
             return Text;
