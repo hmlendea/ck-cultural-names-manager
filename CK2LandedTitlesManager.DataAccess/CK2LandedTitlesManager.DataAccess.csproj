@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Pdoxcl2Sharp" Version="0.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CK2LandedTitlesManager.Infrastructure\CK2LandedTitlesManager.Infrastructure.csproj" />
     <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
   </ItemGroup>
