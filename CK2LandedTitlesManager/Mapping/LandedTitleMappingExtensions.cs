@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 using CK2LandedTitlesManager.DataAccess.DataObjects;
@@ -23,7 +24,28 @@ namespace CK2LandedTitlesManager.Mapping
                 Id = landedTitleEntity.Id,
                 ParentId = landedTitleEntity.ParentId,
                 Children = landedTitleEntity.Children.ToDomainModels().ToList(),
-                DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                PrimaryColour = Color.FromArgb(255, landedTitleEntity.PrimaryColour[0], landedTitleEntity.PrimaryColour[1], landedTitleEntity.PrimaryColour[2]),
+                SecondaryColour = Color.FromArgb(255, landedTitleEntity.SecondaryColour[0], landedTitleEntity.SecondaryColour[1], landedTitleEntity.SecondaryColour[2]),
+                CultureId = landedTitleEntity.CultureId,
+                GraphicalCulture = landedTitleEntity.GraphicalCulture,
+                MercenaryType = landedTitleEntity.MercenaryType,
+                ReligionId = landedTitleEntity.ReligionId,
+                TitleFormOfAddress = landedTitleEntity.TitleFormOfAddress,
+                TitleLocalisationId = landedTitleEntity.TitleLocalisationId,
+                TitleLocalisationFemaleId = landedTitleEntity.TitleLocalisationFemaleId,
+                HasPurpleBornHeirs = landedTitleEntity.HasPurpleBornHeirs,
+                HasTopDeJureCapital = landedTitleEntity.HasTopDeJureCapital,
+                IsCaliphate = landedTitleEntity.IsCaliphate,
+                IsHolyOrder = landedTitleEntity.IsHolyOrder,
+                IsLandless = landedTitleEntity.IsLandless,
+                IsMercenaryGroup = landedTitleEntity.IsMercenaryGroup,
+                IsPrimaryTitle = landedTitleEntity.IsPrimaryTitle,
+                IsTribe = landedTitleEntity.IsTribe,
+                UseShortName = landedTitleEntity.UseShortName,
+                CapitalId = landedTitleEntity.CapitalId,
+                Dignity = landedTitleEntity.Dignity,
+                MonthlyIncome = landedTitleEntity.MonthlyIncome
             };
 
             return landedTitle;
@@ -41,7 +63,28 @@ namespace CK2LandedTitlesManager.Mapping
                 Id = landedTitle.Id,
                 ParentId = landedTitle.ParentId,
                 Children = landedTitle.Children.ToEntities().ToList(),
-                DynamicNames = landedTitle.DynamicNames
+                DynamicNames = landedTitle.DynamicNames,
+                PrimaryColour = new int[] { landedTitle.PrimaryColour.R, landedTitle.PrimaryColour.G, landedTitle.PrimaryColour.B },
+                SecondaryColour = new int[] { landedTitle.SecondaryColour.R, landedTitle.SecondaryColour.G, landedTitle.SecondaryColour.B },
+                CultureId = landedTitle.CultureId,
+                GraphicalCulture = landedTitle.GraphicalCulture,
+                MercenaryType = landedTitle.MercenaryType,
+                ReligionId = landedTitle.ReligionId,
+                TitleFormOfAddress = landedTitle.TitleFormOfAddress,
+                TitleLocalisationId = landedTitle.TitleLocalisationId,
+                TitleLocalisationFemaleId = landedTitle.TitleLocalisationFemaleId,
+                HasPurpleBornHeirs = landedTitle.HasPurpleBornHeirs,
+                HasTopDeJureCapital = landedTitle.HasTopDeJureCapital,
+                IsCaliphate = landedTitle.IsCaliphate,
+                IsHolyOrder = landedTitle.IsHolyOrder,
+                IsLandless = landedTitle.IsLandless,
+                IsMercenaryGroup = landedTitle.IsMercenaryGroup,
+                IsPrimaryTitle = landedTitle.IsPrimaryTitle,
+                IsTribe = landedTitle.IsTribe,
+                UseShortName = landedTitle.UseShortName,
+                CapitalId = landedTitle.CapitalId,
+                Dignity = landedTitle.Dignity,
+                MonthlyIncome = landedTitle.MonthlyIncome
             };
 
             return landedTitleEntity;

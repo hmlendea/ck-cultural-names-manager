@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 
 namespace CK2LandedTitlesManager.Models
@@ -27,13 +28,61 @@ namespace CK2LandedTitlesManager.Models
         /// Gets or sets the de-jure titles belonging to this title.
         /// </summary>
         /// <value>The de jure titles.</value>
-        public List<LandedTitle> Children { get; set; }
+        public IList<LandedTitle> Children { get; set; }
 
         /// <summary>
         /// Gets or sets the dynamic names.
         /// </summary>
         /// <value>The dynamic names.</value>
-        public Dictionary<string, string> DynamicNames { get; set; }
+        public IDictionary<string, string> DynamicNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the religious values.
+        /// </summary>
+        /// <value>The religious values.</value>
+        public IDictionary<string, int> ReligiousValues { get; set; }
+
+        public Color PrimaryColour { get; set; }
+
+        public Color SecondaryColour { get; set; }
+
+        public string CultureId { get; set; }
+
+        public string GraphicalCulture { get; set; }
+
+        public string MercenaryType { get; set; }
+
+        public string ReligionId { get; set; }
+
+        public string TitleFormOfAddress { get; set; }
+
+        public string TitleLocalisationId { get; set; }
+
+        public string TitleLocalisationFemaleId { get; set; }
+
+        public bool HasPurpleBornHeirs { get; set; }
+
+        public bool HasTopDeJureCapital { get; set; }
+
+        public bool IsCaliphate { get; set; }
+
+        public bool IsHolyOrder { get; set; }
+
+        public bool IsLandless { get; set; }
+
+        public bool IsMercenaryGroup { get; set; }
+
+        public bool IsPrimaryTitle { get; set; }
+
+        public bool IsTribe { get; set; }
+
+        public bool UseShortName { get; set; }
+
+        public int CapitalId { get; set; }
+
+        public int Dignity { get; set; }
+
+        public int MonthlyIncome { get; set; }
 
         public int TotalChildren => Children.Count + Children.Sum(x => x.TotalChildren);
 
