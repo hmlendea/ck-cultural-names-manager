@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+
+using CK2LandedTitlesManager.DataAccess.Repositories;
+using CK2LandedTitlesManager.Mapping;
+using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.Menus
 {
@@ -10,6 +13,8 @@ namespace CK2LandedTitlesManager.Menus
     /// </summary>
     public class MainMenu : Menu
     {
+        List<LandedTitle> landedTitles;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainMenu"/> class.
         /// </summary>
@@ -55,12 +60,22 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void CleanTitlesAndNames()
         {
+            Console.Write("Cleaning titles and names... ");
+
             throw new NotImplementedException();
+
+            Console.WriteLine("OK ");
         }
 
-        private void LoadTitles()
+        private void LoadTitles(string fileName)
         {
-            throw new NotImplementedException();
+            Console.Write($"Loading titles from \"{fileName}\"... ");
+
+            LandedTitleRepository repository = new LandedTitleRepository(fileName);
+            landedTitles = repository.GetAll().ToDomainModels().ToList();
+
+            int titlesCount = landedTitles.Sum(x => x.TotalChildren);
+            Console.WriteLine($"OK ({titlesCount} titles)");
         }
 
         /// <summary>
@@ -69,15 +84,9 @@ namespace CK2LandedTitlesManager.Menus
         private void LoadFile()
         {
             string fileName = Input("Input file path (absolute) = ");
-            List<string> lines = File.ReadAllLines(Path.GetFullPath(fileName)).ToList();
 
-            Console.Write("Loading titles... ");
-            LoadTitles();
-            Console.WriteLine("OK ({0} titles)");
-            
-            Console.Write("Cleaning titles and names... ");
+            LoadTitles(fileName);
             CleanTitlesAndNames();
-            Console.WriteLine("OK ");
         }
 
         /// <summary>

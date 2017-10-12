@@ -1,23 +1,18 @@
 ﻿using System.Collections.Generic;
 
+using CK2LandedTitlesManager.DataAccess.DataObjects;
 using CK2LandedTitlesManager.Infrastructure.Extensions;
 
 using Pdoxcl2Sharp;
 
 namespace CK2LandedTitlesManager.DataAccess.IO
 {
-    public sealed class LandedTitleDefinition : IParadoxRead, IParadoxWrite
+    public sealed class LandedTitleDefinition : LandedTitleEntity, IParadoxRead, IParadoxWrite
     {
-        public IDictionary<string, string> DynamicNames { get; set; }
-
-        public IList<LandedTitleDefinition> LandedTitles { get; set; }
-
-        public string Id { get; set; }
-
         public LandedTitleDefinition()
         {
             DynamicNames = new Dictionary<string, string>();
-            LandedTitles = new List<LandedTitleDefinition>();
+            Children = new List<LandedTitleEntity>();
         }
 
         public void TokenCallback(ParadoxParser parser, string token)
@@ -26,10 +21,11 @@ namespace CK2LandedTitlesManager.DataAccess.IO
             {
                 LandedTitleDefinition landedTitle = new LandedTitleDefinition
                 {
-                    Id = token
+                    Id = token,
+                    ParentId = Id
                 };
 
-                LandedTitles.Add(parser.Parse(landedTitle));
+                Children.Add(parser.Parse(landedTitle));
             }
             else
             {
@@ -44,7 +40,7 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                 writer.WriteLine(dynamicName.Key, dynamicName.Value, ValueWrite.Quoted);
             }
 
-            foreach (LandedTitleDefinition landedTitle in LandedTitles)
+            foreach (LandedTitleDefinition landedTitle in Children)
             {
                 writer.Write(landedTitle.Id, landedTitle);
             }

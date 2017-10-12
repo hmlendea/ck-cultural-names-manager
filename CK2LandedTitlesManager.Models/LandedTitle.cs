@@ -1,21 +1,45 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
 namespace CK2LandedTitlesManager.Models
 {
     /// <summary>
     /// The title entity
     /// </summary>
-    public class LandedTitle : EntityBase
+    public class LandedTitle
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the identifier.
         /// </summary>
-        /// <value>The name.</value>
-        public string Text { get; set; }
+        /// <value>The identifier.</value>
+        [Key]
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the de jure title identifier.
+        /// Gets or sets the identifier of the de-jure title it belongs to.
         /// </summary>
         /// <value>The de jure title identifier.</value>
-        public int DeJureTitleId { get; set; }
+        public string ParentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the de-jure titles belonging to this title.
+        /// </summary>
+        /// <value>The de jure titles.</value>
+        public List<LandedTitle> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dynamic names.
+        /// </summary>
+        /// <value>The dynamic names.</value>
+        public Dictionary<string, string> DynamicNames { get; set; }
+
+        public int TotalChildren => Children.Count + Children.Sum(x => x.TotalChildren);
+
+        public LandedTitle()
+        {
+            DynamicNames = new Dictionary<string, string>();
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="LandedTitle"/>.
@@ -25,7 +49,7 @@ namespace CK2LandedTitlesManager.Models
         /// <see cref="LandedTitle"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            if (obj.ToString() == Text)
+            if (obj.ToString() == Id)
             {
                 return true;
             }
@@ -49,7 +73,7 @@ namespace CK2LandedTitlesManager.Models
         /// <returns>A <see cref="string"/> that represents the current <see cref="LandedTitle"/>.</returns>
         public override string ToString()
         {
-            return Text;
+            return Id;
         }
     }
 }

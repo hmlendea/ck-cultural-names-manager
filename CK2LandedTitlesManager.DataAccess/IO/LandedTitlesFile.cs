@@ -6,7 +6,7 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 {
     public sealed class LandedTitlesFile : IParadoxRead, IParadoxWrite
     {
-        IList<LandedTitleDefinition> LandedTitles { get; set; }
+        public IList<LandedTitleDefinition> LandedTitles { get; set; }
 
         public LandedTitlesFile()
         {
