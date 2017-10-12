@@ -43,7 +43,8 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void DisplayLandedTitles()
         {
-            throw new NotImplementedException();
+            landedTitles.ForEach(Console.Write);
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace CK2LandedTitlesManager.Menus
         {
             Console.Write("Cleaning titles and names... ");
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
             Console.WriteLine("OK ");
         }
@@ -99,14 +100,6 @@ namespace CK2LandedTitlesManager.Menus
             Console.Write("Writing output... ");
             SaveLandedTitles(fileName);
             Console.WriteLine("OK");
-        }
-
-        /// <summary>
-        /// Links names with their respective titles
-        /// </summary>
-        private void LinkNamesWithTitles()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Linq;
 namespace CK2LandedTitlesManager.Models
 {
     /// <summary>
-    /// The title entity
+    /// The title entity.
     /// </summary>
     public class LandedTitle
     {
@@ -49,7 +50,7 @@ namespace CK2LandedTitlesManager.Models
         /// <see cref="LandedTitle"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
-            if (obj.ToString() == Id)
+            if (obj.ToString() == ToString())
             {
                 return true;
             }
@@ -73,7 +74,19 @@ namespace CK2LandedTitlesManager.Models
         /// <returns>A <see cref="string"/> that represents the current <see cref="LandedTitle"/>.</returns>
         public override string ToString()
         {
-            return Id;
+            string str = string.Empty;
+
+            foreach(var name in DynamicNames)
+            {
+                str += $"{Id}.{name.Key}=\"{name.Value}\"{Environment.NewLine}";
+            }
+
+            foreach(LandedTitle child in Children)
+            {
+                str += child.ToString();
+            }
+
+            return str;
         }
     }
 }
