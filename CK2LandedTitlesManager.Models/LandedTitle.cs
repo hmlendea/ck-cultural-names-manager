@@ -60,6 +60,8 @@ namespace CK2LandedTitlesManager.Models
 
         public string TitleLocalisationFemaleId { get; set; }
 
+        public string TitlePrefixLocalisationId { get; set; }
+
         public bool HasPurpleBornHeirs { get; set; }
 
         public bool HasTopDeJureCapital { get; set; }

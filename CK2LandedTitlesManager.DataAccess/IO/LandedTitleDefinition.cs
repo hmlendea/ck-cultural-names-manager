@@ -25,8 +25,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
             switch (token)
             {
-                // TODO: Implement this
+                // TODO: Implement these
                 case "allow":
+                case "coat_of_arms":
+                case "gain_effect":
                     parser.ReadInsideBrackets((p) => { });
                     break;
 
@@ -108,6 +110,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
                 case "title_female":
                     TitleLocalisationFemaleId = parser.ReadString();
+                    break;
+
+                case "title_prefix":
+                    TitlePrefixLocalisationId = parser.ReadString();
                     break;
 
                 case "tribe":

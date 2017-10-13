@@ -36,6 +36,8 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public string TitleLocalisationFemaleId { get; set; }
 
+        public string TitlePrefixLocalisationId { get; set; }
+
         public bool HasPurpleBornHeirs { get; set; }
 
         public bool HasTopDeJureCapital { get; set; }
