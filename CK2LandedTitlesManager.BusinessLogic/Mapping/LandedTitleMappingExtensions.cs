@@ -5,7 +5,7 @@ using System.Linq;
 using CK2LandedTitlesManager.DataAccess.DataObjects;
 using CK2LandedTitlesManager.Models;
 
-namespace CK2LandedTitlesManager.Mapping
+namespace CK2LandedTitlesManager.BusinessLogic.Mapping
 {
     /// <summary>
     /// LandedTitle mapping extensions for converting between entities and domain models.

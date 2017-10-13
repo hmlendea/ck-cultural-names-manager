@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CK2LandedTitlesManager.DataAccess\CK2LandedTitlesManager.DataAccess.csproj" />
+    <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
+  </ItemGroup>
+
+</Project>

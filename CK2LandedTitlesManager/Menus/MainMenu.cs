@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using CK2LandedTitlesManager.BusinessLogic;
 using CK2LandedTitlesManager.DataAccess.Repositories;
-using CK2LandedTitlesManager.Mapping;
 using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.Menus
@@ -13,13 +13,15 @@ namespace CK2LandedTitlesManager.Menus
     /// </summary>
     public class MainMenu : Menu
     {
-        List<LandedTitle> landedTitles;
+        LandedTitleManager landedTitleManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainMenu"/> class.
         /// </summary>
         public MainMenu()
         {
+            landedTitleManager = new LandedTitleManager();
+
             Title = "CK2 Landed Titles Extractor";
 
             AddCommand(
@@ -45,11 +47,17 @@ namespace CK2LandedTitlesManager.Menus
         {
             string id = Input("ID = ");
 
-            LandedTitle landedTitle = FindTitle(id);
+            LandedTitle landedTitle = landedTitleManager.Get(id);
 
             if (landedTitle == null)
             {
                 Console.WriteLine($"Cannot find title {id}!");
+                return;
+            }
+
+            if (landedTitle.DynamicNames.Count == 0)
+            {
+                Console.WriteLine($"There are no dynamic titles for {id}!");
                 return;
             }
 
@@ -65,30 +73,7 @@ namespace CK2LandedTitlesManager.Menus
         /// /// <param name="fileName">Path to the output landed_title file</param>
         private void SaveLandedTitles(string fileName)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Cleans the titles and names
-        /// </summary>
-        private void CleanTitlesAndNames()
-        {
-            Console.Write("Cleaning titles and names... ");
-
-            //throw new NotImplementedException();
-
-            Console.WriteLine("OK ");
-        }
-
-        private void LoadTitles(string fileName)
-        {
-            Console.Write($"Loading titles from \"{fileName}\"... ");
-
-            LandedTitleRepository repository = new LandedTitleRepository(fileName);
-            landedTitles = repository.GetAll().ToDomainModels().ToList();
-
-            int titlesCount = landedTitles.Sum(x => x.TotalChildren);
-            Console.WriteLine($"OK ({titlesCount} titles)");
+            landedTitleManager.SaveTitles(fileName);
         }
 
         /// <summary>
@@ -98,8 +83,14 @@ namespace CK2LandedTitlesManager.Menus
         {
             string fileName = Input("Input file path (absolute) = ");
 
-            LoadTitles(fileName);
-            CleanTitlesAndNames();
+            Console.Write($"Loading titles from \"{fileName}\"... ");
+
+            landedTitleManager.LoadTitles(fileName);
+
+            IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
+            int titlesCount = landedTitles.Sum(x => x.TotalChildren);
+
+            Console.WriteLine($"OK ({titlesCount} titles)");
         }
 
         /// <summary>
@@ -112,31 +103,6 @@ namespace CK2LandedTitlesManager.Menus
             Console.Write("Writing output... ");
             SaveLandedTitles(fileName);
             Console.WriteLine("OK");
-        }
-        
-        private LandedTitle FindTitle(string id)
-        {
-            return FindTitle(id, landedTitles);
-        }
-
-        private LandedTitle FindTitle(string id, IEnumerable<LandedTitle> landedTitlesChunk)
-        {
-            if (landedTitlesChunk.Any(x => x.Id == id))
-            {
-                return landedTitlesChunk.FirstOrDefault(x => x.Id == id);
-            }
-
-            foreach (LandedTitle landedTitle in landedTitlesChunk)
-            {
-                LandedTitle result = FindTitle(id, landedTitle.Children);
-
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
         }
     }
 }

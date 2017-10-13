@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CK2LandedTitlesManager.DataAccess\CK2LandedTitlesManager.DataAccess.csproj" />
+    <ProjectReference Include="..\CK2LandedTitlesManager.BusinessLogic\CK2LandedTitlesManager.BusinessLogic.csproj" />
     <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
   </ItemGroup>
 
