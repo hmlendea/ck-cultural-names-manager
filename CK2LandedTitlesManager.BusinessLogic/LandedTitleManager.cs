@@ -26,6 +26,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
         {
             LandedTitleRepository repository = new LandedTitleRepository(fileName);
             landedTitles = repository.GetAll().ToDomainModels().ToList();
+        
+            RemoveDuplicatedTitles(landedTitles);
         }
 
         public void SaveTitles(string fileName)
@@ -51,6 +53,30 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
 
             return null;
+        }
+
+        private void RemoveDuplicatedTitles(IEnumerable<LandedTitle> landedTitlesChunk)
+        {
+            landedTitlesChunk = landedTitlesChunk
+                .GroupBy(o => o.Id)
+                .Select(g => g.Skip(1)
+                    .Aggregate(
+                        g.First(),
+                        (a, o) =>
+                        {
+                            a.Children = a.Children.Concat(o.Children).ToList();
+                            a.DynamicNames = a.DynamicNames
+                                .Concat(o.DynamicNames)
+                                .GroupBy(e => e.Key)
+                                .ToDictionary(d => d.Key, d => d.First().Value);
+
+                            return a;
+                        }));
+
+            foreach (LandedTitle landedTitle in landedTitlesChunk)
+            {
+                RemoveDuplicatedTitles(landedTitle.Children);
+            }
         }
     }
 }
