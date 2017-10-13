@@ -88,6 +88,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     MonthlyIncome = parser.ReadInt32();
                     break;
 
+                case "name_tier":
+                    TitleNameTierId = parser.ReadString();
+                    break;
+
                 case "primary":
                     IsPrimaryTitle = parser.ReadBool();
                     break;
@@ -113,7 +117,7 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     break;
 
                 case "title_prefix":
-                    TitlePrefixLocalisationId = parser.ReadString();
+                    TitleLocalisationPrefixId = parser.ReadString();
                     break;
 
                 case "tribe":
