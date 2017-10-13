@@ -33,18 +33,30 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { SaveFile(); });
 
             AddCommand(
-                "print",
-                "Display the landed titles",
-                delegate { DisplayLandedTitles(); });
+                "get",
+                "Displays the landed title with the specified ID",
+                delegate { Get(); });
         }
 
         /// <summary>
-        /// Outputs the title names
+        /// Displays the landed title with the specified ID.
         /// </summary>
-        private void DisplayLandedTitles()
+        private void Get()
         {
-            landedTitles.ForEach(Console.Write);
-            Console.WriteLine();
+            string id = Input("ID = ");
+
+            LandedTitle landedTitle = FindTitle(id);
+
+            if (landedTitle == null)
+            {
+                Console.WriteLine($"Cannot find title {id}!");
+                return;
+            }
+
+            foreach (var dynamicName in landedTitle.DynamicNames)
+            {
+                Console.WriteLine($"{landedTitle.Id}.{dynamicName.Key} = \"{dynamicName.Value}\"");
+            }
         }
 
         /// <summary>
@@ -100,6 +112,31 @@ namespace CK2LandedTitlesManager.Menus
             Console.Write("Writing output... ");
             SaveLandedTitles(fileName);
             Console.WriteLine("OK");
+        }
+        
+        private LandedTitle FindTitle(string id)
+        {
+            return FindTitle(id, landedTitles);
+        }
+
+        private LandedTitle FindTitle(string id, IEnumerable<LandedTitle> landedTitlesChunk)
+        {
+            if (landedTitlesChunk.Any(x => x.Id == id))
+            {
+                return landedTitlesChunk.FirstOrDefault(x => x.Id == id);
+            }
+
+            foreach (LandedTitle landedTitle in landedTitlesChunk)
+            {
+                LandedTitle result = FindTitle(id, landedTitle.Children);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -123,19 +123,7 @@ namespace CK2LandedTitlesManager.Models
         /// <returns>A <see cref="string"/> that represents the current <see cref="LandedTitle"/>.</returns>
         public override string ToString()
         {
-            string str = string.Empty;
-
-            foreach(var name in DynamicNames)
-            {
-                str += $"{Id}.{name.Key}=\"{name.Value}\"{Environment.NewLine}";
-            }
-
-            foreach(LandedTitle child in Children)
-            {
-                str += child.ToString();
-            }
-
-            return str;
+            return Id;
         }
     }
 }
