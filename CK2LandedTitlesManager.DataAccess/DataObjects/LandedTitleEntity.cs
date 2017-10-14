@@ -10,6 +10,18 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public IList<LandedTitleEntity> Children { get; set; }
 
+        /// <summary>
+        /// Gets or sets the female names.
+        /// </summary>
+        /// <value>The female names.</value>
+        public IList<string> FemaleNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the male names.
+        /// </summary>
+        /// <value>The male banes.</value>
+        public IList<string> MaleNames { get; set; }
+
         public IDictionary<string, string> DynamicNames { get; set; }
 
         /// <summary>
@@ -21,6 +33,8 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
         public int[] PrimaryColour { get; set; }
 
         public int[] SecondaryColour { get; set; }
+
+        public string ControlledReligionId { get;set; }
 
         public string CultureId { get; set; }
 
@@ -40,6 +54,10 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public string TitleNameTierId { get; set; }
 
+        public bool CreationRequiresCapital { get; set; }
+
+        public bool TitleContainsCapital { get; set; }
+
         public bool HasPurpleBornHeirs { get; set; }
 
         public bool HasTopDeJureCapital { get; set; }
@@ -47,6 +65,8 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
         public bool IsCaliphate { get; set; }
 
         public bool IsHolyOrder { get; set; }
+
+        public bool IsIndependent { get; set; }
 
         public bool IsLandless { get; set; }
 
@@ -66,9 +86,13 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public LandedTitleEntity()
         {
+            Children = new List<LandedTitleEntity>();
+            FemaleNames = new List<string>();
+            MaleNames = new List<string>();
+
             DynamicNames = new Dictionary<string, string>();
             ReligiousValues = new Dictionary<string, int>();
-            Children = new List<LandedTitleEntity>();
+
             PrimaryColour = new int[] { 0, 0, 0 };
             SecondaryColour = new int[] { 0, 0, 0 };
         }

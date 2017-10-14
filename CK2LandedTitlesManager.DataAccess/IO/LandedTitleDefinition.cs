@@ -34,6 +34,7 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                 case "allow":
                 case "coat_of_arms":
                 case "gain_effect":
+                case "pagan_coa":
                     parser.ReadInsideBrackets((p) => { });
                     break;
 
@@ -53,12 +54,24 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     LandedTitleEntity.CapitalId = parser.ReadInt32();
                     break;
 
+                case "controls_religion":
+                    LandedTitleEntity.ControlledReligionId = parser.ReadString();
+                    break;
+
+                case "creation_requires_capital":
+                    LandedTitleEntity.CreationRequiresCapital = parser.ReadBool();
+                    break;
+
                 case "culture":
                     LandedTitleEntity.CultureId = parser.ReadString();
                     break;
 
                 case "dignity":
                     LandedTitleEntity.Dignity = parser.ReadInt32();
+                    break;
+
+                case "female_names":
+                    LandedTitleEntity.FemaleNames = parser.ReadStringList();
                     break;
 
                 case "foa":
@@ -77,8 +90,20 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     LandedTitleEntity.IsHolyOrder = parser.ReadBool();
                     break;
 
+                case "independent":
+                    LandedTitleEntity.IsIndependent = parser.ReadBool();
+                    break;
+
                 case "landless":
                     LandedTitleEntity.IsLandless = parser.ReadBool();
+                    break;
+
+                case "location_ruler_title":
+                    LandedTitleEntity.TitleContainsCapital = parser.ReadBool();
+                    break;
+
+                case "male_names":
+                    LandedTitleEntity.MaleNames = parser.ReadStringList();
                     break;
 
                 case "mercenary":

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
@@ -24,9 +25,12 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 Id = landedTitleEntity.Id,
                 ParentId = landedTitleEntity.ParentId,
                 Children = landedTitleEntity.Children.ToDomainModels().ToList(),
+                FemaleNames = landedTitleEntity.FemaleNames,
+                MaleNames = landedTitleEntity.MaleNames,
                 DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-                PrimaryColour = Color.FromArgb(255, landedTitleEntity.PrimaryColour[0], landedTitleEntity.PrimaryColour[1], landedTitleEntity.PrimaryColour[2]),
-                SecondaryColour = Color.FromArgb(255, landedTitleEntity.SecondaryColour[0], landedTitleEntity.SecondaryColour[1], landedTitleEntity.SecondaryColour[2]),
+                PrimaryColour = GetColorFromIntArray(landedTitleEntity.PrimaryColour),
+                SecondaryColour = GetColorFromIntArray(landedTitleEntity.SecondaryColour),
+                ControlledReligionId = landedTitleEntity.ControlledReligionId,
                 CultureId = landedTitleEntity.CultureId,
                 GraphicalCulture = landedTitleEntity.GraphicalCulture,
                 MercenaryType = landedTitleEntity.MercenaryType,
@@ -36,10 +40,13 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 TitleLocalisationFemaleId = landedTitleEntity.TitleLocalisationFemaleId,
                 TitleLocalisationPrefixId = landedTitleEntity.TitleLocalisationPrefixId,
                 TitleNameTierId = landedTitleEntity.TitleNameTierId,
+                CreationRequiresCapital = landedTitleEntity.CreationRequiresCapital,
+                TitleContainsCapital = landedTitleEntity.TitleContainsCapital,
                 HasPurpleBornHeirs = landedTitleEntity.HasPurpleBornHeirs,
                 HasTopDeJureCapital = landedTitleEntity.HasTopDeJureCapital,
                 IsCaliphate = landedTitleEntity.IsCaliphate,
                 IsHolyOrder = landedTitleEntity.IsHolyOrder,
+                IsIndependent = landedTitleEntity.IsIndependent,
                 IsLandless = landedTitleEntity.IsLandless,
                 IsMercenaryGroup = landedTitleEntity.IsMercenaryGroup,
                 IsPrimaryTitle = landedTitleEntity.IsPrimaryTitle,
@@ -65,10 +72,13 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 Id = landedTitle.Id,
                 ParentId = landedTitle.ParentId,
                 Children = landedTitle.Children.ToEntities().ToList(),
+                FemaleNames = landedTitle.FemaleNames,
+                MaleNames = landedTitle.MaleNames,
                 DynamicNames = landedTitle.DynamicNames,
                 PrimaryColour = new int[] { landedTitle.PrimaryColour.R, landedTitle.PrimaryColour.G, landedTitle.PrimaryColour.B },
                 SecondaryColour = new int[] { landedTitle.SecondaryColour.R, landedTitle.SecondaryColour.G, landedTitle.SecondaryColour.B },
                 CultureId = landedTitle.CultureId,
+                ControlledReligionId = landedTitle.ControlledReligionId,
                 GraphicalCulture = landedTitle.GraphicalCulture,
                 MercenaryType = landedTitle.MercenaryType,
                 ReligionId = landedTitle.ReligionId,
@@ -77,10 +87,13 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 TitleLocalisationFemaleId = landedTitle.TitleLocalisationFemaleId,
                 TitleLocalisationPrefixId = landedTitle.TitleLocalisationPrefixId,
                 TitleNameTierId = landedTitle.TitleNameTierId,
+                CreationRequiresCapital = landedTitle.CreationRequiresCapital,
+                TitleContainsCapital = landedTitle.TitleContainsCapital,
                 HasPurpleBornHeirs = landedTitle.HasPurpleBornHeirs,
                 HasTopDeJureCapital = landedTitle.HasTopDeJureCapital,
                 IsCaliphate = landedTitle.IsCaliphate,
                 IsHolyOrder = landedTitle.IsHolyOrder,
+                IsIndependent = landedTitle.IsIndependent,
                 IsLandless = landedTitle.IsLandless,
                 IsMercenaryGroup = landedTitle.IsMercenaryGroup,
                 IsPrimaryTitle = landedTitle.IsPrimaryTitle,
@@ -116,6 +129,15 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
             IEnumerable<LandedTitleEntity> landedTitleEntities = landedTitles.Select(landedTitle => landedTitle.ToEntity());
 
             return landedTitleEntities;
+        }
+
+        private static Color GetColorFromIntArray(int[] rgb)
+        {
+            int r = Math.Min(Math.Max(0, rgb[0]), 255);
+            int g = Math.Min(Math.Max(0, rgb[1]), 255);
+            int b = Math.Min(Math.Max(0, rgb[2]), 255);
+
+            return Color.FromArgb(255, r, g, b);
         }
     }
 }

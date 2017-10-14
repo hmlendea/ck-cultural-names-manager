@@ -31,6 +31,18 @@ namespace CK2LandedTitlesManager.Models
         public IList<LandedTitle> Children { get; set; }
 
         /// <summary>
+        /// Gets or sets the female names.
+        /// </summary>
+        /// <value>The female names.</value>
+        public IList<string> FemaleNames { get; set; }
+
+        /// <summary>
+        /// Gets or sets the male names.
+        /// </summary>
+        /// <value>The male banes.</value>
+        public IList<string> MaleNames { get; set; }
+
+        /// <summary>
         /// Gets or sets the dynamic names.
         /// </summary>
         /// <value>The dynamic names.</value>
@@ -45,6 +57,8 @@ namespace CK2LandedTitlesManager.Models
         public Color PrimaryColour { get; set; }
 
         public Color SecondaryColour { get; set; }
+
+        public string ControlledReligionId { get; set; }
 
         public string CultureId { get; set; }
 
@@ -64,6 +78,10 @@ namespace CK2LandedTitlesManager.Models
 
         public string TitleNameTierId { get; set; }
 
+        public bool CreationRequiresCapital { get; set; }
+
+        public bool TitleContainsCapital { get; set; }
+
         public bool HasPurpleBornHeirs { get; set; }
 
         public bool HasTopDeJureCapital { get; set; }
@@ -71,6 +89,8 @@ namespace CK2LandedTitlesManager.Models
         public bool IsCaliphate { get; set; }
 
         public bool IsHolyOrder { get; set; }
+
+        public bool IsIndependent { get; set; }
 
         public bool IsLandless { get; set; }
 
@@ -93,6 +113,9 @@ namespace CK2LandedTitlesManager.Models
         public LandedTitle()
         {
             Children = new List<LandedTitle>();
+            FemaleNames = new List<string>();
+            MaleNames = new List<string>();
+
             DynamicNames = new Dictionary<string, string>();
             ReligiousValues = new Dictionary<string, int>();
         }
