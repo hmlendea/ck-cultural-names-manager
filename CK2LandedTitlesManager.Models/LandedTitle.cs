@@ -92,7 +92,9 @@ namespace CK2LandedTitlesManager.Models
 
         public LandedTitle()
         {
+            Children = new List<LandedTitle>();
             DynamicNames = new Dictionary<string, string>();
+            ReligiousValues = new Dictionary<string, int>();
         }
 
         /// <summary>

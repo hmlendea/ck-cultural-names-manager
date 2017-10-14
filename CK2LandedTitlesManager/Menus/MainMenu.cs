@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using CK2LandedTitlesManager.BusinessLogic;
-using CK2LandedTitlesManager.DataAccess.Repositories;
 using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.Menus
