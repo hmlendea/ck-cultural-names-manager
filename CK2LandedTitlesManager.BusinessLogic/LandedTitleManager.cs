@@ -22,6 +22,18 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return landedTitles;
         }
 
+        public int GetCount()
+        {
+            int count = 0;
+
+            foreach (LandedTitle landedTitle in landedTitles)
+            {
+                count += GetCountRecursively(landedTitle);
+            }
+
+            return count;
+        }
+
         public void LoadTitles(string fileName)
         {
             landedTitles = LandedTitlesFile
@@ -37,7 +49,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
-        private LandedTitle FindTitle(string id, IEnumerable<LandedTitle> landedTitlesChunk)
+         LandedTitle FindTitle(string id, IEnumerable<LandedTitle> landedTitlesChunk)
         {
             if (landedTitlesChunk.Any(x => x.Id == id))
             {
@@ -57,12 +69,24 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return null;
         }
 
-        private void MergeDuplicates()
+        int GetCountRecursively(LandedTitle landedTitle)
+        {
+            int count = 1; // Count the current title as well
+
+            foreach (LandedTitle child in landedTitle.Children)
+            {
+                count += GetCountRecursively(child);
+            }
+
+            return count;
+        }
+
+        void MergeDuplicates()
         {
             landedTitles = MergeDuplicates(landedTitles).ToList();
         }
 
-        private IEnumerable<LandedTitle> MergeDuplicates(IEnumerable<LandedTitle> landedTitlesChunk)
+        IEnumerable<LandedTitle> MergeDuplicates(IEnumerable<LandedTitle> landedTitlesChunk)
         {
             IEnumerable<LandedTitle> mergedDuplicates = landedTitlesChunk
                 .GroupBy(o => o.Id)

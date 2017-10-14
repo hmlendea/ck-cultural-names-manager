@@ -108,8 +108,6 @@ namespace CK2LandedTitlesManager.Models
 
         public int MonthlyIncome { get; set; }
 
-        public int TotalChildren => Children.Count + Children.Sum(x => x.TotalChildren);
-
         public LandedTitle()
         {
             Children = new List<LandedTitle>();

@@ -87,7 +87,7 @@ namespace CK2LandedTitlesManager.Menus
             landedTitleManager.LoadTitles(fileName);
 
             IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
-            int titlesCount = landedTitles.Sum(x => x.TotalChildren);
+            int titlesCount = landedTitleManager.GetCount();
 
             Console.WriteLine($"OK ({titlesCount} titles)");
         }
