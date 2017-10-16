@@ -88,7 +88,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         IEnumerable<LandedTitle> MergeDuplicates(IEnumerable<LandedTitle> landedTitlesChunk)
         {
-            IEnumerable<LandedTitle> mergedDuplicates = landedTitlesChunk
+            List<LandedTitle> mergedDuplicates = landedTitlesChunk
                 .GroupBy(o => o.Id)
                 .Select(g => g.Skip(1)
                     .Aggregate(
@@ -106,9 +106,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                 .ToDictionary(d => d.Key, d => d.First().Value);
 
                             return a;
-                        }));
+                        })).ToList();
 
-            foreach (LandedTitle landedTitle in landedTitlesChunk)
+            foreach (LandedTitle landedTitle in mergedDuplicates)
             {
                 landedTitle.Children = MergeDuplicates(landedTitle.Children).ToList();
             }
