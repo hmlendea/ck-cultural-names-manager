@@ -24,7 +24,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
             {
                 Id = landedTitleEntity.Id,
                 ParentId = landedTitleEntity.ParentId,
-                Children = landedTitleEntity.Children.ToDomainModels().ToList(),
+                //Children = landedTitleEntity.Children.ToDomainModels().ToList(),
                 FemaleNames = landedTitleEntity.FemaleNames,
                 MaleNames = landedTitleEntity.MaleNames,
                 DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
@@ -60,6 +60,20 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
             return landedTitle;
         }
 
+        internal static IEnumerable<LandedTitle> ToDomainModelsRecursively(this LandedTitleEntity landedTitleEntity)
+        {
+            List<LandedTitle> landedTitles = new List<LandedTitle>();
+
+            landedTitles.Add(landedTitleEntity.ToDomainModel());
+
+            foreach(LandedTitleEntity child in landedTitleEntity.Children)
+            {
+                landedTitles.AddRange(child.ToDomainModelsRecursively());
+            }
+
+            return landedTitles;
+        }
+
         /// <summary>
         /// Converts the domain model into an entity.
         /// </summary>
@@ -71,7 +85,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
             {
                 Id = landedTitle.Id,
                 ParentId = landedTitle.ParentId,
-                Children = landedTitle.Children.ToEntities().ToList(),
+                //Children = landedTitle.Children.ToEntities().ToList(),
                 FemaleNames = landedTitle.FemaleNames,
                 MaleNames = landedTitle.MaleNames,
                 DynamicNames = landedTitle.DynamicNames,
@@ -107,6 +121,26 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
             return landedTitleEntity;
         }
 
+        internal static LandedTitleEntity ToEntity(this IEnumerable<LandedTitle> landedTitles)
+        {
+            LandedTitleEntity landedTitleEntity = landedTitles.FirstOrDefault(x => landedTitles.All(y => y.Id != x.ParentId)).ToEntity();
+
+            AddChildrenToEntityRecursively(landedTitleEntity, landedTitles);
+
+            return landedTitleEntity;
+        }
+
+        private static void AddChildrenToEntityRecursively(LandedTitleEntity landedTitleEntity, IEnumerable<LandedTitle> landedTitles)
+        {
+            foreach(LandedTitle landedTitle in landedTitles.Where(x => x.ParentId == landedTitleEntity.Id))
+            {
+                LandedTitleEntity child = landedTitle.ToEntity();
+                landedTitleEntity.Children.Add(child);
+
+                AddChildrenToEntityRecursively(child, landedTitles);
+            }
+        }
+
         /// <summary>
         /// Converts the entities into domain models.
         /// </summary>
@@ -114,8 +148,15 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
         /// <param name="landedTitleEntities">LandedTitle entities.</param>
         internal static IEnumerable<LandedTitle> ToDomainModels(this IEnumerable<LandedTitleEntity> landedTitleEntities)
         {
-            IEnumerable<LandedTitle> landedTitles = landedTitleEntities.Select(landedTitleEntity => landedTitleEntity.ToDomainModel());
+            List<LandedTitle> landedTitles = new List<LandedTitle>();
 
+            foreach(LandedTitleEntity landedTitleEntity in landedTitleEntities)
+            {
+                IEnumerable<LandedTitle> landedTitlesChildren = landedTitleEntity.ToDomainModelsRecursively();
+
+                landedTitles.AddRange(landedTitlesChildren);
+            }
+            
             return landedTitles;
         }
 
@@ -126,7 +167,17 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
         /// <param name="landedTitles">LandedTitles.</param>
         internal static IEnumerable<LandedTitleEntity> ToEntities(this IEnumerable<LandedTitle> landedTitles)
         {
-            IEnumerable<LandedTitleEntity> landedTitleEntities = landedTitles.Select(landedTitle => landedTitle.ToEntity());
+            IEnumerable<LandedTitle> roots = landedTitles.Where(x => landedTitles.All(y => y.Id != x.ParentId));
+            List<LandedTitleEntity> landedTitleEntities = new List<LandedTitleEntity>();
+
+            foreach(LandedTitle root in roots)
+            {
+                LandedTitleEntity landedTitleEntity = root.ToEntity();
+
+                AddChildrenToEntityRecursively(landedTitleEntity, landedTitles);
+
+                landedTitleEntities.Add(landedTitleEntity);
+            }
 
             return landedTitleEntities;
         }

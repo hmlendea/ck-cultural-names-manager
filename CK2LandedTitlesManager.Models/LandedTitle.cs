@@ -23,13 +23,7 @@ namespace CK2LandedTitlesManager.Models
         /// </summary>
         /// <value>The de jure title identifier.</value>
         public string ParentId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the de-jure titles belonging to this title.
-        /// </summary>
-        /// <value>The de jure titles.</value>
-        public IList<LandedTitle> Children { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the female names.
         /// </summary>
@@ -110,7 +104,6 @@ namespace CK2LandedTitlesManager.Models
 
         public LandedTitle()
         {
-            Children = new List<LandedTitle>();
             FemaleNames = new List<string>();
             MaleNames = new List<string>();
 

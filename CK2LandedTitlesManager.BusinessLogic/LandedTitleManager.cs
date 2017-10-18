@@ -14,26 +14,14 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         public LandedTitle Get(string id)
         {
-            return FindTitle(id, landedTitles);
+            return landedTitles.FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<LandedTitle> GetAll()
         {
             return landedTitles;
         }
-
-        public int GetCount()
-        {
-            int count = 0;
-
-            foreach (LandedTitle landedTitle in landedTitles)
-            {
-                count += GetCountRecursively(landedTitle);
-            }
-
-            return count;
-        }
-
+        
         public void LoadTitles(string fileName)
         {
             landedTitles = LandedTitlesFile
@@ -49,38 +37,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
-         LandedTitle FindTitle(string id, IEnumerable<LandedTitle> landedTitlesChunk)
-        {
-            if (landedTitlesChunk.Any(x => x.Id == id))
-            {
-                return landedTitlesChunk.FirstOrDefault(x => x.Id == id);
-            }
-
-            foreach (LandedTitle landedTitle in landedTitlesChunk)
-            {
-                LandedTitle result = FindTitle(id, landedTitle.Children);
-
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
-        }
-
-        int GetCountRecursively(LandedTitle landedTitle)
-        {
-            int count = 1; // Count the current title as well
-
-            foreach (LandedTitle child in landedTitle.Children)
-            {
-                count += GetCountRecursively(child);
-            }
-
-            return count;
-        }
-
         void MergeDuplicates()
         {
             landedTitles = MergeDuplicates(landedTitles).ToList();
@@ -91,27 +47,21 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<LandedTitle> mergedDuplicates = landedTitlesChunk
                 .GroupBy(o => o.Id)
                 .Select(g => g.Skip(1)
-                    .Aggregate(
-                        g.First(),
-                        (a, o) =>
-                        {
-                            a.Children = a.Children.Concat(o.Children).ToList();
-                            a.DynamicNames = a.DynamicNames
-                                .Concat(o.DynamicNames)
-                                .GroupBy(e => e.Key)
-                                .ToDictionary(d => d.Key, d => d.First().Value);
-                            a.ReligiousValues = a.ReligiousValues
-                                .Concat(o.ReligiousValues)
-                                .GroupBy(e => e.Key)
-                                .ToDictionary(d => d.Key, d => d.First().Value);
+                              .Aggregate(g.First(),
+                                        (a, o) =>
+                                        {
+                                            a.DynamicNames = a.DynamicNames
+                                                .Concat(o.DynamicNames)
+                                                .GroupBy(e => e.Key)
+                                                .ToDictionary(d => d.Key, d => d.First().Value);
+                                            a.ReligiousValues = a.ReligiousValues
+                                                .Concat(o.ReligiousValues)
+                                                .GroupBy(e => e.Key)
+                                                .ToDictionary(d => d.Key, d => d.First().Value);
 
-                            return a;
-                        })).ToList();
+                                            return a;
+                                        })).ToList();
 
-            foreach (LandedTitle landedTitle in mergedDuplicates)
-            {
-                landedTitle.Children = MergeDuplicates(landedTitle.Children).ToList();
-            }
 
             return mergedDuplicates;
         }
