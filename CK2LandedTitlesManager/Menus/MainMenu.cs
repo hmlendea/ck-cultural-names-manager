@@ -37,6 +37,11 @@ namespace CK2LandedTitlesManager.Menus
                 "get",
                 "Displays the landed title with the specified ID",
                 delegate { Get(); });
+
+            AddCommand(
+                "removeNames",
+                "Removes the dynamic names contained in the specified file",
+                delegate { RemoveNames(); });
         }
 
         /// <summary>
@@ -64,6 +69,18 @@ namespace CK2LandedTitlesManager.Menus
             {
                 Console.WriteLine($"{landedTitle.Id}.{dynamicName.Key} = \"{dynamicName.Value}\"");
             }
+        }
+
+        private void RemoveNames()
+        {
+            string fileName = Input("File containing the names to remove (absolute) = ");
+
+            landedTitleManager.RemoveDynamicNamesFromFile(fileName);
+
+            IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
+            int titlesCount = landedTitleManager.GetAll().Count();
+
+            Console.WriteLine($"OK");
         }
 
         /// <summary>

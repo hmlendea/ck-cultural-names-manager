@@ -28,8 +28,19 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .ReadAllTitles(fileName)
                 .ToDomainModels()
                 .ToList();
-        
-            MergeDuplicates();
+
+             MergeTitles(landedTitles);
+        }
+
+        public void RemoveDynamicNamesFromFile(string fileName)
+        {
+            List<LandedTitle> landedTitlesToRemove = LandedTitlesFile
+                .ReadAllTitles(fileName)
+                .ToDomainModels()
+                .ToList();
+
+            MergeTitles(landedTitlesToRemove);
+            RemoveDynamicNames(landedTitlesToRemove);
         }
 
         public void SaveTitles(string fileName)
@@ -37,14 +48,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
-        void MergeDuplicates()
+        void MergeTitles(IEnumerable<LandedTitle> landedTitles)
         {
-            landedTitles = MergeDuplicates(landedTitles).ToList();
-        }
-
-        IEnumerable<LandedTitle> MergeDuplicates(IEnumerable<LandedTitle> landedTitlesChunk)
-        {
-            List<LandedTitle> mergedDuplicates = landedTitlesChunk
+            landedTitles = landedTitles
                 .GroupBy(o => o.Id)
                 .Select(g => g.Skip(1)
                               .Aggregate(g.First(),
@@ -61,9 +67,23 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                                             return a;
                                         })).ToList();
+        }
 
+        void RemoveDynamicNames(IEnumerable<LandedTitle> titlesToRemove)
+        {
+            landedTitles = landedTitles
+                .Concat(titlesToRemove)
+                .GroupBy(o => o.Id)
+                .Select(g => g.Skip(1)
+                              .Aggregate(g.First(),
+                                         (a, o) =>
+                                         {
+                                             a.DynamicNames = a.DynamicNames
+                                                 .Where(kvp => !o.DynamicNames.Keys.Contains(kvp.Key))
+                                                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            return mergedDuplicates;
+                                             return a;
+                                         })).ToList();
         }
     }
 }
