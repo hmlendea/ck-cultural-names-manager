@@ -90,6 +90,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     LandedTitleEntity.IsHolyOrder = parser.ReadBool();
                     break;
 
+                case "holy_site":
+                    LandedTitleEntity.HolySites.Add(parser.ReadString());
+                    break;
+
                 case "independent":
                     LandedTitleEntity.IsIndependent = parser.ReadBool();
                     break;
@@ -136,6 +140,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
                 case "short_name":
                     LandedTitleEntity.UseShortName = parser.ReadBool();
+                    break;
+
+                case "strength_growth_per_century":
+                    LandedTitleEntity.StrengthGrowthPerCentury = parser.ReadFloat();
                     break;
 
                 case "title":

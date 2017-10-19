@@ -22,6 +22,12 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
         /// <value>The male banes.</value>
         public IList<string> MaleNames { get; set; }
 
+        /// <summary>
+        /// Gets or sets the holy sites.
+        /// </summary>
+        /// <value>The holy sites.</value>
+        public IList<string> HolySites { get; set; }
+
         public IDictionary<string, string> DynamicNames { get; set; }
 
         /// <summary>
@@ -77,6 +83,8 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
         public bool IsTribe { get; set; }
 
         public bool UseShortName { get; set; }
+        
+        public float StrengthGrowthPerCentury { get; set; }
 
         public int CapitalId { get; set; }
 
@@ -89,6 +97,7 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
             Children = new List<LandedTitleEntity>();
             FemaleNames = new List<string>();
             MaleNames = new List<string>();
+            HolySites = new List<string>();
 
             DynamicNames = new Dictionary<string, string>();
             ReligiousValues = new Dictionary<string, int>();

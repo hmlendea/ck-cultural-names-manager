@@ -27,6 +27,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 //Children = landedTitleEntity.Children.ToDomainModels().ToList(),
                 FemaleNames = landedTitleEntity.FemaleNames,
                 MaleNames = landedTitleEntity.MaleNames,
+                HolySites = landedTitleEntity.HolySites,
                 DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 PrimaryColour = GetColorFromIntArray(landedTitleEntity.PrimaryColour),
                 SecondaryColour = GetColorFromIntArray(landedTitleEntity.SecondaryColour),
@@ -52,6 +53,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 IsPrimaryTitle = landedTitleEntity.IsPrimaryTitle,
                 IsTribe = landedTitleEntity.IsTribe,
                 UseShortName = landedTitleEntity.UseShortName,
+                StrengthGrowthPerCentury = landedTitleEntity.StrengthGrowthPerCentury,
                 CapitalId = landedTitleEntity.CapitalId,
                 Dignity = landedTitleEntity.Dignity,
                 MonthlyIncome = landedTitleEntity.MonthlyIncome
@@ -88,6 +90,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 //Children = landedTitle.Children.ToEntities().ToList(),
                 FemaleNames = landedTitle.FemaleNames,
                 MaleNames = landedTitle.MaleNames,
+                HolySites = landedTitle.HolySites,
                 DynamicNames = landedTitle.DynamicNames,
                 PrimaryColour = new int[] { landedTitle.PrimaryColour.R, landedTitle.PrimaryColour.G, landedTitle.PrimaryColour.B },
                 SecondaryColour = new int[] { landedTitle.SecondaryColour.R, landedTitle.SecondaryColour.G, landedTitle.SecondaryColour.B },
@@ -113,6 +116,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 IsPrimaryTitle = landedTitle.IsPrimaryTitle,
                 IsTribe = landedTitle.IsTribe,
                 UseShortName = landedTitle.UseShortName,
+                StrengthGrowthPerCentury = landedTitle.StrengthGrowthPerCentury,
                 CapitalId = landedTitle.CapitalId,
                 Dignity = landedTitle.Dignity,
                 MonthlyIncome = landedTitle.MonthlyIncome

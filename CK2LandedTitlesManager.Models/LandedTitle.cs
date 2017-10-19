@@ -37,6 +37,12 @@ namespace CK2LandedTitlesManager.Models
         public IList<string> MaleNames { get; set; }
 
         /// <summary>
+        /// Gets or sets the holy sites.
+        /// </summary>
+        /// <value>The holy sites.</value>
+        public IList<string> HolySites { get; set; }
+
+        /// <summary>
         /// Gets or sets the dynamic names.
         /// </summary>
         /// <value>The dynamic names.</value>
@@ -96,6 +102,8 @@ namespace CK2LandedTitlesManager.Models
 
         public bool UseShortName { get; set; }
 
+        public float StrengthGrowthPerCentury { get; set; }
+
         public int CapitalId { get; set; }
 
         public int Dignity { get; set; }
@@ -106,6 +114,7 @@ namespace CK2LandedTitlesManager.Models
         {
             FemaleNames = new List<string>();
             MaleNames = new List<string>();
+            HolySites = new List<string>();
 
             DynamicNames = new Dictionary<string, string>();
             ReligiousValues = new Dictionary<string, int>();
