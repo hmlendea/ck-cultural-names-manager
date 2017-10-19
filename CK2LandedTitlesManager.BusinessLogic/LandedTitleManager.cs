@@ -69,21 +69,25 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                         }));
         }
 
-        IEnumerable<LandedTitle> RemoveDynamicNames(IEnumerable<LandedTitle> titlesToRemove)
+        void RemoveDynamicNames(IEnumerable<LandedTitle> landedTitlesToRemove)
         {
-            return landedTitles
-                .Concat(titlesToRemove)
-                .GroupBy(o => o.Id)
-                .Select(g => g.Skip(1)
-                              .Aggregate(g.First(),
-                                         (a, o) =>
-                                         {
-                                             a.DynamicNames = a.DynamicNames
-                                                 .Where(kvp => !o.DynamicNames.Keys.Contains(kvp.Key))
-                                                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            foreach (LandedTitle landedTitle in landedTitles)
+            {
+                LandedTitle landedTitleToRemove = landedTitlesToRemove.FirstOrDefault(x => x.Id == landedTitle.Id);
 
-                                             return a;
-                                         }));
+                if (landedTitleToRemove != null)
+                {
+                    List<string> cultureIds = landedTitle.DynamicNames.Keys.ToList();
+
+                    foreach(string cultureId in cultureIds)
+                    {
+                        if (landedTitleToRemove.DynamicNames.ContainsKey(cultureId))
+                        {
+                            landedTitle.DynamicNames.Remove(cultureId);
+                        }
+                    }
+                }
+            }
         }
     }
 }
