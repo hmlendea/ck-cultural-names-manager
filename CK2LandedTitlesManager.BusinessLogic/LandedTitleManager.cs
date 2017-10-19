@@ -29,7 +29,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .ToDomainModels()
                 .ToList();
 
-             MergeTitles(landedTitles);
+            landedTitles = MergeTitles(landedTitles).ToList();
         }
 
         public void RemoveDynamicNamesFromFile(string fileName)
@@ -48,9 +48,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
-        void MergeTitles(IEnumerable<LandedTitle> landedTitles)
+        IEnumerable<LandedTitle> MergeTitles(IEnumerable<LandedTitle> landedTitles)
         {
-            landedTitles = landedTitles
+            return landedTitles
                 .GroupBy(o => o.Id)
                 .Select(g => g.Skip(1)
                               .Aggregate(g.First(),
@@ -66,12 +66,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                                 .ToDictionary(d => d.Key, d => d.First().Value);
 
                                             return a;
-                                        })).ToList();
+                                        }));
         }
 
-        void RemoveDynamicNames(IEnumerable<LandedTitle> titlesToRemove)
+        IEnumerable<LandedTitle> RemoveDynamicNames(IEnumerable<LandedTitle> titlesToRemove)
         {
-            landedTitles = landedTitles
+            return landedTitles
                 .Concat(titlesToRemove)
                 .GroupBy(o => o.Id)
                 .Select(g => g.Skip(1)
@@ -83,7 +83,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                                  .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
                                              return a;
-                                         })).ToList();
+                                         }));
         }
     }
 }
