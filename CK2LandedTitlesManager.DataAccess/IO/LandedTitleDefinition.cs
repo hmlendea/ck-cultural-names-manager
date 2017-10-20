@@ -38,6 +38,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     parser.ReadInsideBrackets((p) => { });
                     break;
 
+                case "assimilate":
+                    LandedTitleEntity.AllowsAssimilation = parser.ReadBool();
+                    break;
+
                 case "color":
                     LandedTitleEntity.PrimaryColour = parser.ReadIntList().ToArray();
                     break;
@@ -68,6 +72,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
                 case "dignity":
                     LandedTitleEntity.Dignity = parser.ReadInt32();
+                    break;
+
+                case "dynasty_title_names":
+                    LandedTitleEntity.UseDynastyTitleNames = parser.ReadBool();
                     break;
 
                 case "female_names":
@@ -124,6 +132,10 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
                 case "name_tier":
                     LandedTitleEntity.TitleNameTierId = parser.ReadString();
+                    break;
+
+                case "pirate":
+                    LandedTitleEntity.IsPirate = parser.ReadBool();
                     break;
 
                 case "primary":

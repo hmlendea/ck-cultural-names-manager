@@ -60,6 +60,8 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public string TitleNameTierId { get; set; }
 
+        public bool AllowsAssimilation { get; set; }
+
         public bool CreationRequiresCapital { get; set; }
 
         public bool TitleContainsCapital { get; set; }
@@ -78,9 +80,13 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public bool IsMercenaryGroup { get; set; }
 
+        public bool IsPirate { get; set; }
+
         public bool IsPrimaryTitle { get; set; }
 
         public bool IsTribe { get; set; }
+
+        public bool UseDynastyTitleNames { get; set; }
 
         public bool UseShortName { get; set; }
         
