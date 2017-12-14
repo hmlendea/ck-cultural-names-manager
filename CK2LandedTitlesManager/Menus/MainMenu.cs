@@ -42,6 +42,11 @@ namespace CK2LandedTitlesManager.Menus
                 "removeNames",
                 "Removes the dynamic names contained in the specified file",
                 delegate { RemoveNames(); });
+
+            AddCommand(
+                "integrityCheck",
+                "Checks if a landed titles structure is compatible as a mod for a master file",
+                delegate { IntegrityCheck(); });
         }
 
         /// <summary>
@@ -81,6 +86,22 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             Console.WriteLine($"OK");
+        }
+
+        private void IntegrityCheck()
+        {
+            string fileName = Input("Master file to check compatibility with (absolute) = ");
+
+            bool isValid = landedTitleManager.CheckIntegrity(fileName);
+
+            if (isValid)
+            {
+                Console.WriteLine("The structure passed the integrity check!");
+            }
+            else
+            {
+                Console.WriteLine("The structure FAILED the integrity check!!!");
+            }
         }
 
         /// <summary>

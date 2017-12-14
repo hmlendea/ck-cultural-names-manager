@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using CK2LandedTitlesManager.DataAccess.DataObjects;
 using CK2LandedTitlesManager.Infrastructure.Extensions;
@@ -193,7 +194,9 @@ namespace CK2LandedTitlesManager.DataAccess.IO
         
         public void Write(ParadoxStreamWriter writer)
         {
-            foreach(var dynamicName in LandedTitleEntity.DynamicNames)
+            List<KeyValuePair<string, string>> sortedDynamicNames = LandedTitleEntity.DynamicNames.ToList().OrderBy(x => x.Key).ToList();
+
+            foreach(var dynamicName in sortedDynamicNames)
             {
                 writer.WriteLine(dynamicName.Key, dynamicName.Value, ValueWrite.Quoted);
             }

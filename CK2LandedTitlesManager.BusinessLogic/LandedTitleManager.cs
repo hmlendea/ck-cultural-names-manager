@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
 using CK2LandedTitlesManager.DataAccess.IO;
+using CK2LandedTitlesManager.Infrastructure.Extensions;
 using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.BusinessLogic
@@ -41,6 +41,35 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             MergeTitles(landedTitlesToRemove);
             RemoveDynamicNames(landedTitlesToRemove);
+        }
+
+        public bool CheckIntegrity(string fileName)
+        {
+            List<LandedTitle> masterTitles = LandedTitlesFile
+                .ReadAllTitles(fileName)
+                .ToDomainModels()
+                .ToList();
+
+            Dictionary<string, string> violations = new Dictionary<string, string>();
+
+            foreach(LandedTitle title in landedTitles)
+            {
+                LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
+
+                if (masterTitle == null)
+                {
+                    AddReasonToViolations(violations, title.Id, "Master file does not contain this title");
+                    continue;
+                }
+
+                if (masterTitle.ParentId != title.ParentId)
+                {
+                    AddReasonToViolations(violations, title.Id, $"Master title has different parent ({title.ParentId} should be {masterTitle.Id})");
+                    continue;
+                }
+            }
+
+            return violations.Count != 0;
         }
 
         public void SaveTitles(string fileName)
@@ -87,6 +116,18 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         }
                     }
                 }
+            }
+        }
+
+        void AddReasonToViolations(Dictionary<string, string> violations, string titleId, string reason)
+        {
+            if (violations.ContainsKey(titleId))
+            {
+                violations[titleId] += $"; {reason}";
+            }
+            else
+            {
+                violations.Add(titleId, reason);
             }
         }
     }
