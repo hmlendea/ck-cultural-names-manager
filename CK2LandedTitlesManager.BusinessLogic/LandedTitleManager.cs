@@ -56,6 +56,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
 
+                if (landedTitles.Count(x => x.Id == title.Id) > 1)
+                {
+                    AddReasonToViolations(violations, title.Id, "Title is defined multiple times");
+                    continue;
+                }
+
                 if (masterTitle == null)
                 {
                     AddReasonToViolations(violations, title.Id, "Master file does not contain this title");
@@ -64,12 +70,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                 if (masterTitle.ParentId != title.ParentId)
                 {
-                    AddReasonToViolations(violations, title.Id, $"Master title has different parent ({title.ParentId} should be {masterTitle.Id})");
+                    AddReasonToViolations(violations, title.Id, $"Master title has different parent ({title.ParentId} should be {masterTitle.ParentId})");
                     continue;
                 }
             }
 
-            return violations.Count != 0;
+            return violations.Count == 0;
         }
 
         public void SaveTitles(string fileName)
