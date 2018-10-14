@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
@@ -51,6 +52,27 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .ToList();
 
             Dictionary<string, string> violations = new Dictionary<string, string>();
+            List<List<string>> alikeCultureLists = new List<List<string>>();
+
+            alikeCultureLists.Add(new List<string> {
+                "italian", "sardinian", "sicilian", "umbrian", "laziale", "neapolitan",
+                "tuscan", "ligurian", "langobardisch", "venetian", "dalmatian" });
+            alikeCultureLists.Add(new List<string> {
+                "german", "thuringian", "swabian", "bavarian", "low_saxon", "franconian",
+                "low_german", "low_frankish" });
+            alikeCultureLists.Add(new List<string> {
+                "turkish", "turkmen", "oghuz", "pecheneg" });
+            alikeCultureLists.Add(new List<string> {
+                "avar", "bolghar", "khazar" });
+            alikeCultureLists.Add(new List<string> {
+                "croatian", "serbian", "bosnian", "karantanci" });
+            alikeCultureLists.Add(new List<string> {
+                "bohemian", "moravian" });
+            alikeCultureLists.Add(new List<string> {
+                "maghreb_arabic", "levantine_arabic", "egyptian_arabic",
+                "andalusian_arabic", "bedouin_arabic" });
+
+            List<string> sasa = new List<string>();
 
             foreach(LandedTitle title in landedTitles)
             {
@@ -72,6 +94,72 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 {
                     AddReasonToViolations(violations, title.Id, $"Master title has different parent ({title.ParentId} should be {masterTitle.ParentId})");
                     continue;
+                }
+
+                foreach (string cultureId in title.DynamicNames.Keys)
+                {
+                    if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
+                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
+                    {
+                        AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
+                    }
+
+                    if (title.DynamicNames[cultureId].Contains('?'))
+                    {
+                        AddReasonToViolations(violations, title.Id, $"Invalid character in title name ({cultureId})");
+                    }
+                }
+
+                foreach (List<string> alikeCultures in alikeCultureLists)
+                {
+                    string foundTitleCultureId = alikeCultures.FirstOrDefault(x => title.DynamicNames.ContainsKey(x));
+                    string foundMasterTitleCultureId = alikeCultures.FirstOrDefault(x => masterTitle.DynamicNames.ContainsKey(x));
+                    
+                    if (string.IsNullOrEmpty(foundTitleCultureId))
+                    {
+                        if (string.IsNullOrEmpty(foundMasterTitleCultureId))
+                        {
+                            continue;
+                        }
+
+                        foundTitleCultureId = foundMasterTitleCultureId;
+                    }
+
+                    foreach (string cultureId in alikeCultures)
+                    {
+                        if (!masterTitle.DynamicNames.ContainsKey(cultureId) &&
+                            !title.DynamicNames.ContainsKey(cultureId))
+                        {
+                            AddReasonToViolations(
+                                violations,
+                                title.Id,
+                                $"No localisation found for {cultureId}. Consider copying one from {foundTitleCultureId} as fallback.");
+                            
+                            if (foundTitleCultureId == "bohemian" ||
+                                foundTitleCultureId == "moravian" ||
+                                foundTitleCultureId == "german" ||
+                                foundTitleCultureId == "turkish" ||
+                                foundTitleCultureId == "italian" ||
+                                foundTitleCultureId == "croatian" ||
+                                foundTitleCultureId == "serbian" ||
+                                foundTitleCultureId == "avar" ||
+                                foundTitleCultureId == "bolghar" ||
+                                foundTitleCultureId == "khazar" ||
+                                foundTitleCultureId == "maghreb_arabic")
+                            {
+                                if (title.DynamicNames.ContainsKey(foundTitleCultureId))
+                                {
+                                    sasa.Add($"{title.Id} {cultureId} {foundTitleCultureId} {title.DynamicNames[foundTitleCultureId].Replace(" ", "_")}");
+                                }
+                                else if (masterTitle.DynamicNames.ContainsKey(foundTitleCultureId))
+                                {
+                                    sasa.Add($"{title.Id} {cultureId} {foundTitleCultureId} {masterTitle.DynamicNames[foundTitleCultureId].Replace(" ", "_")}");
+                                }
+                            }
+                        }
+                    }
+
+                    System.IO.File.WriteAllLines("sasa.out.txt", sasa);
                 }
             }
 
@@ -127,6 +215,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         void AddReasonToViolations(Dictionary<string, string> violations, string titleId, string reason)
         {
+            Console.WriteLine(titleId + " " + reason);
+
             if (violations.ContainsKey(titleId))
             {
                 violations[titleId] += $"; {reason}";
