@@ -65,12 +65,22 @@ namespace CK2LandedTitlesManager.BusinessLogic
             alikeCultureLists.Add(new List<string> {
                 "avar", "bolghar", "khazar" });
             alikeCultureLists.Add(new List<string> {
-                "croatian", "serbian", "bosnian", "karantanci" });
+                "croatian", "serbian", "bosnian" }); //, "carantanian" });
             alikeCultureLists.Add(new List<string> {
                 "bohemian", "moravian" });
             alikeCultureLists.Add(new List<string> {
+                "hungarian", "szekely" });
+            alikeCultureLists.Add(new List<string> {
+                "norwegian", "swedish", "danish", "gothic" }); //, "norse" });
+            alikeCultureLists.Add(new List<string> {
+                "norse", "icelandic", });// "anglonorse", "norsegaelic" });
+            alikeCultureLists.Add(new List<string> {
+                "greek", "crimean_gothic" });
+            alikeCultureLists.Add(new List<string> {
                 "maghreb_arabic", "levantine_arabic", "egyptian_arabic",
                 "andalusian_arabic", "bedouin_arabic" });
+            
+            bool safeAlikeCultures = true;
 
             List<string> sasa = new List<string>();
 
@@ -123,6 +133,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         }
 
                         foundTitleCultureId = foundMasterTitleCultureId;
+                    }
+
+                    if (safeAlikeCultures &&
+                        foundTitleCultureId != alikeCultures.First())
+                    {
+                        continue;
                     }
 
                     foreach (string cultureId in alikeCultures)
