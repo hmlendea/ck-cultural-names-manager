@@ -52,58 +52,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .ToList();
 
             Dictionary<string, string> violations = new Dictionary<string, string>();
-            List<List<string>> alikeCultureLists = new List<List<string>>();
-
-            alikeCultureLists.Add(new List<string> { "italian", "dalmatian", "sardinian", "langobardisch", "laziale", "ligurian",
-                                                     "neapolitan", "sicilian", "tuscan", "umbrian", "venetian" });
-
-            alikeCultureLists.Add(new List<string> { "irish", "scottish", "welsh" });
-            alikeCultureLists.Add(new List<string> { "scottish", "irish", "welsh" });
-            alikeCultureLists.Add(new List<string> { "welsh", "irish", "scottish" });
-            alikeCultureLists.Add(new List<string> { "welsh", "breton", "cornish" });
-            alikeCultureLists.Add(new List<string> { "scottish", "cumbric", "pictish" });
-
-            alikeCultureLists.Add(new List<string> { "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian" });
-
-            alikeCultureLists.Add(new List<string> { "turkish", "oghuz", "pecheneg", "turkmen" });
-
-            alikeCultureLists.Add(new List<string> { "avar", "bolghar", "khazar" });
-            alikeCultureLists.Add(new List<string> { "bolghar", "avar", "khazar" });
-            alikeCultureLists.Add(new List<string> { "khazar", "avar", "bolghar" });
-
-            alikeCultureLists.Add(new List<string> { "serbian", "bosnian", "croatian" }); //, "carantanian" });
-
-            alikeCultureLists.Add(new List<string> { "bohemian", "moravian" });
-            alikeCultureLists.Add(new List<string> { "moravian", "bohemian" });
-            
-            alikeCultureLists.Add(new List<string> { "hungarian", "szekely" });
-            alikeCultureLists.Add(new List<string> { "szekely", "hungarian" });
-
-            alikeCultureLists.Add(new List<string> { "french", "norman" });
-            alikeCultureLists.Add(new List<string> { "norman", "french" });
-            
-            alikeCultureLists.Add(new List<string> { "hijazi", "yemeni" });
-            alikeCultureLists.Add(new List<string> { "yemeni", "hijazi" });
-            
-            alikeCultureLists.Add(new List<string> { "sogdian", "khalaj", "khwarezmi" });
-            alikeCultureLists.Add(new List<string> { "khwarezmi", "khalaj", "sogdian" });
-            alikeCultureLists.Add(new List<string> { "khalaj", "khwarezmi", "sogdian" });
-
-            alikeCultureLists.Add(new List<string> { "norwegian", "danish", "gothic", "swedish" }); //, "norse" });
-            alikeCultureLists.Add(new List<string> { "norse", "icelandic", });
-            alikeCultureLists.Add(new List<string> { "anglonorse", "norsegaelic" });
-            alikeCultureLists.Add(new List<string> { "norsegaelic", "anglonorse" });
-
-            alikeCultureLists.Add(new List<string> { "greek", "crimean_gothic" });
-            alikeCultureLists.Add(new List<string> { "crimean_gothic", "greek" });
-
-            alikeCultureLists.Add(new List<string> { "finnish", "komi", "lappish", "livonian", "ugricbaltic" });
-
-            alikeCultureLists.Add(new List<string> { "maghreb_arabic", "levantine_arabic", "egyptian_arabic", "andalusian_arabic", "bedouin_arabic" });
-            
-            bool safeAlikeCultures = true;
-
-            List<string> sasa = new List<string>();
 
             foreach(LandedTitle title in landedTitles)
             {
@@ -140,6 +88,73 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         AddReasonToViolations(violations, title.Id, $"Invalid character in title name ({cultureId})");
                     }
                 }
+            }
+
+            return violations.Count == 0;
+        }
+
+        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(string fileName)
+        {
+            List<LandedTitle> masterTitles = LandedTitlesFile
+                .ReadAllTitles(fileName)
+                .ToDomainModels()
+                .ToList();
+
+            List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();
+            List<List<string>> alikeCultureLists = new List<List<string>>();
+
+            alikeCultureLists.Add(new List<string> { "italian", "dalmatian", "sardinian", "langobardisch", "laziale", "ligurian",
+                                                     "neapolitan", "sicilian", "tuscan", "umbrian", "venetian" });
+
+            alikeCultureLists.Add(new List<string> { "irish", "scottish", "welsh" });
+            alikeCultureLists.Add(new List<string> { "scottish", "irish", "welsh" });
+            alikeCultureLists.Add(new List<string> { "welsh", "irish", "scottish" });
+            alikeCultureLists.Add(new List<string> { "welsh", "breton", "cornish" });
+            alikeCultureLists.Add(new List<string> { "scottish", "cumbric", "pictish" });
+
+            alikeCultureLists.Add(new List<string> { "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian" });
+
+            alikeCultureLists.Add(new List<string> { "turkish", "oghuz", "pecheneg", "turkmen" });
+
+            alikeCultureLists.Add(new List<string> { "avar", "bolghar", "khazar" });
+            alikeCultureLists.Add(new List<string> { "bolghar", "avar", "khazar" });
+            alikeCultureLists.Add(new List<string> { "khazar", "avar", "bolghar" });
+
+            alikeCultureLists.Add(new List<string> { "serbian", "bosnian", "croatian" }); //, "carantanian" });
+
+            alikeCultureLists.Add(new List<string> { "bohemian", "moravian" });
+            alikeCultureLists.Add(new List<string> { "moravian", "bohemian" });
+            
+            alikeCultureLists.Add(new List<string> { "hungarian", "szekely" });
+            alikeCultureLists.Add(new List<string> { "szekely", "hungarian" });
+
+            alikeCultureLists.Add(new List<string> { "frankish", "norman" });
+            alikeCultureLists.Add(new List<string> { "norman", "frankish" });
+            
+            alikeCultureLists.Add(new List<string> { "hijazi", "yemeni" });
+            alikeCultureLists.Add(new List<string> { "yemeni", "hijazi" });
+            
+            alikeCultureLists.Add(new List<string> { "sogdian", "khalaj", "khwarezmi" });
+            alikeCultureLists.Add(new List<string> { "khwarezmi", "khalaj", "sogdian" });
+            alikeCultureLists.Add(new List<string> { "khalaj", "khwarezmi", "sogdian" });
+
+            alikeCultureLists.Add(new List<string> { "norwegian", "danish", "gothic", "swedish" }); //, "norse" });
+            alikeCultureLists.Add(new List<string> { "norse", "icelandic", });
+            alikeCultureLists.Add(new List<string> { "anglonorse", "norsegaelic" });
+            alikeCultureLists.Add(new List<string> { "norsegaelic", "anglonorse" });
+
+            alikeCultureLists.Add(new List<string> { "greek", "crimean_gothic" });
+            alikeCultureLists.Add(new List<string> { "crimean_gothic", "greek" });
+
+            alikeCultureLists.Add(new List<string> { "finnish", "komi", "lappish", "livonian", "ugricbaltic" });
+
+            alikeCultureLists.Add(new List<string> { "maghreb_arabic", "levantine_arabic", "egyptian_arabic", "andalusian_arabic", "bedouin_arabic" });
+            
+            bool safeAlikeCultures = true;
+
+            foreach(LandedTitle title in landedTitles)
+            {
+                LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
 
                 foreach (List<string> alikeCultures in alikeCultureLists)
                 {
@@ -156,51 +171,44 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         foundTitleCultureId = foundMasterTitleCultureId;
                     }
 
-                    if (safeAlikeCultures &&
-                        foundTitleCultureId != alikeCultures.First())
+                    if (safeAlikeCultures && foundTitleCultureId != alikeCultures.First())
                     {
                         continue;
                     }
 
                     foreach (string cultureId in alikeCultures)
                     {
-                        if (!masterTitle.DynamicNames.ContainsKey(cultureId) &&
-                            !title.DynamicNames.ContainsKey(cultureId))
+                        if (masterTitle.DynamicNames.ContainsKey(cultureId) ||
+                            title.DynamicNames.ContainsKey(cultureId))
                         {
-                            AddReasonToViolations(
-                                violations,
-                                title.Id,
-                                $"No localisation found for {cultureId}. Consider copying one from {foundTitleCultureId} as fallback.");
-                            
-                            if (foundTitleCultureId == "bohemian" ||
-                                foundTitleCultureId == "moravian" ||
-                                foundTitleCultureId == "german" ||
-                                foundTitleCultureId == "turkish" ||
-                                foundTitleCultureId == "italian" ||
-                                foundTitleCultureId == "croatian" ||
-                                foundTitleCultureId == "serbian" ||
-                                foundTitleCultureId == "avar" ||
-                                foundTitleCultureId == "bolghar" ||
-                                foundTitleCultureId == "khazar" ||
-                                foundTitleCultureId == "maghreb_arabic")
-                            {
-                                if (title.DynamicNames.ContainsKey(foundTitleCultureId))
-                                {
-                                    sasa.Add($"{title.Id} {cultureId} {foundTitleCultureId} {title.DynamicNames[foundTitleCultureId].Replace(" ", "_")}");
-                                }
-                                else if (masterTitle.DynamicNames.ContainsKey(foundTitleCultureId))
-                                {
-                                    sasa.Add($"{title.Id} {cultureId} {foundTitleCultureId} {masterTitle.DynamicNames[foundTitleCultureId].Replace(" ", "_")}");
-                                }
-                            }
+                            continue;
                         }
-                    }
 
-                    System.IO.File.WriteAllLines("sasa.out.txt", sasa);
+                        string name = string.Empty;
+
+                        if (title.DynamicNames.ContainsKey(foundTitleCultureId))
+                        {
+                            name = title.DynamicNames[foundTitleCultureId];
+                        }
+                        else
+                        {
+                            name = masterTitle.DynamicNames[foundTitleCultureId];
+                        }
+
+                        CulturalGroupSuggestion suggestion = new CulturalGroupSuggestion
+                        {
+                            TitleId = title.Id,
+                            SourceCultureId = foundTitleCultureId,
+                            TargetCultureId = cultureId,
+                            SuggestedName = name
+                        };
+
+                        suggestions.Add(suggestion);
+                    }
                 }
             }
 
-            return violations.Count == 0;
+            return suggestions;
         }
 
         public void SaveTitles(string fileName)

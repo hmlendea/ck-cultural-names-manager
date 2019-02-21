@@ -41,12 +41,17 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { Get(); });
 
             AddCommand(
-                "removeNames",
+                "remove-names",
                 "Removes the dynamic names contained in the specified file",
                 delegate { RemoveNames(); });
 
             AddCommand(
-                "integrityCheck",
+                "get-suggestions",
+                "Suggests names for cultures in the same group",
+                delegate { GetSuggestions(); });
+
+            AddCommand(
+                "integrity-check",
                 "Checks if a landed titles structure is compatible as a mod for a master file",
                 delegate { IntegrityCheck(); });
         }
@@ -88,6 +93,26 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             Console.WriteLine($"OK");
+        }
+
+        private void GetSuggestions()
+        {
+            string fileName = Input("Master file to check titles from (absolute) = ");
+            
+            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions(fileName);
+
+            if (suggestions.Count() == 0)
+            {
+                Console.WriteLine("There are no suggestions!");
+            }
+            else
+            {
+                foreach (CulturalGroupSuggestion suggestion in suggestions)
+                {
+                    //Console.WriteLine($"{suggestion.TitleId}\t{suggestion.SourceCultureId}\t=> {suggestion.TargetCultureId}\t({suggestion.SuggestedName})");
+                    Console.WriteLine($"{suggestion.TitleId}\t{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" # Historical? Copied from {suggestion.SourceCultureId}");
+                }
+            }
         }
 
         private void IntegrityCheck()
