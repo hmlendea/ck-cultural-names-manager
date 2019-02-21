@@ -10,4 +10,9 @@
     <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NuciCLI" Version="1.0.0" />
+    <PackageReference Include="NuciCLI.Menus" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

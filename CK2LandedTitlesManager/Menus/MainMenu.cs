@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using NuciCLI.Menus;
+
 using CK2LandedTitlesManager.BusinessLogic;
 using CK2LandedTitlesManager.Models;
 
