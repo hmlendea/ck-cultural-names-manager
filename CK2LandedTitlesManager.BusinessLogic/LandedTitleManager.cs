@@ -125,30 +125,32 @@ namespace CK2LandedTitlesManager.BusinessLogic
             alikeCultureLists.Add(new List<string> { "bohemian", "moravian" });
             alikeCultureLists.Add(new List<string> { "moravian", "bohemian" });
             
+            alikeCultureLists.Add(new List<string> { "polish", "pommeranian" });
+            
             alikeCultureLists.Add(new List<string> { "hungarian", "szekely" });
             alikeCultureLists.Add(new List<string> { "szekely", "hungarian" });
 
             alikeCultureLists.Add(new List<string> { "frankish", "norman" });
             alikeCultureLists.Add(new List<string> { "norman", "frankish" });
             
-            alikeCultureLists.Add(new List<string> { "hijazi", "yemeni" });
-            alikeCultureLists.Add(new List<string> { "yemeni", "hijazi" });
-            
             alikeCultureLists.Add(new List<string> { "sogdian", "khalaj", "khwarezmi" });
             alikeCultureLists.Add(new List<string> { "khwarezmi", "khalaj", "sogdian" });
             alikeCultureLists.Add(new List<string> { "khalaj", "khwarezmi", "sogdian" });
 
-            alikeCultureLists.Add(new List<string> { "norwegian", "danish", "gothic", "swedish" }); //, "norse" });
             alikeCultureLists.Add(new List<string> { "norse", "icelandic", });
             alikeCultureLists.Add(new List<string> { "anglonorse", "norsegaelic" });
             alikeCultureLists.Add(new List<string> { "norsegaelic", "anglonorse" });
 
             alikeCultureLists.Add(new List<string> { "greek", "crimean_gothic" });
-            alikeCultureLists.Add(new List<string> { "crimean_gothic", "greek" });
 
             alikeCultureLists.Add(new List<string> { "finnish", "komi", "lappish", "livonian", "ugricbaltic" });
 
-            alikeCultureLists.Add(new List<string> { "maghreb_arabic", "levantine_arabic", "egyptian_arabic", "andalusian_arabic", "bedouin_arabic" });
+            alikeCultureLists.Add(new List<string> { "maghreb_arabic", "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic" });
+            alikeCultureLists.Add(new List<string> { "maghreb_arabic", "hijazi", "yemeni" });
+            alikeCultureLists.Add(new List<string> { "hijazi", "maghreb_arabic" });
+            alikeCultureLists.Add(new List<string> { "yemeni", "maghreb_arabic" });
+            alikeCultureLists.Add(new List<string> { "hijazi", "yemeni" });
+            alikeCultureLists.Add(new List<string> { "yemeni", "hijazi" });
             
             bool safeAlikeCultures = true;
 
