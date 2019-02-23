@@ -37,7 +37,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<LandedTitle> loadedTitles = LoadTitlesFromFile(fileName).ToList();
 
             landedTitles.AddRange(loadedTitles);
-            landedTitles = MergeTitles(landedTitles).ToList();
+            landedTitles = MergeTitles(loadedTitles).ToList();
         }
 
         public void RemoveDynamicNamesFromFile(string fileName)
@@ -165,20 +165,20 @@ namespace CK2LandedTitlesManager.BusinessLogic
             landedTitles = new List<LandedTitle>();
             landedTitles = LoadTitlesFromFile(fileName).ToList();
 
-            List<string> myLines = File.ReadAllLines(fileName).ToList();
-
-            SaveTitles(fileName);
-
-            List<string> mcnLines = File
+            List<string> oldLines = File
                 .ReadAllLines(fileName)
                 .Distinct()
                 .ToList();
+
+            SaveTitles(fileName);
+
+            List<string> newLines = File.ReadAllLines(fileName).ToList();
             
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            for (int i = 0; i < mcnLines.Count; i++)
+            for (int i = 0; i < oldLines.Count; i++)
             {
-                string mcnLine = mcnLines[i];
+                string mcnLine = oldLines[i];
 
                 if (string.IsNullOrWhiteSpace(mcnLine) || !mcnLine.Contains('#'))
                 {
@@ -202,9 +202,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 }
             }
             
-            for (int i = 0; i < myLines.Count; i++)
+            for (int i = 0; i < newLines.Count; i++)
             {
-                string myLine = myLines[i];
+                string myLine = newLines[i];
 
                 if (string.IsNullOrWhiteSpace(myLine))
                 {
@@ -213,14 +213,15 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                 if (dict.ContainsKey(myLine))
                 {
-                    myLine = dict[myLine];
-                    myLines[i] = myLine;
+                    string myIndentation = Regex.Match(myLine, "( *)[^ ]*").Groups[1].Value;
+                    myLine = myIndentation + dict[myLine].TrimStart();
+                    newLines[i] = myLine;
 
                     continue;
                 }
             }
 
-            File.WriteAllLines(fileName, myLines);
+            File.WriteAllLines(fileName, newLines);
 
             landedTitles = oldLandedTitles;
         }

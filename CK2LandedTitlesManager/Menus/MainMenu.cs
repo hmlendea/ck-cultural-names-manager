@@ -96,7 +96,7 @@ namespace CK2LandedTitlesManager.Menus
 
         private void RemoveNamesFromFile()
         {
-            string fileName = Input("File containing the names to remove (absolute) = ");
+            string fileName = Input("File containing the names to remove = ");
 
             landedTitleManager.RemoveDynamicNamesFromFile(fileName);
 
@@ -146,7 +146,7 @@ namespace CK2LandedTitlesManager.Menus
 
         private void IntegrityCheck()
         {
-            string fileName = Input("Master file to check compatibility with (absolute) = ");
+            string fileName = Input("Master file to check compatibility with = ");
 
             bool isValid = landedTitleManager.CheckIntegrity(fileName);
 
@@ -162,7 +162,7 @@ namespace CK2LandedTitlesManager.Menus
         
         private void CleanFile()
         {
-            string fileName = Input("Master file to check compatibility with (absolute) = ");
+            string fileName = Input("File to clean = ");
 
             landedTitleManager.CleanFile(fileName);
         }
@@ -181,7 +181,7 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void LoadFile()
         {
-            string fileName = Input("Input file path (absolute) = ");
+            string fileName = Input("Input file path = ");
 
             Console.Write($"Loading titles from \"{fileName}\"... ");
 
@@ -198,7 +198,7 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void SaveFile()
         {
-            string fileName = Input("Output file path (absolute) = ");
+            string fileName = Input("Output file path = ");
 
             Console.Write("Writing output... ");
             SaveLandedTitles(fileName);
