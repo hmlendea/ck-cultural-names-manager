@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
 using CK2LandedTitlesManager.DataAccess.IO;
@@ -155,6 +157,14 @@ namespace CK2LandedTitlesManager.BusinessLogic
         public void SaveTitles(string fileName)
         {
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
+            string content = File.ReadAllText(fileName);
+
+            content = Regex.Replace(content, "\t", "    ");
+            content = Regex.Replace(content, "= *(\r\n|\r|\n).*{", "={");
+            content = Regex.Replace(content, "=", " = ");
+            content = Regex.Replace(content, "\"(\r\n|\r|\n)( *[ekdcb]_)", "\"\n\n$2");
+
+            File.WriteAllText(fileName, content);
         }
 
         IEnumerable<LandedTitle> MergeTitles(IEnumerable<LandedTitle> landedTitles)
