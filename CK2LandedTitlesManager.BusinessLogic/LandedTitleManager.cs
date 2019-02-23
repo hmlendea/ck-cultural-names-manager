@@ -48,6 +48,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
             RemoveDynamicNames(landedTitlesToRemove);
         }
 
+        public void RemoveAllDynamicNames()
+        {
+            landedTitles.ForEach(title => title.DynamicNames.Clear());
+        }
+
         public bool CheckIntegrity(string fileName)
         {
             List<LandedTitle> masterTitles = LandedTitlesFile
@@ -154,6 +159,72 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return suggestions;
         }
 
+        public void CleanFile(string fileName)
+        {
+            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
+            landedTitles = new List<LandedTitle>();
+            landedTitles = LoadTitlesFromFile(fileName).ToList();
+
+            List<string> myLines = File.ReadAllLines(fileName).ToList();
+
+            SaveTitles(fileName);
+
+            List<string> mcnLines = File
+                .ReadAllLines(fileName)
+                .Distinct()
+                .ToList();
+            
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+
+            for (int i = 0; i < mcnLines.Count; i++)
+            {
+                string mcnLine = mcnLines[i];
+
+                if (string.IsNullOrWhiteSpace(mcnLine) || !mcnLine.Contains('#'))
+                {
+                    continue;
+                }
+
+                string key = Regex
+                    .Match(mcnLine, "^([^#]*)[\t ]*#.*$")
+                    .Groups[1]
+                    .Value
+                    .TrimEnd();
+
+                if (string.IsNullOrWhiteSpace(key))
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(key) && !dict.ContainsKey(key))
+                {
+                    dict.Add(key, mcnLine);
+                }
+            }
+            
+            for (int i = 0; i < myLines.Count; i++)
+            {
+                string myLine = myLines[i];
+
+                if (string.IsNullOrWhiteSpace(myLine))
+                {
+                    continue;
+                }
+
+                if (dict.ContainsKey(myLine))
+                {
+                    myLine = dict[myLine];
+                    myLines[i] = myLine;
+
+                    continue;
+                }
+            }
+
+            File.WriteAllLines(fileName, myLines);
+
+            landedTitles = oldLandedTitles;
+        }
+
         public void SaveTitles(string fileName)
         {
             LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
@@ -228,6 +299,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
             IEnumerable<LandedTitle> titles = LandedTitlesFile
                 .ReadAllTitles(fileName)
                 .ToDomainModels();
+            
+            titles = MergeTitles(titles);
             
             return titles;
         }

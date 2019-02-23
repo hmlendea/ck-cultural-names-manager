@@ -42,9 +42,14 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { Get(); });
 
             AddCommand(
-                "remove-names",
+                "remove-names-from-file",
                 "Removes the dynamic names contained in the specified file",
-                delegate { RemoveNames(); });
+                delegate { RemoveNamesFromFile(); });
+
+            AddCommand(
+                "remove-all-names",
+                "Removes all of the dynamic names",
+                delegate { RemoveAllNames(); });
 
             AddCommand(
                 "get-suggestions",
@@ -55,6 +60,11 @@ namespace CK2LandedTitlesManager.Menus
                 "integrity-check",
                 "Checks if a landed titles structure is compatible as a mod for a master file",
                 delegate { IntegrityCheck(); });
+
+            AddCommand(
+                "clean-file",
+                "Cleans a landed titles file",
+                delegate { CleanFile(); });
         }
 
         /// <summary>
@@ -84,7 +94,7 @@ namespace CK2LandedTitlesManager.Menus
             }
         }
 
-        private void RemoveNames()
+        private void RemoveNamesFromFile()
         {
             string fileName = Input("File containing the names to remove (absolute) = ");
 
@@ -94,6 +104,11 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             Console.WriteLine($"OK");
+        }
+
+        private void RemoveAllNames()
+        {
+            landedTitleManager.RemoveAllDynamicNames();
         }
 
         private void GetSuggestions()
@@ -111,8 +126,9 @@ namespace CK2LandedTitlesManager.Menus
             {
                 foreach (string titleId in titlesWithSuggestions)
                 {
-                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = suggestions.Where(x => x.TitleId == titleId);
-                    string indentation = GetIndentationForTitle(titleId);
+                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = suggestions
+                        .Where(x => x.TitleId == titleId)
+                        .OrderBy(x => x.TargetCultureId);
 
                     Console.Write("Suggestions for ");
                     ConsoleEx.WriteColoured(titleId, ConsoleColor.Yellow);
@@ -142,6 +158,13 @@ namespace CK2LandedTitlesManager.Menus
             {
                 Console.WriteLine("The structure FAILED the integrity check!!!");
             }
+        }
+        
+        private void CleanFile()
+        {
+            string fileName = Input("Master file to check compatibility with (absolute) = ");
+
+            landedTitleManager.CleanFile(fileName);
         }
 
         /// <summary>
