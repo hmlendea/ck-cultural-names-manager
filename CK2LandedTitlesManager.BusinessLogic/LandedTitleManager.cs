@@ -116,6 +116,29 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
         }
 
+        public void ApplySuggestions(string fileName)
+        {
+            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
+            landedTitles = new List<LandedTitle>();
+            landedTitles = LoadTitlesFromFile(fileName).ToList();
+
+            IEnumerable<CulturalGroupSuggestion> suggestions = GetCulturalGroupSuggestions();
+
+            landedTitles = oldLandedTitles;
+
+            foreach (CulturalGroupSuggestion suggestion in suggestions)
+            {
+                LandedTitle landedTitle = landedTitles.First(x => x.Id == suggestion.TitleId);
+
+                string name = $"{suggestion.SuggestedName}\" # Copied from {suggestion.SourceCultureId}. \"Cultural group match";
+
+                if (!landedTitle.DynamicNames.ContainsKey(suggestion.TargetCultureId))
+                {
+                    landedTitle.DynamicNames.Add(suggestion.TargetCultureId, name);
+                }
+            }
+        }
+
         public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions()
         {
             List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();

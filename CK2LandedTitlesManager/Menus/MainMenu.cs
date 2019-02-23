@@ -151,7 +151,9 @@ namespace CK2LandedTitlesManager.Menus
 
         private void ApplySuggestions()
         {
-            landedTitleManager.ApplySuggestions();
+            //string fileName = Input("File = ");
+
+            landedTitleManager.ApplySuggestions();//(fileName);
         }
 
         private void IntegrityCheck()
