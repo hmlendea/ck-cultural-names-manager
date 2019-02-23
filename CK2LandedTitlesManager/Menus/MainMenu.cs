@@ -57,6 +57,11 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { GetSuggestions(); });
 
             AddCommand(
+                "apply-suggestions",
+                "Applies all suggestions",
+                delegate { ApplySuggestions(); });
+
+            AddCommand(
                 "integrity-check",
                 "Checks if a landed titles structure is compatible as a mod for a master file",
                 delegate { IntegrityCheck(); });
@@ -142,6 +147,11 @@ namespace CK2LandedTitlesManager.Menus
                     }
                 }
             }
+        }
+
+        private void ApplySuggestions()
+        {
+            landedTitleManager.ApplySuggestions();
         }
 
         private void IntegrityCheck()
