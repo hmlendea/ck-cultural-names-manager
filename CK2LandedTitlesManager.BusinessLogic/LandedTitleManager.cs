@@ -16,6 +16,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         public LandedTitleManager()
         {
+            landedTitles = new List<LandedTitle>();
             cultureGroups = BuildCultureGroups();
         }
 
@@ -31,7 +32,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
         
         public void LoadTitles(string fileName)
         {
-            landedTitles = LoadTitlesFromFile(fileName).ToList();
+            List<LandedTitle> loadedTitles = LoadTitlesFromFile(fileName).ToList();
+
+            landedTitles.AddRange(loadedTitles);
             landedTitles = MergeTitles(landedTitles).ToList();
         }
 
@@ -92,14 +95,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return violations.Count == 0;
         }
 
-        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(string fileName)
+        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions()
         {
-            IEnumerable<LandedTitle> masterTitles = LoadTitlesFromFile(fileName);
-            IEnumerable<LandedTitle> mergedTitles = MergeTitles(masterTitles);
-
             List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();
 
-            foreach (LandedTitle title in mergedTitles)
+            foreach (LandedTitle title in landedTitles)
             {
                 if (title.DynamicNames.Count == 0)
                 {
@@ -121,8 +121,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         continue;
                     }
 
-                    foreach (string cultureId in cultureGroup.CultureIds.Where(x => !title.DynamicNames.ContainsKey(x)))
+                    foreach (string cultureId in cultureGroup.CultureIds)
                     {
+                        if (title.DynamicNames.ContainsKey(cultureId))
+                        {
+                            continue;
+                        }
+
                         if (cultureGroup.MatchingMode == CulturalGroupMatchingMode.AscendingPriority &&
                             cultureGroup.CultureIds.IndexOf(foundTitleCultureId) > cultureGroup.CultureIds.IndexOf(cultureId))
                         {

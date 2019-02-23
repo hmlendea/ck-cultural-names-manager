@@ -97,9 +97,7 @@ namespace CK2LandedTitlesManager.Menus
 
         private void GetSuggestions()
         {
-            string fileName = Input("Master file to check titles from (absolute) = ");
-            
-            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions(fileName);
+            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions();
 
             int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
 
