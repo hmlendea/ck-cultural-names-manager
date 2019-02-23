@@ -101,6 +101,8 @@ namespace CK2LandedTitlesManager.Menus
             
             IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions(fileName);
 
+            int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
+
             if (suggestions.Count() == 0)
             {
                 Console.WriteLine("There are no suggestions!");
@@ -110,7 +112,10 @@ namespace CK2LandedTitlesManager.Menus
                 foreach (CulturalGroupSuggestion suggestion in suggestions)
                 {
                     //Console.WriteLine($"{suggestion.TitleId}\t{suggestion.SourceCultureId}\t=> {suggestion.TargetCultureId}\t({suggestion.SuggestedName})");
-                    Console.WriteLine($"{suggestion.TitleId}\t{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" # Historical? Copied from {suggestion.SourceCultureId}");
+                    Console.WriteLine(
+                        $"{(suggestion.TitleId + " ").PadRight(titleColWidth, '-')} " + 
+                        $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
+                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
                 }
             }
         }
@@ -167,6 +172,25 @@ namespace CK2LandedTitlesManager.Menus
             Console.Write("Writing output... ");
             SaveLandedTitles(fileName);
             Console.WriteLine("OK");
+        }
+
+        private string GetCultureNameFromId(string cultureId)
+        {
+            string cultureName = char.ToUpper(cultureId[0]).ToString();
+
+            for (int i = 1; i < cultureId.Length; i++)
+            {
+                if (cultureId[i] == '_')
+                {
+                    cultureName += char.ToUpper(cultureId[i + 1]);
+                    i++;
+                    continue;
+                }
+
+                cultureName += cultureId[i];
+            }
+
+            return cultureName;
         }
     }
 }
