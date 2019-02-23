@@ -14,12 +14,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
     public sealed class LandedTitleManager
     {
         List<LandedTitle> landedTitles;
-        List<CultureGroup> cultureGroups;
 
         public LandedTitleManager()
         {
             landedTitles = new List<LandedTitle>();
-            cultureGroups = BuildCultureGroups();
         }
 
         public LandedTitle Get(string id)
@@ -37,7 +35,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<LandedTitle> loadedTitles = LoadTitlesFromFile(fileName).ToList();
 
             landedTitles.AddRange(loadedTitles);
-            landedTitles = MergeTitles(loadedTitles).ToList();
+            landedTitles = MergeTitles(landedTitles).ToList();
         }
 
         public void RemoveDynamicNamesFromFile(string fileName)
@@ -121,6 +119,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
             landedTitles = new List<LandedTitle>();
             landedTitles = LoadTitlesFromFile(fileName).ToList();
+            landedTitles.AddRange(oldLandedTitles);
+            landedTitles = MergeTitles(landedTitles).ToList();
 
             IEnumerable<CulturalGroupSuggestion> suggestions = GetCulturalGroupSuggestions();
 
@@ -288,9 +288,22 @@ namespace CK2LandedTitlesManager.BusinessLogic
             {
                 if (cultureIds.All(title.DynamicNames.ContainsKey))
                 {
+                    string prefix = " ";
+
+                    List<string> uniqueNames = title.DynamicNames
+                        .Where(x => cultureIds.Contains(x.Key))
+                        .Select(x => x.Value)
+                        .Distinct()
+                        .ToList();
+
+                    if (uniqueNames.Count == 1)
+                    {
+                        prefix = "X";
+                    }
+
                     foreach (string cultureId in cultureIds)
                     {
-                        string finding = $"{title.Id}\t{cultureId.PadRight(cultureColumnWidth + 1, ' ')}{title.DynamicNames[cultureId]}";
+                        string finding = $"{prefix} {title.Id}\t{cultureId.PadRight(cultureColumnWidth + 1, ' ')}{title.DynamicNames[cultureId]}";
                         findings.Add(finding);
                     }
                 }
@@ -366,51 +379,48 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return titles;
         }
 
-        List<CultureGroup> BuildCultureGroups()
+        readonly List<CultureGroup> cultureGroups = new List<CultureGroup>
         {
-            List<CultureGroup> cultureGroups = new List<CultureGroup>();
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority,
+                "maghreb_arabic", "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic", "hijazi", "yemeni"),
 
-            cultureGroups.Add(new CultureGroup(
-                CulturalGroupMatchingMode.FirstOnlyPriority,
-                "italian", "dalmatian", "sardinian", "langobardisch", "laziale", "ligurian", "neapolitan", "sicilian", "tuscan", "umbrian", "venetian"));
+            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
+                "italian", "dalmatian", "sardinian", "langobardisch", "laziale", "ligurian", "neapolitan", "sicilian", "tuscan", "umbrian", "venetian"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "scottish", "welsh"));
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "scottish", "cumbric", "pictish"));
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"));
+            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
+                "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian"),
 
-            cultureGroups.Add(new CultureGroup(
-                CulturalGroupMatchingMode.FirstOnlyPriority,
-                "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "scottish", "welsh"),
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "scottish", "cumbric", "pictish"),
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "turkish", "oghuz", "pecheneg", "turkmen"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "norse", "icelandic"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "anglonorse", "norsegaelic"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "avar", "bolghar", "khazar"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "finnish", "komi", "lappish", "livonian", "ugricbaltic"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "lithuanian", "prussian", "lettigallish"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "khanty", "mari", "vespian", "mordvin", "karelian", "samoyed"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian"));
+            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "greek", "crimean_gothic"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "moravian"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "frankish"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"));
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian", "carantanian"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "moravian"),
+            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "hungarian", "szekely"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "hungarian", "szekely"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "turkish", "turkmen", "oghuz", "pecheneg"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "khalaj", "khwarezmi"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "avar", "bolghar", "khazar"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "norse", "icelandic"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "afghan", "baloch", "qufs"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "anglonorse", "norsegaelic"));
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "tuareg", "tagelmust", "sanhaja", "masmuda", "zanata"),
 
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "greek", "crimean_gothic"));
-
-            cultureGroups.Add(new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "finnish", "komi", "lappish", "livonian", "ugricbaltic"));
-
-            cultureGroups.Add(new CultureGroup(
-                CulturalGroupMatchingMode.EqualPriority,
-                "maghreb_arabic", "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic", "hijazi", "yemeni"));
-
-            return cultureGroups;
-        }
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "persian", "tajik", "khwarezmi", "adhari", "khorasani"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "daylamite", "khalaj")
+        };
     }
 }

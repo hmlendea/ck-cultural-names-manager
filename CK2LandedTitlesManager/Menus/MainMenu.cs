@@ -165,10 +165,34 @@ namespace CK2LandedTitlesManager.Menus
         private void GetNamesOfCultures()
         {
             string cultures = Input("Cultures to search = ");
-            List<string> cultureIds = cultures.Split(' ').ToList();
+            List<string> cultureIds = cultures
+                .Replace("\"", "")
+                .Replace(",", "")
+                .Trim()
+                .Split(' ')
+                .ToList();
 
             List<string> findings = landedTitleManager.GetNamesOfTitlesWithAllCultures(cultureIds);
-            findings.ForEach(Console.WriteLine);
+
+            int titlesCount = findings.Count / cultureIds.Count;
+            int perfectMatches = 0;
+            
+            foreach (string finding in findings)
+            {
+                Console.WriteLine(finding);
+
+                if (finding.StartsWith('X'))
+                {
+                    perfectMatches += 1;
+                }
+            }
+
+            perfectMatches = perfectMatches / cultureIds.Count;
+
+            Console.WriteLine();
+            Console.WriteLine("A grand total of :");
+            Console.WriteLine($"   {titlesCount} titles");
+            Console.WriteLine($"   {perfectMatches} perfect matches");
         }
 
         private void IntegrityCheck()
