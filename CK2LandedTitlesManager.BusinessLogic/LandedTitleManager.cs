@@ -276,6 +276,29 @@ namespace CK2LandedTitlesManager.BusinessLogic
             File.WriteAllText(fileName, content);
         }
 
+        // TODO: Better name
+        // TODO: Proper return type
+        public List<string> GetNamesOfTitlesWithAllCultures(List<string> cultureIds)
+        {
+            List<string> findings = new List<string>();
+
+            int cultureColumnWidth = cultureIds.Max(x => x.Length);
+
+            foreach (LandedTitle title in landedTitles)
+            {
+                if (cultureIds.All(title.DynamicNames.ContainsKey))
+                {
+                    foreach (string cultureId in cultureIds)
+                    {
+                        string finding = $"{title.Id}\t{cultureId.PadRight(cultureColumnWidth + 1, ' ')}{title.DynamicNames[cultureId]}";
+                        findings.Add(finding);
+                    }
+                }
+            }
+
+            return findings;
+        }
+
         IEnumerable<LandedTitle> MergeTitles(IEnumerable<LandedTitle> landedTitles)
         {
             return landedTitles

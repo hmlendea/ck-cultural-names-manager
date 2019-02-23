@@ -61,6 +61,12 @@ namespace CK2LandedTitlesManager.Menus
                 "Applies all suggestions",
                 delegate { ApplySuggestions(); });
 
+            // TODO: Better command name and description, etc
+            AddCommand(
+                "get-cultural-names",
+                "Gets the names of all titles that contain all specified cultures",
+                delegate { GetNamesOfCultures(); });
+
             AddCommand(
                 "integrity-check",
                 "Checks if a landed titles structure is compatible as a mod for a master file",
@@ -154,6 +160,15 @@ namespace CK2LandedTitlesManager.Menus
             //string fileName = Input("File = ");
 
             landedTitleManager.ApplySuggestions();//(fileName);
+        }
+
+        private void GetNamesOfCultures()
+        {
+            string cultures = Input("Cultures to search = ");
+            List<string> cultureIds = cultures.Split(' ').ToList();
+
+            List<string> findings = landedTitleManager.GetNamesOfTitlesWithAllCultures(cultureIds);
+            findings.ForEach(Console.WriteLine);
         }
 
         private void IntegrityCheck()
