@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using NuciCLI;
 using NuciCLI.Menus;
 
 using CK2LandedTitlesManager.BusinessLogic;
@@ -97,7 +98,8 @@ namespace CK2LandedTitlesManager.Menus
 
         private void GetSuggestions()
         {
-            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions();
+            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
+            IEnumerable<string> titlesWithSuggestions = suggestions.Select(x => x.TitleId).Distinct();
 
             int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
 
@@ -107,13 +109,21 @@ namespace CK2LandedTitlesManager.Menus
             }
             else
             {
-                foreach (CulturalGroupSuggestion suggestion in suggestions)
+                foreach (string titleId in titlesWithSuggestions)
                 {
-                    //Console.WriteLine($"{suggestion.TitleId}\t{suggestion.SourceCultureId}\t=> {suggestion.TargetCultureId}\t({suggestion.SuggestedName})");
-                    Console.WriteLine(
-                        $"{(suggestion.TitleId + " ").PadRight(titleColWidth, '-')} " + 
-                        $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
+                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = suggestions.Where(x => x.TitleId == titleId);
+                    string indentation = GetIndentationForTitle(titleId);
+
+                    Console.Write("Suggestions for ");
+                    ConsoleEx.WriteColoured(titleId, ConsoleColor.Yellow);
+                    Console.WriteLine(" :");
+
+                    foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
+                    {
+                        Console.WriteLine(
+                            $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
+                            $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
+                    }
                 }
             }
         }

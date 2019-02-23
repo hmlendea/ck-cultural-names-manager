@@ -264,7 +264,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             cultureGroups.Add(new CultureGroup(
                 CulturalGroupMatchingMode.EqualPriority,
-                "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic", "maghreb_arabic", "hijazi", "yemeni"));
+                "maghreb_arabic", "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic", "hijazi", "yemeni"));
 
             return cultureGroups;
         }
