@@ -202,6 +202,24 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return suggestions;
         }
 
+        public void CopyNamesFromCulture(string sourceCultureId, string targetCultureId)
+        {
+            foreach (LandedTitle title in landedTitles)
+            {
+                if (!title.DynamicNames.ContainsKey(sourceCultureId))
+                {
+                    continue;
+                }
+
+                if (title.DynamicNames.ContainsKey(targetCultureId))
+                {
+                    continue;
+                }
+
+                title.DynamicNames.Add(targetCultureId, title.DynamicNames[sourceCultureId]);
+            }
+        }
+
         public void CleanFile(string fileName)
         {
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();

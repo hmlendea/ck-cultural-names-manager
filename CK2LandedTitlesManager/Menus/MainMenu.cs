@@ -66,6 +66,11 @@ namespace CK2LandedTitlesManager.Menus
                 "Applies all suggestions",
                 delegate { ApplySuggestions(); });
 
+            AddCommand(
+                "copy-names-from-culture",
+                "Copies the names from a culture to another where they don't exist already",
+                delegate { CopyNamesFromCulture(); });
+
             // TODO: Better command name and description, etc
             AddCommand(
                 "get-cultural-names",
@@ -140,6 +145,13 @@ namespace CK2LandedTitlesManager.Menus
             Console.WriteLine($"OK");
         }
 
+        private void ApplySuggestions()
+        {
+            //string fileName = Input("File = ");
+
+            landedTitleManager.ApplySuggestions();//(fileName);
+        }
+
         private void GetSuggestions()
         {
             IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
@@ -173,11 +185,12 @@ namespace CK2LandedTitlesManager.Menus
             }
         }
 
-        private void ApplySuggestions()
+        private void CopyNamesFromCulture()
         {
-            //string fileName = Input("File = ");
+            string sourceCultureId = Input("Culture from which to copy = ");
+            string targetCultureId = Input("Culture to which to copy to = ");
 
-            landedTitleManager.ApplySuggestions();//(fileName);
+            landedTitleManager.CopyNamesFromCulture(sourceCultureId, targetCultureId);
         }
 
         private void GetNamesOfCultures()
