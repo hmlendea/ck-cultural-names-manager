@@ -46,9 +46,15 @@ namespace CK2LandedTitlesManager.BusinessLogic
             RemoveDynamicNames(landedTitlesToRemove);
         }
 
-        public void RemoveAllDynamicNames()
+        public void RemoveDynamicNames() => RemoveDynamicNames(new List<string>());
+        public void RemoveDynamicNames(IEnumerable<string> cultureIdExceptions)
         {
-            landedTitles.ForEach(title => title.DynamicNames.Clear());
+            foreach (LandedTitle title in landedTitles)
+            {
+                title.DynamicNames = title.DynamicNames
+                    .Where(x => cultureIdExceptions.Contains(x.Key))
+                    .ToDictionary(x => x.Key, x => x.Value);
+            }
         }
 
         public bool CheckIntegrity(string fileName)

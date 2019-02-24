@@ -42,14 +42,19 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { Get(); });
 
             AddCommand(
+                "remove-names",
+                "Removes all of the dynamic names",
+                delegate { RemoveNames(); });
+
+            AddCommand(
+                "remove-names-except",
+                "Removes all of the dynamic names except those of specified cultures",
+                delegate { RemoveNamesExcept(); });
+
+            AddCommand(
                 "remove-names-from-file",
                 "Removes the dynamic names contained in the specified file",
                 delegate { RemoveNamesFromFile(); });
-
-            AddCommand(
-                "remove-all-names",
-                "Removes all of the dynamic names",
-                delegate { RemoveAllNames(); });
 
             AddCommand(
                 "get-suggestions",
@@ -105,6 +110,24 @@ namespace CK2LandedTitlesManager.Menus
             }
         }
 
+        private void RemoveNames()
+        {
+            landedTitleManager.RemoveDynamicNames();
+        }
+
+        private void RemoveNamesExcept()
+        {
+            string cultures = Input("Cultures to keep = ");
+            List<string> cultureIds = cultures
+                .Replace("\"", "")
+                .Replace(",", "")
+                .Trim()
+                .Split(' ')
+                .ToList();
+
+            landedTitleManager.RemoveDynamicNames(cultureIds);
+        }
+
         private void RemoveNamesFromFile()
         {
             string fileName = Input("File containing the names to remove = ");
@@ -115,11 +138,6 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             Console.WriteLine($"OK");
-        }
-
-        private void RemoveAllNames()
-        {
-            landedTitleManager.RemoveAllDynamicNames();
         }
 
         private void GetSuggestions()
