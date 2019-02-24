@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 
-using CK2LandedTitlesManager.DataAccess.DataObjects;
-
 using Pdoxcl2Sharp;
+
+using CK2LandedTitlesManager.DataAccess.DataObjects;
 
 namespace CK2LandedTitlesManager.DataAccess.IO
 {

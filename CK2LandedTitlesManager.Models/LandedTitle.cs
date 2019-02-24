@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
-using System.Linq;
 
 namespace CK2LandedTitlesManager.Models
 {
@@ -23,6 +22,8 @@ namespace CK2LandedTitlesManager.Models
         /// </summary>
         /// <value>The de jure title identifier.</value>
         public string ParentId { get; set; }
+
+        public IList<LandedTitle> Children { get; set; }
         
         /// <summary>
         /// Gets or sets the female names.
@@ -118,6 +119,7 @@ namespace CK2LandedTitlesManager.Models
 
         public LandedTitle()
         {
+            Children = new List<LandedTitle>();
             FemaleNames = new List<string>();
             MaleNames = new List<string>();
             HolySites = new List<string>();

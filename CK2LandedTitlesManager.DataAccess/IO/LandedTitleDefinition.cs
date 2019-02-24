@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Pdoxcl2Sharp;
+
 using CK2LandedTitlesManager.DataAccess.DataObjects;
 using CK2LandedTitlesManager.Infrastructure.Extensions;
-
-using Pdoxcl2Sharp;
 
 namespace CK2LandedTitlesManager.DataAccess.IO
 {
