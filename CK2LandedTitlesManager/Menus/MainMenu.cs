@@ -24,6 +24,7 @@ namespace CK2LandedTitlesManager.Menus
         {
             landedTitleManager = new LandedTitleManager();
 
+            AreStatisticsEnabled = true;
             Title = "CK2 Landed Titles Extractor";
 
             AddCommand(
@@ -93,25 +94,25 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void Get()
         {
-            string id = Input("ID = ");
+            string id = NuciConsole.ReadLine("ID = ");
 
             LandedTitle landedTitle = landedTitleManager.Get(id);
 
             if (landedTitle == null)
             {
-                Console.WriteLine($"Cannot find title {id}!");
+                NuciConsole.WriteLine($"Cannot find title {id}!");
                 return;
             }
 
             if (landedTitle.DynamicNames.Count == 0)
             {
-                Console.WriteLine($"There are no dynamic titles for {id}!");
+                NuciConsole.WriteLine($"There are no dynamic titles for {id}!");
                 return;
             }
 
             foreach (var dynamicName in landedTitle.DynamicNames)
             {
-                Console.WriteLine($"{landedTitle.Id}.{dynamicName.Key} = \"{dynamicName.Value}\"");
+                NuciConsole.WriteLine($"{landedTitle.Id}.{dynamicName.Key} = \"{dynamicName.Value}\"");
             }
         }
 
@@ -122,7 +123,7 @@ namespace CK2LandedTitlesManager.Menus
 
         private void RemoveNamesExcept()
         {
-            string cultures = Input("Cultures to keep = ");
+            string cultures = NuciConsole.ReadLine("Cultures to keep = ");
             List<string> cultureIds = cultures
                 .Replace("\"", "")
                 .Replace(",", "")
@@ -135,14 +136,14 @@ namespace CK2LandedTitlesManager.Menus
 
         private void RemoveNamesFromFile()
         {
-            string fileName = Input("File containing the names to remove = ");
+            string fileName = NuciConsole.ReadLine("File containing the names to remove = ");
 
             landedTitleManager.RemoveDynamicNamesFromFile(fileName);
 
             IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
             int titlesCount = landedTitleManager.GetAll().Count();
 
-            Console.WriteLine($"OK");
+            NuciConsole.WriteLine($"OK");
         }
 
         private void ApplySuggestions()
@@ -161,7 +162,7 @@ namespace CK2LandedTitlesManager.Menus
 
             if (suggestions.Count() == 0)
             {
-                Console.WriteLine("There are no suggestions!");
+                NuciConsole.WriteLine("There are no suggestions!");
             }
             else
             {
@@ -171,13 +172,13 @@ namespace CK2LandedTitlesManager.Menus
                         .Where(x => x.TitleId == titleId)
                         .OrderBy(x => x.TargetCultureId);
 
-                    Console.Write("Suggestions for ");
-                    ConsoleEx.WriteColoured(titleId, ConsoleColor.Yellow);
-                    Console.WriteLine(" :");
+                    NuciConsole.Write("Suggestions for ");
+                    NuciConsole.Write(titleId, Colour.Yellow);
+                    NuciConsole.WriteLine(" :");
 
                     foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
                     {
-                        Console.WriteLine(
+                        NuciConsole.WriteLine(
                             $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
                             $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
                     }
@@ -187,15 +188,15 @@ namespace CK2LandedTitlesManager.Menus
 
         private void CopyNamesFromCulture()
         {
-            string sourceCultureId = Input("Culture from which to copy = ");
-            string targetCultureId = Input("Culture to which to copy to = ");
+            string sourceCultureId = NuciConsole.ReadLine("Culture from which to copy = ");
+            string targetCultureId = NuciConsole.ReadLine("Culture to which to copy to = ");
 
             landedTitleManager.CopyNamesFromCulture(sourceCultureId, targetCultureId);
         }
 
         private void GetNamesOfCultures()
         {
-            string cultures = Input("Cultures to search = ");
+            string cultures = NuciConsole.ReadLine("Cultures to search = ");
             List<string> cultureIds = cultures
                 .Replace("\"", "")
                 .Replace(",", "")
@@ -210,7 +211,7 @@ namespace CK2LandedTitlesManager.Menus
             
             foreach (string finding in findings)
             {
-                Console.WriteLine(finding);
+                NuciConsole.WriteLine(finding);
 
                 if (finding.StartsWith('X'))
                 {
@@ -220,31 +221,31 @@ namespace CK2LandedTitlesManager.Menus
 
             perfectMatches = perfectMatches / cultureIds.Count;
 
-            Console.WriteLine();
-            Console.WriteLine("A grand total of :");
-            Console.WriteLine($"   {titlesCount} titles");
-            Console.WriteLine($"   {perfectMatches} perfect matches");
+            NuciConsole.WriteLine();
+            NuciConsole.WriteLine("A grand total of :");
+            NuciConsole.WriteLine($"   {titlesCount} titles");
+            NuciConsole.WriteLine($"   {perfectMatches} perfect matches");
         }
 
         private void IntegrityCheck()
         {
-            string fileName = Input("Master file to check compatibility with = ");
+            string fileName = NuciConsole.ReadLine("Master file to check compatibility with = ");
 
             bool isValid = landedTitleManager.CheckIntegrity(fileName);
 
             if (isValid)
             {
-                Console.WriteLine("The structure passed the integrity check!");
+                NuciConsole.WriteLine("The structure passed the integrity check!");
             }
             else
             {
-                Console.WriteLine("The structure FAILED the integrity check!!!");
+                NuciConsole.WriteLine("The structure FAILED the integrity check!!!");
             }
         }
         
         private void CleanFile()
         {
-            string fileName = Input("File to clean = ");
+            string fileName = NuciConsole.ReadLine("File to clean = ");
 
             landedTitleManager.CleanFile(fileName);
         }
@@ -263,16 +264,16 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void LoadFile()
         {
-            string fileName = Input("Input file path = ");
+            string fileName = NuciConsole.ReadLine("Input file path = ");
 
-            Console.Write($"Loading titles from \"{fileName}\"... ");
+            NuciConsole.Write($"Loading titles from \"{fileName}\"... ");
 
             landedTitleManager.LoadTitles(fileName);
 
             IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
             int titlesCount = landedTitleManager.GetAll().Count();
 
-            Console.WriteLine($"OK ({titlesCount} titles)");
+            NuciConsole.WriteLine($"OK ({titlesCount} titles)");
         }
 
         /// <summary>
@@ -280,11 +281,11 @@ namespace CK2LandedTitlesManager.Menus
         /// </summary>
         private void SaveFile()
         {
-            string fileName = Input("Output file path = ");
+            string fileName = NuciConsole.ReadLine("Output file path = ");
 
-            Console.Write("Writing output... ");
+            NuciConsole.Write("Writing output... ");
             SaveLandedTitles(fileName);
-            Console.WriteLine("OK");
+            NuciConsole.WriteLine("OK");
         }
 
         private string GetCultureNameFromId(string cultureId)
