@@ -29,7 +29,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
         {
             return landedTitles;
         }
-        
+
         public void LoadTitles(string fileName)
         {
             List<LandedTitle> loadedTitles = LoadTitlesFromFile(fileName).ToList();
@@ -54,6 +54,39 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 title.DynamicNames = title.DynamicNames
                     .Where(x => cultureIdExceptions.Contains(x.Key))
                     .ToDictionary(x => x.Key, x => x.Value);
+            }
+        }
+
+        public void RemoveTitle(string titleId)
+        {
+            LandedTitle title = landedTitles.First(x => x.Id == titleId);
+
+            if (!string.IsNullOrWhiteSpace(title.ParentId))
+            {
+                LandedTitle parentTitle = landedTitles.First(x => x.Id == title.ParentId);
+
+                parentTitle.Children.Remove(title);
+            }
+
+            List<LandedTitle> children = landedTitles.Where(x => x.ParentId == title.Id).ToList();
+
+            foreach (LandedTitle childTitle in children)
+            {
+                RemoveTitle(childTitle.Id);
+            }
+        }
+
+        public void RemoveUnlocalisedTitles()
+        {
+            // TODO: Approach this issue better
+            char[] titleLevels = new char[] { 'b', 'c', 'd', 'k', 'e' };
+
+            foreach (char titleLevel in titleLevels)
+            {
+                landedTitles.RemoveAll(x =>
+                    x.DynamicNames.Count == 0 &&
+                    x.Id.StartsWith(titleLevel) &&
+                    landedTitles.All(y => y.ParentId != x.Id));
             }
         }
 
@@ -159,7 +192,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 foreach (CultureGroup cultureGroup in cultureGroups)
                 {
                     string foundTitleCultureId = cultureGroup.CultureIds.FirstOrDefault(x => title.DynamicNames.ContainsKey(x));
-                    
+
                     if (string.IsNullOrEmpty(foundTitleCultureId))
                     {
                         continue;
@@ -234,7 +267,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             SaveTitles(fileName);
 
             List<string> newLines = File.ReadAllLines(fileName).ToList();
-            
+
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
             for (int i = 0; i < oldLines.Count; i++)
@@ -262,7 +295,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     dict.Add(key, mcnLine);
                 }
             }
-            
+
             for (int i = 0; i < newLines.Count; i++)
             {
                 string myLine = newLines[i];
@@ -298,6 +331,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
             content = Regex.Replace(content, "\"(\r\n|\r|\n)( *[ekdcb]_)", "\"\n\n$2");
 
             File.WriteAllText(fileName, content);
+
+            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
+            landedTitles = new List<LandedTitle>();
+            landedTitles = LoadTitlesFromFile(fileName).ToList();
         }
 
         // TODO: Better name
@@ -397,9 +434,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             IEnumerable<LandedTitle> titles = LandedTitlesFile
                 .ReadAllTitles(fileName)
                 .ToDomainModels();
-            
+
             titles = MergeTitles(titles);
-            
+
             return titles;
         }
 

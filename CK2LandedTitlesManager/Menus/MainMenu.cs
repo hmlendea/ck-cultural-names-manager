@@ -58,6 +58,16 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { RemoveNamesFromFile(); });
 
             AddCommand(
+                "remove-title",
+                "Removes the specified title",
+                delegate { RemoveTitle(); });
+
+            AddCommand(
+                "remove-unlocalised-titles",
+                "Removes the titles that contain no dynamic names",
+                delegate { RemoveUnlocalisedTitles(); });
+
+            AddCommand(
                 "get-suggestions",
                 "Suggests names for cultures in the same group",
                 delegate { GetSuggestions(); });
@@ -144,6 +154,18 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             NuciConsole.WriteLine($"OK");
+        }
+
+        private void RemoveTitle()
+        {
+            string titleId = NuciConsole.ReadLine("Title to remove = ");
+
+            landedTitleManager.RemoveTitle(titleId);
+        }
+
+        private void RemoveUnlocalisedTitles()
+        {
+            landedTitleManager.RemoveUnlocalisedTitles();
         }
 
         private void ApplySuggestions()
