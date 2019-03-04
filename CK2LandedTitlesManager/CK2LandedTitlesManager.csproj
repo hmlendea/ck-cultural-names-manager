@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NuciCLI" Version="1.1.1.1" />
-    <PackageReference Include="NuciCLI.Menus" Version="1.1.1" />
+    <PackageReference Include="NuciCLI" Version="1.1.2" />
+    <PackageReference Include="NuciCLI.Menus" Version="1.2.0" />
   </ItemGroup>
 
 </Project>

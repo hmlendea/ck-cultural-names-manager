@@ -1,5 +1,7 @@
 ﻿using CK2LandedTitlesManager.Menus;
 
+using NuciCLI.Menus;
+
 namespace CK2LandedTitlesManager
 {
     public class Program
@@ -10,8 +12,7 @@ namespace CK2LandedTitlesManager
         /// /// <param name="args">CLI arguments</param>
         public static void Main(string[] args)
         {
-            MainMenu mainMenu = new MainMenu();
-            mainMenu.Run();
+            MenuManager.Instance.OpenMenu(typeof(MainMenu));
         }
     }
 }
