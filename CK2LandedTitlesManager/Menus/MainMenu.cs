@@ -195,7 +195,7 @@ namespace CK2LandedTitlesManager.Menus
                         .OrderBy(x => x.TargetCultureId);
 
                     NuciConsole.Write("Suggestions for ");
-                    NuciConsole.Write(titleId, Colour.Yellow);
+                    NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
                     NuciConsole.WriteLine(" :");
 
                     foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)

@@ -12,7 +12,7 @@ namespace CK2LandedTitlesManager
         /// /// <param name="args">CLI arguments</param>
         public static void Main(string[] args)
         {
-            MenuManager.Instance.OpenMenu(typeof(MainMenu));
+            MenuManager.Instance.OpenMenu<MainMenu>();
         }
     }
 }
