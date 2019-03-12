@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NuciExtensions" Version="1.1.1" />
+  </ItemGroup>
+
 </Project>

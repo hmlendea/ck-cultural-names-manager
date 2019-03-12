@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using NuciExtensions;
+
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
 using CK2LandedTitlesManager.DataAccess.IO;
-using CK2LandedTitlesManager.Infrastructure.Extensions;
 using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.BusinessLogic

@@ -2,9 +2,9 @@
 using System.Linq;
 
 using Pdoxcl2Sharp;
+using NuciExtensions;
 
 using CK2LandedTitlesManager.DataAccess.DataObjects;
-using CK2LandedTitlesManager.Infrastructure.Extensions;
 
 namespace CK2LandedTitlesManager.DataAccess.IO
 {
