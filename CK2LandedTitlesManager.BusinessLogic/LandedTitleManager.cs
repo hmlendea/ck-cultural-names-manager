@@ -468,7 +468,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "frankish"),
 
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian", "carantanian"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "moravian"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "slovieni"),
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"),
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "hungarian", "szekely"),
