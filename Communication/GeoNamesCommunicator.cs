@@ -90,6 +90,15 @@ namespace CK2LandedTitlesManager.Communication
             string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
             string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
 
+            alternateName = alternateName.Split('/')[0].Trim();
+
+            if (searchName.RemoveDiacritics() == searchName &&
+                toponymName.RemoveDiacritics() == toponymName &&
+                !searchName.Equals(toponymName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+
             if (toponymName == alternateName ||
                 toponymName.Length != searchName.Length)
             {
