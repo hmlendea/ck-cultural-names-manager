@@ -4,8 +4,7 @@ dotnet: 2.2
 dist: xenial
 
 install:
-- dotnet restore
+  - dotnet restore
 
 script:
- - dotnet build
- 
+  - dotnet build

@@ -7,13 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CK2LandedTitlesManager.BusinessLogic\CK2LandedTitlesManager.BusinessLogic.csproj" />
-    <ProjectReference Include="..\CK2LandedTitlesManager.Models\CK2LandedTitlesManager.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NuciCLI" Version="1.2.0" />
     <PackageReference Include="NuciCLI.Menus" Version="1.2.2" />
+    <PackageReference Include="NuciCLI" Version="1.2.0" />
+    <PackageReference Include="NuciExtensions" Version="1.1.1" />
+    <PackageReference Include="Pdoxcl2Sharp" Version="0.6.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
