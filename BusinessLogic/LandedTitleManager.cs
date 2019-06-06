@@ -241,12 +241,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return suggestions;
         }
 
-        public IEnumerable<GeoNamesSuggestion> GetGeoNamesSuggestion()
+        // TODO: This parameter shouldn't exist
+        public IEnumerable<GeoNamesSuggestion> GetGeoNamesSuggestion(bool autoAddThem = false)
         {
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 525; i < 650; i++)
+            for (int i = 700; i < 900; i++)
             {
                 Console.WriteLine(i);
                 LandedTitle title = landedTitles[i];
@@ -274,6 +275,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     };
 
                     suggestions.Add(suggestion);
+
+                    if (autoAddThem)
+                    {
+                        title.DynamicNames.Add(cultureId, exonym);
+                    }
                 }
             }
 

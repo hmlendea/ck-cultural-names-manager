@@ -78,6 +78,11 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { GetGeoNamesSuggestions(); });
 
             AddCommand(
+                "get-suggestions",
+                "Suggests names using all sources",
+                delegate { GetSuggestions(); });
+
+            AddCommand(
                 "apply-suggestions",
                 "Applies all suggestions",
                 delegate { ApplySuggestions(); });
@@ -180,22 +185,74 @@ namespace CK2LandedTitlesManager.Menus
             landedTitleManager.ApplySuggestions();//(fileName);
         }
 
+        private void GetSuggestions()
+        {
+            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion(true);
+            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
+            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
+            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
+            IEnumerable<string> titlesWithSuggestions = titlesWithCulturalGroupSuggestions.Union(titlesWithGeoNameSuggestions).Distinct();
+
+            NuciConsole.WriteLine("THIS OPERATION WILL MODIFY THE LOADED TITLES!");
+
+            int titleColWidth = culturalGroupSuggestions
+                .Select(x => x.TitleId)
+                .Union(geoNameSuggestions.Select(x => x.TitleId))
+                .Max(x => x.Length);
+
+            if (culturalGroupSuggestions.Count() + geoNameSuggestions.Count() == 0)
+            {
+                NuciConsole.WriteLine("There are no suggestions!");
+                return;
+            }
+            
+            foreach (string titleId in titlesWithGeoNameSuggestions)
+            //foreach (string titleId in titlesWithSuggestions)
+            {
+                IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestionForTitle = culturalGroupSuggestions
+                    .Where(x => x.TitleId == titleId)
+                    .OrderBy(x => x.TargetCultureId);
+
+                IEnumerable<GeoNamesSuggestion> geoNamesSuggestionsForTitle = geoNameSuggestions
+                    .Where(x => x.TitleId == titleId)
+                    .OrderBy(x => x.CultureId);
+
+                NuciConsole.Write("Suggestions for ");
+                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
+                NuciConsole.WriteLine(" :");
+
+                foreach (GeoNamesSuggestion suggestion in geoNamesSuggestionsForTitle)
+                {
+                    NuciConsole.WriteLine($"{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
+                }
+
+                foreach (CulturalGroupSuggestion suggestion in culturalGroupSuggestionForTitle)
+                {
+                    NuciConsole.WriteLine(
+                        $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
+                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
+                }
+            }
+
+            NuciConsole.WriteLine("LOADED TITLES HAVE BEEN MODIFIED!");
+        }
+
         private void GetCulturalGroupSuggestions()
         {
-            IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
-            IEnumerable<string> titlesWithSuggestions = suggestions.Select(x => x.TitleId).Distinct();
+            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
+            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
 
-            int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
+            int titleColWidth = culturalGroupSuggestions.Select(x => x.TitleId).Max(x => x.Length);
 
-            if (suggestions.Count() == 0)
+            if (culturalGroupSuggestions.Count() == 0)
             {
                 NuciConsole.WriteLine("There are no suggestions!");
             }
             else
             {
-                foreach (string titleId in titlesWithSuggestions)
+                foreach (string titleId in titlesWithCulturalGroupSuggestions)
                 {
-                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = suggestions
+                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = culturalGroupSuggestions
                         .Where(x => x.TitleId == titleId)
                         .OrderBy(x => x.TargetCultureId);
 
@@ -215,20 +272,20 @@ namespace CK2LandedTitlesManager.Menus
 
         private void GetGeoNamesSuggestions()
         {
-            IEnumerable<GeoNamesSuggestion> suggestions = landedTitleManager.GetGeoNamesSuggestion();
-            IEnumerable<string> titlesWithSuggestions = suggestions.Select(x => x.TitleId).Distinct();
+            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion();
+            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
 
-            int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
+            int titleColWidth = geoNameSuggestions.Select(x => x.TitleId).Max(x => x.Length);
 
-            if (suggestions.Count() == 0)
+            if (geoNameSuggestions.Count() == 0)
             {
                 NuciConsole.WriteLine("There are no suggestions!");
             }
             else
             {
-                foreach (string titleId in titlesWithSuggestions)
+                foreach (string titleId in titlesWithGeoNameSuggestions)
                 {
-                    IEnumerable<GeoNamesSuggestion> suggestionsForTitle = suggestions
+                    IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
                         .Where(x => x.TitleId == titleId)
                         .OrderBy(x => x.CultureId);
 
