@@ -1,13 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+using NuciExtensions;
 
 namespace CK2LandedTitlesManager.Communication
 {
     public sealed class GeoNamesCommunicator : IGeoNamesCommunicator
     {
         const string GeoNamesApiUrl = "http://api.geonames.org";
+
+        readonly IEnumerable<string> Usernames = new List<string>
+        { "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons" };
 
         readonly HttpClient httpClient;
 
@@ -55,7 +61,7 @@ namespace CK2LandedTitlesManager.Communication
                 $"?name={placeName}" +
                 $"&cities=cities15000" +
                 $"&lang={language}" +
-                $"&username=geonamesfreeaccountt";
+                $"&username={Usernames.GetRandomElement()}";
         }
 
         async Task ValdiateHttpRespone(HttpResponseMessage httpResponse)
