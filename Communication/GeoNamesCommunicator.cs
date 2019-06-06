@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using NuciDAL.Repositories;
 using NuciExtensions;
 
 namespace CK2LandedTitlesManager.Communication
@@ -13,13 +14,16 @@ namespace CK2LandedTitlesManager.Communication
         const string GeoNamesApiUrl = "http://api.geonames.org";
 
         readonly IEnumerable<string> Usernames = new List<string>
-        { "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons" };
+        { "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons", "berestesievici", "izvoli.prostagma" };
 
         readonly HttpClient httpClient;
+
+        readonly IRepository<CachedGeoNameExonym> cache;
 
         public GeoNamesCommunicator()
         {
             httpClient = new HttpClient();
+            cache = new CsvRepository<CachedGeoNameExonym>("geonames-cache.txt");
         }
 
         public async Task<string> TryGatherExonym(string placeName, string language)
@@ -46,12 +50,49 @@ namespace CK2LandedTitlesManager.Communication
                 throw new ArgumentNullException(language);
             }
 
+            string exonym = FindExonymInCahce(placeName, language);
+
+            if (!(exonym is null))
+            {
+                return exonym;
+            }
+
             string endpoint = BuildRequestUrl(placeName, language);
             HttpResponseMessage httpResponse = await httpClient.GetAsync(endpoint);
             
             await ValdiateHttpRespone(httpResponse);
 
-            return await DeserialiseSuccessResponse(httpResponse, placeName);
+            exonym = await DeserialiseSuccessResponse(httpResponse, placeName);
+
+            SaveExonymInCache(placeName, language, exonym);
+
+            return exonym;
+        }
+
+        string FindExonymInCahce(string placeName, string language)
+        {
+            string id = $"{placeName}_{language}";
+
+            CachedGeoNameExonym cachedExonym = cache.TryGet(id);
+
+            if (cachedExonym is null)
+            {
+                return null;
+            }
+
+            return cachedExonym.Exonym;
+        }
+
+        void SaveExonymInCache(string placeName, string language, string exonym)
+        {
+            CachedGeoNameExonym cachedExonym = new CachedGeoNameExonym();
+            cachedExonym.Id = $"{placeName}_{language}";
+            cachedExonym.PlaceName = placeName;
+            cachedExonym.LanguageId = language;
+            cachedExonym.Exonym = exonym ?? string.Empty;
+
+            cache.Add(cachedExonym);
+            cache.ApplyChanges();
         }
 
         string BuildRequestUrl(string placeName, string language)
@@ -90,7 +131,8 @@ namespace CK2LandedTitlesManager.Communication
             string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
             string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
 
-            alternateName = alternateName.Split('/')[0].Trim();
+            toponymName = NormalisePlaceName(toponymName);
+            alternateName = NormalisePlaceName(alternateName);
 
             if (searchName.RemoveDiacritics() == searchName &&
                 toponymName.RemoveDiacritics() == toponymName &&
@@ -116,6 +158,15 @@ namespace CK2LandedTitlesManager.Communication
             string errorMessage = Regex.Match(responseString, errorMessagePattern).Groups[1].Value;
 
             return errorMessage;
+        }
+
+        string NormalisePlaceName(string name)
+        {
+            return name
+                .Replace(" ", "")
+                .Replace("-", "")
+                .Split('/')[0]
+                .ToLower();
         }
     }
 }
