@@ -16,6 +16,18 @@ namespace CK2LandedTitlesManager.Communication
             httpClient = new HttpClient();
         }
 
+        public async Task<string> TryGatherExonym(string placeName, string language)
+        {
+            try
+            {
+                return await GatherExonym(placeName, language);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<string> GatherExonym(string placeName, string language)
         {
             if (string.IsNullOrWhiteSpace(placeName))
@@ -33,14 +45,14 @@ namespace CK2LandedTitlesManager.Communication
             
             await ValdiateHttpRespone(httpResponse);
 
-            return await DeserialiseSuccessResponse(httpResponse);
+            return await DeserialiseSuccessResponse(httpResponse, placeName);
         }
 
         string BuildRequestUrl(string placeName, string language)
         {
             return
                 $"{GeoNamesApiUrl}/search" +
-                $"?q={placeName}" +
+                $"?name={placeName}" +
                 $"&cities=cities15000" +
                 $"&lang={language}" +
                 $"&username=geonamesfreeaccountt";
@@ -62,14 +74,23 @@ namespace CK2LandedTitlesManager.Communication
             }
         }
 
-        async Task<string> DeserialiseSuccessResponse(HttpResponseMessage httpResponse)
+        // TODO: The searchName parameter doesn't belong here
+        async Task<string> DeserialiseSuccessResponse(HttpResponseMessage httpResponse, string searchName)
         {
-            const string namePattern = "<name>(.*)</name>";
+            const string toponymNamePattern = "<toponymName>(.*)</toponymName>";
+            const string alternateNamePattern = "<name>(.*)</name>";
 
             string responseString = await httpResponse.Content.ReadAsStringAsync();
-            string name = Regex.Match(responseString, namePattern).Groups[1].Value;
+            string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
+            string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
 
-            return name;
+            if (toponymName == alternateName ||
+                toponymName.Length != searchName.Length)
+            {
+                return null;
+            }
+
+            return alternateName;
         }
 
         async Task<string> DeserialiseErrorResponse(HttpResponseMessage httpResponse)

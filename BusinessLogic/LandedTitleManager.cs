@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using NuciExtensions;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
+using CK2LandedTitlesManager.Communication;
 using CK2LandedTitlesManager.DataAccess.IO;
 using CK2LandedTitlesManager.Models;
 
@@ -16,9 +17,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
     {
         List<LandedTitle> landedTitles;
 
+        readonly IGeoNamesCommunicator geoNamesCommunicator;
+
         public LandedTitleManager()
         {
             landedTitles = new List<LandedTitle>();
+
+            this.geoNamesCommunicator = new GeoNamesCommunicator();
         }
 
         public LandedTitle Get(string id)
@@ -230,6 +235,45 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                         suggestions.Add(suggestion);
                     }
+                }
+            }
+
+            return suggestions;
+        }
+
+        public IEnumerable<GeoNamesSuggestion> GetGeoNamesSuggestion()
+        {
+            List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
+
+            //foreach (LandedTitle title in landedTitles)
+            for (int i = 325; i < 350; i++)
+            {
+                Console.WriteLine(i);
+                LandedTitle title = landedTitles[i];
+
+                foreach (string cultureId in CultureLanguages.Keys)
+                {
+                    if (title.DynamicNames.ContainsKey(cultureId))
+                    {
+                        continue;
+                    }
+
+                    string placeName = title.Id.Substring(2);
+                    string exonym = geoNamesCommunicator.TryGatherExonym(placeName, CultureLanguages[cultureId]).Result; // TODO: Broken async
+
+                    if (string.IsNullOrWhiteSpace(exonym) || placeName.Equals(exonym, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    GeoNamesSuggestion suggestion = new GeoNamesSuggestion
+                    {
+                        TitleId = title.Id,
+                        CultureId = cultureId,
+                        SuggestedName = exonym
+                    };
+
+                    suggestions.Add(suggestion);
                 }
             }
 
@@ -465,7 +509,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "greek", "crimean_gothic"),
 
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "frankish"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "arpitan"),
 
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian", "carantanian"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "slovieni"),
@@ -483,6 +527,31 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "persian", "tajik", "khwarezmi", "adhari", "khorasani"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "daylamite", "khalaj")
+        };
+
+        readonly IDictionary<string, string> CultureLanguages = new Dictionary<string, string>
+        {
+            { "afghan", "AF" },
+            { "bohemian", "CZ" },
+            { "bosnian", "BA" },
+            { "carantanian", "SI" },
+            { "croatian", "HR" },
+            { "egyptian_arabic", "EG" },
+            { "finnish", "FI" },
+            { "frankish", "FR" },
+            { "german", "DE" },
+            { "greek", "GR" },
+            { "hungarian", "HU" },
+            { "icelandic", "IS" },
+            { "irish", "IE" },
+            { "italian", "IT" },
+            { "lithuanian", "LT" },
+            { "persian", "IR" },
+            { "polish", "PL" },
+            { "romanian", "RO" },
+            { "slovieni", "SK" },
+            { "turkish", "TR" },
+            { "yemeni", "YE" },
         };
     }
 }

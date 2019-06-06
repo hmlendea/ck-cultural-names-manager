@@ -68,9 +68,14 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { RemoveUnlocalisedTitles(); });
 
             AddCommand(
-                "get-suggestions",
+                "get-suggestions-cultural-groups",
                 "Suggests names for cultures in the same group",
-                delegate { GetSuggestions(); });
+                delegate { GetCulturalGroupSuggestions(); });
+
+            AddCommand(
+                "get-suggestions-geonames",
+                "Suggests names from GeoNames",
+                delegate { GetGeoNamesSuggestions(); });
 
             AddCommand(
                 "apply-suggestions",
@@ -175,7 +180,7 @@ namespace CK2LandedTitlesManager.Menus
             landedTitleManager.ApplySuggestions();//(fileName);
         }
 
-        private void GetSuggestions()
+        private void GetCulturalGroupSuggestions()
         {
             IEnumerable<CulturalGroupSuggestion> suggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
             IEnumerable<string> titlesWithSuggestions = suggestions.Select(x => x.TitleId).Distinct();
@@ -203,6 +208,37 @@ namespace CK2LandedTitlesManager.Menus
                         NuciConsole.WriteLine(
                             $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
                             $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
+                    }
+                }
+            }
+        }
+
+        private void GetGeoNamesSuggestions()
+        {
+            IEnumerable<GeoNamesSuggestion> suggestions = landedTitleManager.GetGeoNamesSuggestion();
+            IEnumerable<string> titlesWithSuggestions = suggestions.Select(x => x.TitleId).Distinct();
+
+            int titleColWidth = suggestions.Select(x => x.TitleId).Max(x => x.Length);
+
+            if (suggestions.Count() == 0)
+            {
+                NuciConsole.WriteLine("There are no suggestions!");
+            }
+            else
+            {
+                foreach (string titleId in titlesWithSuggestions)
+                {
+                    IEnumerable<GeoNamesSuggestion> suggestionsForTitle = suggestions
+                        .Where(x => x.TitleId == titleId)
+                        .OrderBy(x => x.CultureId);
+
+                    NuciConsole.Write("Suggestions for ");
+                    NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
+                    NuciConsole.WriteLine(" :");
+
+                    foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
+                    {
+                        NuciConsole.WriteLine($"{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
                     }
                 }
             }
