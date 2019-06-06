@@ -246,7 +246,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 325; i < 350; i++)
+            for (int i = 525; i < 650; i++)
             {
                 Console.WriteLine(i);
                 LandedTitle title = landedTitles[i];
@@ -532,24 +532,40 @@ namespace CK2LandedTitlesManager.BusinessLogic
         readonly IDictionary<string, string> CultureLanguages = new Dictionary<string, string>
         {
             { "afghan", "AF" },
+            { "arberian", "AL" },
+            //{ "armenian", "AM" },
             { "bohemian", "CZ" },
-            { "bosnian", "BA" },
+            //{ "bosnian", "BA" },
+            //{ "bulgarian", "BG" },
             { "carantanian", "SI" },
+            { "castillan", "ES" },
             { "croatian", "HR" },
+            { "danish", "DK" },
             { "egyptian_arabic", "EG" },
+            { "ethiopian", "ET" },
             { "finnish", "FI" },
             { "frankish", "FR" },
+            { "georgian", "GE" },
             { "german", "DE" },
             { "greek", "GR" },
+            { "han", "CN" },
             { "hungarian", "HU" },
             { "icelandic", "IS" },
             { "irish", "IE" },
             { "italian", "IT" },
+            { "kirghiz", "KG" },
             { "lithuanian", "LT" },
+            { "mongolia", "ME" },
+            { "norwegian", "NO" },
             { "persian", "IR" },
             { "polish", "PL" },
+            { "portuguese", "PT" },
             { "romanian", "RO" },
+            //{ "russian", "RU" },
             { "slovieni", "SK" },
+            { "somali", "SO" },
+            { "swedish", "SE" },
+            { "tajik", "TJ" },
             { "turkish", "TR" },
             { "yemeni", "YE" },
         };
