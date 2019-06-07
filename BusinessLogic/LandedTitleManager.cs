@@ -330,7 +330,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 112; i < 1500; i++)
+            for (int i = 1000; i < 2000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 Console.WriteLine($"{i} - {title.Id}");
@@ -349,9 +349,19 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         placeName = title.IdWithoutLevel;
                     }
 
-                    string exonym = geoNamesCommunicator.TryGatherExonym(placeName, CultureLanguages[cultureId]).Result; // TODO: Broken async
+                    string exonym = null;
+                    
+                    foreach (string languageCode in CultureLanguages[cultureId])
+                    {
+                        exonym = geoNamesCommunicator.TryGatherExonym(placeName, languageCode).Result; // TODO: Broken async
 
-                    if (string.IsNullOrWhiteSpace(exonym) || placeName.Equals(exonym, StringComparison.InvariantCultureIgnoreCase))
+                        if (placeName.Equals(exonym ?? string.Empty, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            exonym = null;
+                        }
+                    }
+
+                    if (string.IsNullOrWhiteSpace(exonym))
                     {
                         continue;
                     }
@@ -624,75 +634,77 @@ namespace CK2LandedTitlesManager.BusinessLogic
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "daylamite", "khalaj")
         };
 
-        readonly IDictionary<string, string> CultureLanguages = new Dictionary<string, string>
+        readonly IDictionary<string, string[]> CultureLanguages = new Dictionary<string, string[]>
         {
-            { "afar", "AA" },
-            { "aragonese", "AN" },
-            { "assamese", "AS" },
-            { "avar", "AV" },
-            { "basque", "EU" },
-            { "bohemian", "CZ" },
-            { "breton", "BR" },
-            { "carantanian", "SL" },
-            { "castillan", "ES" },
-            { "catalan", "CA" },
-            { "cornish", "KW" },
-            { "croatian", "HR" },
-            { "danish", "DA" },
-            { "dutch", "DL" },
-            { "finnish", "FI" },
-            { "frankish", "FR" },
-            { "frisian", "FY" },
-            { "galician", "GL" },
-            { "german", "DE" },
-            { "hausa", "HA" },
-            { "hungarian", "HU" },
-            { "icelandic", "IS" },
-            { "irish", "GA" },
-            { "italian", "IT" },
-            { "kanuri", "KR" },
-            { "lithuanian", "LT" },
-            { "norwegian", "NO" },
-            { "occitan", "OC" }, // i don't think it's mediaeval
-            { "polish", "PL" },
-            { "portuguese", "PT" },
-            { "roman", "LA" },
-            { "romanian", "RO" },
-            { "sardinian", "SC" },
-            { "scottish", "GD" },
-            { "slovieni", "SK" },
-            { "somali", "SO" },
-            { "swedish", "SV" },
-            { "turkish", "TR" },
-            { "turkmen", "TK" },
-            { "welsh", "CY" },
-            { "wolof", "WO" },
-            //{ "armenian", "HY" }, // non-latin
-            //{ "bashkir", "BA" }, // non-latin
-            //{ "bengali", "BN" }, // non-latin
-            //{ "bosnian", "BS" }, // non-latin
-            //{ "bulgarian", "BG" }, // non-latin
-            //{ "georgian", "KA" }, // non-latin
-            //{ "greek", "EL" }, // non-latin
-            //{ "han", "ZH" }, // non-latin
-            //{ "hindustani", "HI" }, // non-latin
-            //{ "kannada", "KN" }, // non-latin
-            //{ "kirghiz", "KY" }, // non-latin
-            //{ "komi", "KV" }, // non-latin
-            //{ "kurdish", "KU" }, // non-latin
-            //{ "marathi", "MR" }, // non-latin
-            //{ "mongolia", "MN" }, // non-latin
-            //{ "nepali", "NE" }, // non-latin
-            //{ "oriya", "OR" }, // non-latin
-            //{ "panjabi", "PA" }, // non-latin
-            //{ "persian", "FA" }, // non-latin
-            //{ "russian", "RU" }, // non-latin
-            //{ "sindhi", "SD" }, // non-latin
-            //{ "sinhala", "SI" }, // non-latin
-            //{ "tajik", "TG" }, // non-latin
-            //{ "tamil", "TA" }, // non-latin
-            //{ "telugu", "TE" }, // non-latin
-            //{ "uyghur", "UG" }, // non-latin
+            { "afar", new string[] { "AA" } },
+            { "aragonese", new string[] { "AN" } },
+            { "assamese", new string[] { "AS" } },
+            { "avar", new string[] { "AV" } },
+            { "basque", new string[] { "EU" } },
+            { "bohemian", new string[] { "CZ" } },
+            { "breton", new string[] { "BR" } },
+            { "carantanian", new string[] { "SL" } },
+            { "castillan", new string[] { "ES" } },
+            { "catalan", new string[] { "CA" } },
+            { "cornish", new string[] { "KW" } },
+            { "croatian", new string[] { "HR" } },
+            { "danish", new string[] { "DA" } },
+            { "dutch", new string[] { "DL" } },
+            { "finnish", new string[] { "FI" } },
+            { "frankish", new string[] { "FR" } },
+            { "frisian", new string[] { "FY" } },
+            { "galician", new string[] { "GL" } },
+            { "german", new string[] { "DE" } },
+            { "hausa", new string[] { "HA" } },
+            { "hungarian", new string[] { "HU" } },
+            { "icelandic", new string[] { "IS" } },
+            { "sicilian", new string[] { "SCN" } },
+            { "irish", new string[] { "GA" } },
+            { "italian", new string[] { "IT" } },
+            { "kanuri", new string[] { "KR" } },
+            { "lithuanian", new string[] { "LT" } },
+            { "leonese", new string[] { "AST" } },
+            { "norwegian", new string[] { "NO" } },
+            { "occitan", new string[] { "PRO", "OC" } }, // i don't think it's mediaeval
+            { "polish", new string[] { "PL" } },
+            { "portuguese", new string[] { "PT" } },
+            { "roman", new string[] { "LA" } },
+            { "romanian", new string[] { "RO", "RUP" } },
+            { "sardinian", new string[] { "SC" } },
+            { "scottish", new string[] { "GD" } },
+            { "slovieni", new string[] { "SK" } },
+            { "somali", new string[] { "SO" } },
+            { "swedish", new string[] { "SV" } },
+            { "turkish", new string[] { "TR" } },
+            { "turkmen", new string[] { "TK" } },
+            { "welsh", new string[] { "CY" } },
+            { "wolof", new string[] { "WO" } },
+            //{ "armenian", new string[] { "HY" } }, // non-latin
+            //{ "bashkir", new string[] { "BA" } }, // non-latin
+            //{ "bengali", new string[] { "BN" } }, // non-latin
+            //{ "bosnian", new string[] { "BS" } }, // non-latin
+            //{ "bulgarian", new string[] { "BG" } }, // non-latin
+            //{ "georgian", new string[] { "KA" } }, // non-latin
+            //{ "greek", new string[] { "EL" } }, // non-latin
+            //{ "han", new string[] { "ZH" } }, // non-latin
+            //{ "hindustani", new string[] { "HI" } }, // non-latin
+            //{ "kannada", new string[] { "KN" } }, // non-latin
+            //{ "kirghiz", new string[] { "KY" } }, // non-latin
+            //{ "komi", new string[] { "KV" } }, // non-latin
+            //{ "kurdish", new string[] { "KU" } }, // non-latin
+            //{ "marathi", new string[] { "MR" } }, // non-latin
+            //{ "mongolia", new string[] { "MN" } }, // non-latin
+            //{ "nepali", new string[] { "NE" } }, // non-latin
+            //{ "oriya", new string[] { "OR" } }, // non-latin
+            //{ "panjabi", new string[] { "PA" } }, // non-latin
+            //{ "persian", new string[] { "FA" } }, // non-latin
+            //{ "russian", new string[] { "RU" } }, // non-latin
+            //{ "sindhi", new string[] { "SD" } }, // non-latin
+            //{ "sinhala", new string[] { "SI" } }, // non-latin
+            //{ "tajik", new string[] { "TG" } }, // non-latin
+            //{ "tamil", new string[] { "TA" } }, // non-latin
+            //{ "telugu", new string[] { "TE" } }, // non-latin
+            //{ "uyghur", new string[] { "UG" } }, // non-latin
         };
     }
 }
