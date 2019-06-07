@@ -184,7 +184,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
         }
 
-        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions()
+        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(bool autoAddThem = false)
         {
             List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();
 
@@ -234,6 +234,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         };
 
                         suggestions.Add(suggestion);
+
+                        if (autoAddThem)
+                        {
+                            title.DynamicNames.Add(cultureId, name);
+                        }
                     }
                 }
             }
@@ -247,7 +252,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 4103; i < 12000; i++)
+            for (int i = 750; i < 1000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 Console.WriteLine($"{i} - {title.Id}");
@@ -554,7 +559,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "finnish", "FI" },
             { "frankish", "FR" },
             { "frisian", "FY" },
-            { "galiian", "GL" },
+            { "galician", "GL" },
             { "german", "DE" },
             { "hausa", "HA" },
             { "hungarian", "HU" },
@@ -571,7 +576,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "romanian", "RO" },
             { "sardinian", "SC" },
             { "scottish", "GD" },
-            { "sindhi", "SD" },
             { "slovieni", "SK" },
             { "somali", "SO" },
             { "swedish", "SV" },
@@ -599,6 +603,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             //{ "panjabi", "PA" }, // non-latin
             //{ "persian", "FA" }, // non-latin
             //{ "russian", "RU" }, // non-latin
+            //{ "sindhi", "SD" }, // non-latin
             //{ "sinhala", "SI" }, // non-latin
             //{ "tajik", "TG" }, // non-latin
             //{ "tamil", "TA" }, // non-latin
