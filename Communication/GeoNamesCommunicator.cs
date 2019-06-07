@@ -14,7 +14,10 @@ namespace CK2LandedTitlesManager.Communication
         const string GeoNamesApiUrl = "http://api.geonames.org";
 
         readonly IEnumerable<string> Usernames = new List<string>
-        { "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons", "berestesievici", "izvoli.prostagma" };
+        { 
+            "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons", "berestesievici", "izvoli.prostagma",
+            "gesturioso", "random.name.ftw", "botu1", "botu2", "botu3", "botu4", "botu5", "botu6", "botu7", "botu8", "botu9"
+        };
 
         readonly HttpClient httpClient;
 
@@ -100,7 +103,7 @@ namespace CK2LandedTitlesManager.Communication
             return
                 $"{GeoNamesApiUrl}/search" +
                 $"?name={placeName}" +
-                $"&cities=cities15000" +
+                $"&cities=cities500" +
                 $"&lang={language}" +
                 $"&username={Usernames.GetRandomElement()}";
         }
@@ -131,18 +134,18 @@ namespace CK2LandedTitlesManager.Communication
             string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
             string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
 
-            toponymName = NormalisePlaceName(toponymName);
-            alternateName = NormalisePlaceName(alternateName);
+            string normalisedToponymName = NormalisePlaceName(toponymName);
+            string normalisedAlternateName = NormalisePlaceName(alternateName);
 
             if (searchName.RemoveDiacritics() == searchName &&
-                toponymName.RemoveDiacritics() == toponymName &&
-                !searchName.Equals(toponymName, StringComparison.InvariantCultureIgnoreCase))
+                normalisedToponymName.RemoveDiacritics() == normalisedToponymName &&
+                searchName.Equals(normalisedToponymName, StringComparison.InvariantCultureIgnoreCase))
             {
                 return null;
             }
 
-            if (toponymName == alternateName ||
-                toponymName.Length != searchName.Length)
+            if (normalisedToponymName == normalisedAlternateName ||
+                normalisedToponymName.Length != searchName.Length)
             {
                 return null;
             }
