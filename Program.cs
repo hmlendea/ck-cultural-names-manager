@@ -12,7 +12,8 @@ namespace CK2LandedTitlesManager
         /// <param name="args">CLI arguments</param>
         public static void Main(string[] args)
         {
-            MenuManager.Instance.OpenMenu<MainMenu>();
+            MenuManager.Instance.AreStatisticsEnabled = true;
+            MenuManager.Instance.Start<MainMenu>();
         }
     }
 }
