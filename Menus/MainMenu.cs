@@ -24,7 +24,6 @@ namespace CK2LandedTitlesManager.Menus
         {
             landedTitleManager = new LandedTitleManager();
 
-            AreStatisticsEnabled = true;
             Title = "CK2 Landed Titles Extractor";
 
             AddCommand(
@@ -56,6 +55,11 @@ namespace CK2LandedTitlesManager.Menus
                 "remove-names-from-file",
                 "Removes the dynamic names contained in the specified file",
                 delegate { RemoveNamesFromFile(); });
+
+            AddCommand(
+                "remove-redundant-names",
+                "Removes the redundant names already contained in the specified file, or default names",
+                delegate { RemoveRedundantNames(); });
 
             AddCommand(
                 "remove-title",
@@ -171,6 +175,13 @@ namespace CK2LandedTitlesManager.Menus
             NuciConsole.WriteLine($"OK");
         }
 
+        private void RemoveRedundantNames()
+        {
+            string fileName = NuciConsole.ReadLine("Master file to check against = ");
+
+            landedTitleManager.RemoveRedundantDynamicNames(fileName);
+        }
+
         private void RemoveTitle()
         {
             string titleId = NuciConsole.ReadLine("Title to remove = ");
@@ -274,25 +285,26 @@ namespace CK2LandedTitlesManager.Menus
             if (culturalGroupSuggestions.Count() == 0)
             {
                 NuciConsole.WriteLine("There are no suggestions!");
+                return;
             }
-            else
+
+            foreach (string titleId in titlesWithCulturalGroupSuggestions)
             {
-                foreach (string titleId in titlesWithCulturalGroupSuggestions)
+                IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = culturalGroupSuggestions
+                    .Where(x => x.TitleId == titleId)
+                    .OrderBy(x => x.TargetCultureId);
+
+                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
+
+                NuciConsole.Write("Suggestions for ");
+                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
+                NuciConsole.WriteLine(" :");
+
+                foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
                 {
-                    IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = culturalGroupSuggestions
-                        .Where(x => x.TitleId == titleId)
-                        .OrderBy(x => x.TargetCultureId);
-
-                    NuciConsole.Write("Suggestions for ");
-                    NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                    NuciConsole.WriteLine(" :");
-
-                    foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
-                    {
-                        NuciConsole.WriteLine(
-                            $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                            $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
-                    }
+                    NuciConsole.WriteLine(
+                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
+                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
                 }
             }
         }
@@ -308,22 +320,22 @@ namespace CK2LandedTitlesManager.Menus
             {
                 NuciConsole.WriteLine("There are no suggestions!");
             }
-            else
+
+            foreach (string titleId in titlesWithGeoNameSuggestions)
             {
-                foreach (string titleId in titlesWithGeoNameSuggestions)
+                IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
+                    .Where(x => x.TitleId == titleId)
+                    .OrderBy(x => x.CultureId);
+
+                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
+
+                NuciConsole.Write("Suggestions for ");
+                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
+                NuciConsole.WriteLine(" :");
+
+                foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
                 {
-                    IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
-                        .Where(x => x.TitleId == titleId)
-                        .OrderBy(x => x.CultureId);
-
-                    NuciConsole.Write("Suggestions for ");
-                    NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                    NuciConsole.WriteLine(" :");
-
-                    foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
-                    {
-                        NuciConsole.WriteLine($"{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
-                    }
+                    NuciConsole.WriteLine($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
                 }
             }
         }

@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using NuciDAL.Repositories;
 using NuciExtensions;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
+using CK2LandedTitlesManager.BusinessLogic.Models;
 using CK2LandedTitlesManager.Communication;
 using CK2LandedTitlesManager.DataAccess.IO;
 using CK2LandedTitlesManager.Models;
@@ -17,11 +19,16 @@ namespace CK2LandedTitlesManager.BusinessLogic
     {
         List<LandedTitle> landedTitles;
 
+        readonly IRepository<TitleLocalisation> localisationRepository;
+
         readonly IGeoNamesCommunicator geoNamesCommunicator;
 
         public LandedTitleManager()
         {
             landedTitles = new List<LandedTitle>();
+            localisationRepository = new CsvRepository<TitleLocalisation>("localisations.csv");
+
+            Console.WriteLine(localisationRepository.GetAll().Count());
 
             this.geoNamesCommunicator = new GeoNamesCommunicator();
         }
@@ -96,6 +103,41 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
         }
 
+        public void RemoveRedundantDynamicNames(string fileName)
+        {
+            List<LandedTitle> masterTitles = LandedTitlesFile
+                .ReadAllTitles(fileName)
+                .ToDomainModels()
+                .ToList();
+
+            foreach (LandedTitle title in landedTitles)
+            {
+                LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
+                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
+
+                IList<string> cultureIdsToRemove = new List<string>();
+
+                foreach (string cultureId in title.DynamicNames.Keys)
+                {
+                    if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
+                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
+                    {
+                        cultureIdsToRemove.Add(cultureId);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(localisation) &&
+                             localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        cultureIdsToRemove.Add(cultureId);
+                    }
+                }
+
+                foreach (string cultureIdToRemove in cultureIdsToRemove)
+                {
+                    title.DynamicNames.Remove(cultureIdToRemove);
+                }
+            }
+        }
+
         public bool CheckIntegrity(string fileName)
         {
             List<LandedTitle> masterTitles = LandedTitlesFile
@@ -108,6 +150,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach(LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
+                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
 
                 if (landedTitles.Count(x => x.Id == title.Id) > 1)
                 {
@@ -131,6 +174,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 {
                     if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
                         masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
+                    {
+                        AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
+                    }
+                    else if (!string.IsNullOrWhiteSpace(localisation) &&
+                             localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
                     {
                         AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
                     }
@@ -218,6 +266,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     continue;
                 }
 
+                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
+
                 foreach (CultureGroup cultureGroup in cultureGroups)
                 {
                     string foundTitleCultureId = cultureGroup.CultureIds.FirstOrDefault(x => title.DynamicNames.ContainsKey(x));
@@ -248,6 +298,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                         string name = title.DynamicNames[foundTitleCultureId];
 
+                        if (!string.IsNullOrWhiteSpace(localisation) && localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            continue;
+                        }
+
                         CulturalGroupSuggestion suggestion = new CulturalGroupSuggestion
                         {
                             TitleId = title.Id,
@@ -275,7 +330,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 1000; i < 1500; i++)
+            for (int i = 112; i < 1500; i++)
             {
                 LandedTitle title = landedTitles[i];
                 Console.WriteLine($"{i} - {title.Id}");
@@ -287,7 +342,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         continue;
                     }
 
-                    string placeName = title.Id.Substring(2);
+                    string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
+
+                    if (string.IsNullOrWhiteSpace(placeName))
+                    {
+                        placeName = title.IdWithoutLevel;
+                    }
+
                     string exonym = geoNamesCommunicator.TryGatherExonym(placeName, CultureLanguages[cultureId]).Result; // TODO: Broken async
 
                     if (string.IsNullOrWhiteSpace(exonym) || placeName.Equals(exonym, StringComparison.InvariantCultureIgnoreCase))

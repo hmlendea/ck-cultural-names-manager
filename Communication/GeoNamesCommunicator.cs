@@ -207,7 +207,7 @@ namespace CK2LandedTitlesManager.Communication
             normalisedName = Regex.Replace(normalisedName, "żž", "z");
             */
 
-            return name;
+            return name.ToLower();
         }
 
         string CleanName(string name)
@@ -232,6 +232,7 @@ namespace CK2LandedTitlesManager.Communication
             cleanName = Regex.Replace(cleanName, " miestas$", "");
             cleanName = Regex.Replace(cleanName, " SH$", "");
             cleanName = Regex.Replace(cleanName, " TG$", "");
+            cleanName = Regex.Replace(cleanName, " AG$", "");
             cleanName = Regex.Replace(cleanName, " valsčius$", "");
             cleanName = Regex.Replace(cleanName, "^Abbaye d'", "");
             cleanName = Regex.Replace(cleanName, "^Arrondissement de ", "");
@@ -255,6 +256,21 @@ namespace CK2LandedTitlesManager.Communication
             cleanName = Regex.Replace(cleanName, "^Powiat ", "");
             cleanName = Regex.Replace(cleanName, "^Prowincja ", "");
             cleanName = Regex.Replace(cleanName, "^Statul ", "");
+
+            // non-Windows1252 characters
+            cleanName = Regex.Replace(cleanName, "Ă", "Ã");
+            cleanName = Regex.Replace(cleanName, "İ", "I");
+            cleanName = Regex.Replace(cleanName, "Ż", "Z");
+            cleanName = Regex.Replace(cleanName, "ă", "ã");
+            cleanName = Regex.Replace(cleanName, "č", "c");
+            cleanName = Regex.Replace(cleanName, "ď", "d");
+            cleanName = Regex.Replace(cleanName, "ė", "e");
+            cleanName = Regex.Replace(cleanName, "ı", "i");
+            cleanName = Regex.Replace(cleanName, "ł", "l");
+            cleanName = Regex.Replace(cleanName, "ș", "s");
+            cleanName = Regex.Replace(cleanName, "ț", "t");
+            cleanName = Regex.Replace(cleanName, "ū", "u");
+            cleanName = Regex.Replace(cleanName, "ż", "z");
 
             return cleanName.Trim();
         }
