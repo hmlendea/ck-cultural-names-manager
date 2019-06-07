@@ -184,6 +184,29 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
         }
 
+        public IDictionary<string, int> GetDynamicNamesCount()
+        {
+            IDictionary<string, int> dynamicNamesCount = new Dictionary<string, int>();
+
+            foreach (LandedTitle title in landedTitles)
+            {
+                foreach (string cultureId in title.DynamicNames.Keys)
+                {
+                    if (!dynamicNamesCount.ContainsKey(cultureId))
+                    {
+                        dynamicNamesCount.Add(cultureId, 0);
+                    }
+
+                    dynamicNamesCount[cultureId] += 1;
+                }
+            }
+
+            return dynamicNamesCount
+                .OrderBy(x => x.Value)
+                .Reverse()
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
         public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(bool autoAddThem = false)
         {
             List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();
@@ -252,7 +275,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 750; i < 1000; i++)
+            for (int i = 1000; i < 1500; i++)
             {
                 LandedTitle title = landedTitles[i];
                 Console.WriteLine($"{i} - {title.Id}");

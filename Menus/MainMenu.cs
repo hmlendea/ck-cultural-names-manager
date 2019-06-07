@@ -83,6 +83,11 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { GetSuggestions(); });
 
             AddCommand(
+                "count-dynamic-names",
+                "Gets the number of dynamic names for each culture",
+                delegate { CountDynamicNames(); });
+
+            AddCommand(
                 "apply-suggestions",
                 "Applies all suggestions",
                 delegate { ApplySuggestions(); });
@@ -244,6 +249,19 @@ namespace CK2LandedTitlesManager.Menus
             }
 
             NuciConsole.WriteLine("LOADED TITLES HAVE BEEN MODIFIED!");
+        }
+
+        private void CountDynamicNames()
+        {
+            IDictionary<string, int> dynamicNamesCount = landedTitleManager.GetDynamicNamesCount();
+
+            foreach (string cultureId in dynamicNamesCount.Keys)
+            {
+                NuciConsole.WriteLine($"{cultureId.PadRight(20, ' ')}{dynamicNamesCount[cultureId]}");
+            }
+
+            NuciConsole.WriteLine();
+            NuciConsole.WriteLine($"TOTAL {dynamicNamesCount.Sum(x => x.Value)}");
         }
 
         private void GetCulturalGroupSuggestions()
