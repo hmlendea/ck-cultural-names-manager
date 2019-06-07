@@ -247,10 +247,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 700; i < 900; i++)
+            for (int i = 4103; i < 12000; i++)
             {
-                Console.WriteLine(i);
                 LandedTitle title = landedTitles[i];
+                Console.WriteLine($"{i} - {title.Id}");
 
                 foreach (string cultureId in CultureLanguages.Keys)
                 {
@@ -537,43 +537,73 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         readonly IDictionary<string, string> CultureLanguages = new Dictionary<string, string>
         {
-            { "afghan", "AF" },
-            { "arberian", "AL" },
-            //{ "armenian", "AM" },
+            { "afar", "AA" },
+            { "aragonese", "AN" },
+            { "assamese", "AS" },
+            { "avar", "AV" },
+            { "basque", "EU" },
             { "bohemian", "CZ" },
-            //{ "bosnian", "BA" },
-            //{ "bulgarian", "BG" },
-            { "carantanian", "SI" },
+            { "breton", "BR" },
+            { "carantanian", "SL" },
             { "castillan", "ES" },
+            { "catalan", "CA" },
+            { "cornish", "KW" },
             { "croatian", "HR" },
-            { "danish", "DK" },
-            { "egyptian_arabic", "EG" },
-            { "ethiopian", "ET" },
+            { "danish", "DA" },
+            { "dutch", "DL" },
             { "finnish", "FI" },
             { "frankish", "FR" },
-            { "georgian", "GE" },
+            { "frisian", "FY" },
+            { "galiian", "GL" },
             { "german", "DE" },
-            { "greek", "GR" },
-            { "han", "CN" },
+            { "hausa", "HA" },
             { "hungarian", "HU" },
             { "icelandic", "IS" },
-            { "irish", "IE" },
+            { "irish", "GA" },
             { "italian", "IT" },
-            { "kirghiz", "KG" },
+            { "kanuri", "KR" },
             { "lithuanian", "LT" },
-            { "mongolia", "ME" },
             { "norwegian", "NO" },
-            { "persian", "IR" },
+            { "occitan", "OC" }, // i don't think it's mediaeval
             { "polish", "PL" },
             { "portuguese", "PT" },
+            { "roman", "LA" },
             { "romanian", "RO" },
-            //{ "russian", "RU" },
+            { "sardinian", "SC" },
+            { "scottish", "GD" },
+            { "sindhi", "SD" },
             { "slovieni", "SK" },
             { "somali", "SO" },
-            { "swedish", "SE" },
-            { "tajik", "TJ" },
+            { "swedish", "SV" },
             { "turkish", "TR" },
-            { "yemeni", "YE" },
+            { "turkmen", "TK" },
+            { "welsh", "CY" },
+            { "wolof", "WO" },
+            //{ "armenian", "HY" }, // non-latin
+            //{ "bashkir", "BA" }, // non-latin
+            //{ "bengali", "BN" }, // non-latin
+            //{ "bosnian", "BS" }, // non-latin
+            //{ "bulgarian", "BG" }, // non-latin
+            //{ "georgian", "KA" }, // non-latin
+            //{ "greek", "EL" }, // non-latin
+            //{ "han", "ZH" }, // non-latin
+            //{ "hindustani", "HI" }, // non-latin
+            //{ "kannada", "KN" }, // non-latin
+            //{ "kirghiz", "KY" }, // non-latin
+            //{ "komi", "KV" }, // non-latin
+            //{ "kurdish", "KU" }, // non-latin
+            //{ "marathi", "MR" }, // non-latin
+            //{ "mongolia", "MN" }, // non-latin
+            //{ "nepali", "NE" }, // non-latin
+            //{ "oriya", "OR" }, // non-latin
+            //{ "panjabi", "PA" }, // non-latin
+            //{ "persian", "FA" }, // non-latin
+            //{ "russian", "RU" }, // non-latin
+            //{ "sinhala", "SI" }, // non-latin
+            //{ "tajik", "TG" }, // non-latin
+            //{ "tamil", "TA" }, // non-latin
+            //{ "telugu", "TE" }, // non-latin
+            //{ "uyghur", "UG" }, // non-latin
         };
     }
 }
