@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 using NuciDAL.Repositories;
 using NuciExtensions;
@@ -22,6 +23,7 @@ namespace CK2LandedTitlesManager.Communication
             "gesturioso", "random.name.ftw", "b75268", "b75375", "b75445", "b75445",
             "botu0", "botu1", "botu2", "botu3", "botu4", "botu5", "botu6", "botu7", "botu8", "botu9",
             "elBot0", "elBot1", "elBot2", "elBot3", "elBot4", "elBot5", "elBot6", "elBot7", "elBot8", "elBot9",
+            "botman0", "botman1", "botman2", "botman3", "botman4", "botman5", "botman6", "botman7", "botman8", "botman9",
         };
 
         readonly HttpClient httpClient;
@@ -60,26 +62,38 @@ namespace CK2LandedTitlesManager.Communication
                 throw new ArgumentNullException(language);
             }
 
-            string exonym = FindExonymInCahce(placeName, language);
-
-            if (!(exonym is null))
+            string normalisedPlaceName = NormalisePlaceName(placeName);
+            string exonym = GetExonymFromCache(normalisedPlaceName, language);
+            
+            if (exonym is null)
             {
-                return exonym;
+                //Console.WriteLine($"Web HIT for '{placeName}' in {language}");
+                exonym = await GetExonymFromApi(normalisedPlaceName, language);
             }
 
+            if (CleanName(exonym).Equals(normalisedPlaceName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+
+            return exonym;
+        }
+
+        async Task<string> GetExonymFromApi(string placeName, string language)
+        {
             string endpoint = BuildRequestUrl(placeName, language);
             HttpResponseMessage httpResponse = await httpClient.GetAsync(endpoint);
 
             await ValdiateHttpRespone(httpResponse);
 
-            exonym = await DeserialiseSuccessResponse(httpResponse, placeName);
+            string exonym = await DeserialiseSuccessResponse(httpResponse, placeName);
 
             SaveExonymInCache(placeName, language, exonym);
 
             return exonym;
         }
 
-        string FindExonymInCahce(string placeName, string language)
+        string GetExonymFromCache(string placeName, string language)
         {
             string id = $"{placeName}_{language}";
 
@@ -114,8 +128,8 @@ namespace CK2LandedTitlesManager.Communication
         {
             return
                 $"{GeoNamesApiUrl}/search" +
-                $"?name={placeName}" +
-                $"&cities=cities500" +
+                $"?name={HttpUtility.UrlEncode(placeName)}" +
+                //$"&cities=cities500" +
                 $"&lang={language}" +
                 $"&username={Usernames.GetRandomElement()}";
         }
@@ -152,7 +166,7 @@ namespace CK2LandedTitlesManager.Communication
             string normalisedAlternateName = NormalisePlaceName(alternateName);
 
             if (normalisedToponymName == normalisedAlternateName ||
-                searchName == normalisedAlternateName ||
+                normalisedAlternateName == searchName ||
                 normalisedToponymName.Length != searchName.Length)
             {
                 return null;
@@ -175,9 +189,7 @@ namespace CK2LandedTitlesManager.Communication
         {
             string normalisedName = CleanName(name);
 
-            normalisedName = Regex.Replace(normalisedName, "-|_|'|,|.", "");
-            normalisedName = Regex.Replace(normalisedName, "Æ|æ", "ae");
-            normalisedName = Regex.Replace(normalisedName, "ß", "ss");
+            normalisedName = Regex.Replace(normalisedName, "-|'", "");
 
             /*
             normalisedName = Regex.Replace(normalisedName, "âăãáä", "a");
@@ -202,12 +214,16 @@ namespace CK2LandedTitlesManager.Communication
         {
             string cleanName = name
                 .Split('/')[0]
+                .Split('.')[0]
                 .Split(',')[0]
                 .Split('[')[0]
                 .Split('(')[0];
 
-            cleanName = Regex.Replace(cleanName, "Æ|æ", "ae");
+            cleanName = Regex.Replace(cleanName, "_", " ");
+            cleanName = Regex.Replace(cleanName, "Æ", "Ae");
+            cleanName = Regex.Replace(cleanName, "æ", "ae");
             cleanName = Regex.Replace(cleanName, "ß", "ss");
+            cleanName = Regex.Replace(cleanName, "ĳ", "ij");
 
             cleanName = Regex.Replace(cleanName, " BL$", "");
             cleanName = Regex.Replace(cleanName, " bykommune$", "");
@@ -218,19 +234,25 @@ namespace CK2LandedTitlesManager.Communication
             cleanName = Regex.Replace(cleanName, " TG$", "");
             cleanName = Regex.Replace(cleanName, " valsčius$", "");
             cleanName = Regex.Replace(cleanName, "^Abbaye d'", "");
+            cleanName = Regex.Replace(cleanName, "^Arrondissement de ", "");
             cleanName = Regex.Replace(cleanName, "^Campo di sterminio di ", "");
             cleanName = Regex.Replace(cleanName, "^Cathair ", "");
+            cleanName = Regex.Replace(cleanName, "^Circondario del ", "");
             cleanName = Regex.Replace(cleanName, "^Ciudad de ", "");
             cleanName = Regex.Replace(cleanName, "^Ciutat d'", "");
             cleanName = Regex.Replace(cleanName, "^Ciutat de ", "");
             cleanName = Regex.Replace(cleanName, "^Comuna de ", "");
             cleanName = Regex.Replace(cleanName, "^Dinas ", "");
+            cleanName = Regex.Replace(cleanName, "^Districte de ", "");
             cleanName = Regex.Replace(cleanName, "^Districtul ", "");
+            cleanName = Regex.Replace(cleanName, "^Distrito de ", "");
             cleanName = Regex.Replace(cleanName, "^Estado de ", "");
             cleanName = Regex.Replace(cleanName, "^Gmina ", "");
+            cleanName = Regex.Replace(cleanName, "^Kreis ", "");
             cleanName = Regex.Replace(cleanName, "^Loster ", "");
             cleanName = Regex.Replace(cleanName, "^Magaalada ", "");
             cleanName = Regex.Replace(cleanName, "^Mestna občina ", "");
+            cleanName = Regex.Replace(cleanName, "^Powiat ", "");
             cleanName = Regex.Replace(cleanName, "^Prowincja ", "");
             cleanName = Regex.Replace(cleanName, "^Statul ", "");
 
