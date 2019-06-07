@@ -221,16 +221,25 @@ namespace CK2LandedTitlesManager.Menus
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
                 NuciConsole.WriteLine(" :");
 
+                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
+
+                IList<string> suggestionPrints = new List<string>();
+
                 foreach (GeoNamesSuggestion suggestion in geoNamesSuggestionsForTitle)
                 {
-                    NuciConsole.WriteLine($"{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
+                    suggestionPrints.Add($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
                 }
 
                 foreach (CulturalGroupSuggestion suggestion in culturalGroupSuggestionForTitle)
                 {
-                    NuciConsole.WriteLine(
-                        $"{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
+                    suggestionPrints.Add(
+                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
                         $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
+                }
+
+                foreach (string print in suggestionPrints.OrderBy(x => x))
+                {
+                    NuciConsole.WriteLine(print);
                 }
             }
 
@@ -421,5 +430,14 @@ namespace CK2LandedTitlesManager.Menus
 
             return cultureName;
         }
+
+        readonly IDictionary<char, int> TitleLevelIndentation = new Dictionary<char, int>
+        {
+            { 'b', 20 },
+            { 'c', 16 },
+            { 'd', 12 },
+            { 'k', 8 },
+            { 'e', 4 }
+        };
     }
 }
