@@ -1,28 +1,60 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using NuciExtensions;
+
 namespace CK2LandedTitlesManager.BusinessLogic
 {
     public sealed class NameCleaner : INameCleaner
     {
-        readonly IDictionary<string, string> cache;
+        readonly IDictionary<string, string> normalisationCache;
+        readonly IDictionary<string, string> cleaningCache;
 
         public NameCleaner()
         {
-            cache = new Dictionary<string, string>();
+            normalisationCache = new Dictionary<string, string>();
+            cleaningCache = new Dictionary<string, string>();
+
             RemovalPattern = BuildRemovalPattern();
+        }
+
+        public string Normalise(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return name;
+            }
+
+            if (normalisationCache.ContainsKey(name))
+            {
+                return normalisationCache[name];
+            }
+
+            string normalisedName = Clean(name)
+                .Replace("-", " ")
+                .Replace(" ", "_")
+                .Replace("'", "")
+                .Replace("Æ", "Ae")
+                .Replace("æ", "ae")
+                .Replace("ß", "ss")
+                .RemoveDiacritics()
+                .ToLower();
+            
+            normalisationCache.Add(name, normalisedName);
+            
+            return normalisedName;
         }
 
         public string Clean(string name)
         {
-            if (cache.ContainsKey(name))
-            {
-                return cache[name];
-            }
-
             if (string.IsNullOrWhiteSpace(name))
             {
                 return name;
+            }
+
+            if (cleaningCache.ContainsKey(name))
+            {
+                return cleaningCache[name];
             }
 
             string cleanName = name
@@ -31,6 +63,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .Split('/')[0]
                 .Split('.')[0]
                 .Split(',')[0]
+                .Split(';')[0]
                 .Split('[')[0]
                 .Split('(')[0];
             
@@ -43,7 +76,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             cleanName = ReplaceNonWindows1252Characters(cleanName);
             cleanName = cleanName.Trim();
 
-            cache.Add(name, cleanName);
+            cleaningCache.Add(name, cleanName);
 
             return cleanName;
         }
@@ -131,6 +164,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Estado de ",
             "^Gemeen ",
             "^Gmina ",
+            "^Kanton ",
             "^Kreis ",
             "^Loster ",
             "^Lutherstadt ",

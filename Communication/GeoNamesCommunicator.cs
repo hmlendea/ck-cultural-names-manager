@@ -69,17 +69,17 @@ namespace CK2LandedTitlesManager.Communication
                 throw new ArgumentNullException(language);
             }
 
-            string normalisedPlaceName = nameCleaner.Clean(placeName);
-            string exonym = GetExonymFromCache(normalisedPlaceName, language);
+            string cleanName = nameCleaner.Clean(placeName);
+            string exonym = GetExonymFromCache(cleanName, language);
             
             if (exonym is null)
             {
-                exonym = await GetExonymFromApi(normalisedPlaceName, language);
+                exonym = await GetExonymFromApi(cleanName, language);
             }
 
             string cleanExonym = nameCleaner.Clean(exonym);
 
-            if (cleanExonym.Equals(normalisedPlaceName, StringComparison.InvariantCultureIgnoreCase))
+            if (cleanExonym.Equals(cleanName, StringComparison.InvariantCultureIgnoreCase))
             {
                 return null;
             }
@@ -103,7 +103,7 @@ namespace CK2LandedTitlesManager.Communication
 
         string GetExonymFromCache(string placeName, string language)
         {
-            string id = $"{NormaliseName(placeName)}_{language}";
+            string id = $"{nameCleaner.Normalise(placeName)}_{language}";
 
             CachedGeoNameExonym cachedExonym = cache.TryGet(id);
 
@@ -118,14 +118,15 @@ namespace CK2LandedTitlesManager.Communication
         void SaveExonymInCache(string placeName, string language, string exonym)
         {
             CachedGeoNameExonym cachedExonym = new CachedGeoNameExonym();
-            cachedExonym.Id = $"{NormaliseName(placeName)}_{language}";
-            cachedExonym.PlaceName = placeName;
+            cachedExonym.Id = $"{nameCleaner.Normalise(placeName)}_{language}";
+            cachedExonym.PlaceName = placeName.Replace(",", ";");
             cachedExonym.LanguageId = language;
             cachedExonym.Exonym = exonym ?? string.Empty;
 
             cache.Add(cachedExonym);
 
-            if ((DateTime.Now - lastCacheSave).TotalSeconds > 20)
+            int passedSeconds = (int)(DateTime.Now - lastCacheSave).TotalSeconds;
+            if (passedSeconds >= 5)
             {
                 lastCacheSave = DateTime.Now;
                 cache.ApplyChanges();
@@ -169,8 +170,8 @@ namespace CK2LandedTitlesManager.Communication
             string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
             string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
 
-            string normalisedToponymName = NormaliseName(toponymName);
-            string normalisedAlternateName = NormaliseName(alternateName);
+            string normalisedToponymName = nameCleaner.Normalise(toponymName);
+            string normalisedAlternateName = nameCleaner.Normalise(alternateName);
 
             if (normalisedToponymName == normalisedAlternateName ||
                 normalisedAlternateName == searchName ||
@@ -190,18 +191,6 @@ namespace CK2LandedTitlesManager.Communication
             string errorMessage = Regex.Match(responseString, errorMessagePattern).Groups[1].Value;
 
             return errorMessage;
-        }
-
-        string NormaliseName(string name)
-        {
-            return nameCleaner.Clean(name)
-                .Replace("-", " ")
-                .Replace(" ", "_")
-                .Replace("'", "")
-                .Replace("Æ", "Ae")
-                .Replace("æ", "ae")
-                .Replace("ß", "ss")
-                .ToLower();
         }
     }
 }

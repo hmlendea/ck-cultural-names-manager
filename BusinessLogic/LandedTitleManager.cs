@@ -330,7 +330,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 0; i < 3000; i++)
+            for (int i = 0; i < 600; i++)
             {
                 LandedTitle title = landedTitles[i];
                 string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
@@ -607,7 +607,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"),
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "norse", "icelandic"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "anglonorse", "norsegaelic"),
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "finnish", "komi", "lappish", "livonian", "ugricbaltic"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "lithuanian", "prussian", "lettigallish"),
@@ -637,122 +636,123 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         readonly IDictionary<string, string[]> CultureLanguages = new Dictionary<string, string[]>
         {
-            { "afar", new string[] { "AA" } },
-            { "andalusian_arabic", new string[] { "XAA" } },
-            { "anglonorse", new string[] { "ANG" } },
-            { "aragonese", new string[] { "AN" } },
-            { "arberian", new string[] { "AAE" } },
-            { "arpitan", new string[] { "FRP" } },
-            { "assamese", new string[] { "AS" } },
-            { "avar", new string[] { "OAV", "AV" } },
-            { "basque", new string[] { "EU", "EUS" } },
-            { "bavarian", new string[] { "BAR" } },
-            { "bohemian", new string[] { "CS" } },
-            { "bolghar", new string[] { "XBO" } },
-            { "breton", new string[] { "XBM", "OBT", "BR" } },
-            { "carantanian", new string[] { "SL" } },
-            { "castillan", new string[] { "OSP", "ES" } },
-            { "catalan", new string[] { "CA" } },
-            { "cornish", new string[] { "CNX", "OCO", "KW" } },
-            { "croatian", new string[] { "HR" } },
-            { "cuman", new string[] { "QWM" } },
-            { "cumbric", new string[] { "XCB" } },
-            { "dalmatian", new string[] { "DLM" } },
-            { "danish", new string[] { "DA" } },
-            { "dutch", new string[] { "DUM", "NL" } },
-            { "egyptian_arabic", new string[] { "EGX", "ARZ", "AVL" } },
-            { "english", new string[] { "ENM" } },
-            { "finnish", new string[] { "FI", "FIT", "FKV" } },
-            { "franconian", new string[] { "VMF" } },
-            { "frankish", new string[] { "FRO", "FRM", "FR" } },
-            { "frisian", new string[] { "FY", "FRY", "FRS", "FRR" } },
-            { "galician", new string[] { "GL" } },
-            { "german", new string[] { "GOH", "GMH", "GML", "DE" } },
-            { "gothic", new string[] { "GOT" } },
-            { "hausa", new string[] { "HA" } },
-            { "hungarian", new string[] { "OHU", "HU" } },
-            { "icelandic", new string[] { "IS" } },
-            { "irish", new string[] { "MGA", "GA" } },
-            { "italian", new string[] { "IT" } },
-            { "jurchen", new string[] { "JUC" } },
-            { "kanuri", new string[] { "KR" } },
-            { "karelian", new string[] { "KRL" } },
-            { "kasogi", new string[] { "ZSK" } },
-            { "khalaj", new string[] { "KJF", "KLJ" } },
-            { "khanty", new string[] { "KCA" } },
-            { "khazar", new string[] { "ZKZ" } },
-            { "khitan", new string[] { "ZKT" } },
-            { "langobardisch", new string[] { "LNG" } },
-            { "lappish", new string[] { "SMI" } },
-            { "leonese", new string[] { "AST" } },
-            { "lettigallish", new string[] { "LV" } },
-            { "ligurian", new string[] { "LIJ" } },
-            { "lithuanian", new string[] { "LT" } },
-            { "livonian", new string[] { "LIV" } },
-            { "lombard", new string[] { "LMO" } },
-            { "low_german", new string[] { "NDS" } },
-            { "low_saxon", new string[] { "NDS" } },
-            { "mari", new string[] { "CHM" } },
-            { "nahuatl", new string[] { "NCI", "NAH", "NHN", "AZD", "AZM", "AZZ", "CBS", "ISC", "KAQ" } },
-            { "neapolitan", new string[] { "NAP" } },
-            { "norman", new string[] { "NRF" } },
-            { "norse", new string[] { "NON" } },
-            { "norwegian", new string[] { "NO", "NN", "NB" } },
-            { "occitan", new string[] { "PRO", "OC" } }, // i don't think it's mediaeval
-            { "old_frankish", new string[] { "FRK" } },
-            { "old_saxon", new string[] { "OSX" } },
-            { "pahlavi", new string[] { "PAL" } },
-            { "pecheneg", new string[] { "XPC" } },
-            { "pictish", new string[] { "XPI" } },
-            { "polish", new string[] { "PL" } },
-            { "portuguese", new string[] { "PT" } },
-            { "prussian", new string[] { "PRG" } },
-            { "roman", new string[] { "LA" } },
-            { "romanian", new string[] { "RO", "RUP", "RUO", "RUQ" } },
-            { "samoyed", new string[] { "SYD" } },
-            { "sardinian", new string[] { "SC", "SRO", "SRC", "SDN", "SDC" } },
-            { "scottish", new string[] { "GD", "GHC", "SCO" } },
-            { "sicilian", new string[] { "SCN" } },
-            { "slovieni", new string[] { "SK" } },
-            { "somali", new string[] { "SO" } },
-            { "swabian", new string[] { "SWG" } },
-            { "swedish", new string[] { "SV" } },
-            { "turkish", new string[] { "OTK", "OTA", "TR", "BGX", "CRH", "KMZ" } },
-            { "turkmen", new string[] { "TK" } },
-            { "udi", new string[] { "UDI" } },
-            { "ugricbaltic", new string[] { "ET" } },
-            { "umbrian", new string[] { "XUM" } },
-            { "venetian", new string[] { "VEC" } },
-            { "vepsian", new string[] { "VEP" } },
-            { "welsh", new string[] { "WLM", "OWL", "CY" } },
-            { "wolof", new string[] { "WO" } },
-            //{ "armenian", new string[] { "AXM", "HY" } }, // non-latin
-            //{ "bashkir", new string[] { "BA" } }, // non-latin
-            //{ "bengali", new string[] { "BN" } }, // non-latin
-            //{ "bosnian", new string[] { "BS" } }, // non-latin
-            //{ "bulgarian", new string[] { "CU", "BG" } }, // non-latin
-            //{ "georgian", new string[] { "KA" } }, // non-latin
-            //{ "greek", new string[] { "GRC", "EL" } }, // non-latin
-            //{ "han", new string[] { "ZH" } }, // non-latin
-            //{ "hindustani", new string[] { "HI" } }, // non-latin
-            //{ "kannada", new string[] { "KN" } }, // non-latin
-            //{ "kirghiz", new string[] { "KY" } }, // non-latin
-            //{ "komi", new string[] { "KV", "KOI", "KPV" } }, // non-latin
-            //{ "kurdish", new string[] { "KU" } }, // non-latin
-            //{ "maghreb_arabic", new string[] { "AR" } }, // non-latin
-            //{ "marathi", new string[] { "MR" } }, // non-latin
-            //{ "mongol", new string[] { "CMG", "MN" } }, // non-latin
-            //{ "nepali", new string[] { "NE" } }, // non-latin
-            //{ "oriya", new string[] { "OR" } }, // non-latin
-            //{ "panjabi", new string[] { "PA" } }, // non-latin
-            //{ "persian", new string[] { "FA" } }, // non-latin
-            //{ "russian", new string[] { "RU" } }, // non-latin
-            //{ "sindhi", new string[] { "SD" } }, // non-latin
-            //{ "sinhala", new string[] { "SI" } }, // non-latin
-            //{ "tajik", new string[] { "TG" } }, // non-latin
-            //{ "tamil", new string[] { "TA" } }, // non-latin
-            //{ "telugu", new string[] { "TE" } }, // non-latin
-            //{ "uyghur", new string[] { "UG" } }, // non-latin
+            { "afar", new string[] { "aa" } },
+            { "andalusian_arabic", new string[] { "xaa" } },
+            { "anglonorse", new string[] { "ang" } },
+            { "aragonese", new string[] { "an" } },
+            { "arberian", new string[] { "aae" } },
+            { "arpitan", new string[] { "frp" } },
+            { "assamese", new string[] { "as" } },
+            { "avar", new string[] { "oav", "av" } },
+            { "basque", new string[] { "eu", "eus" } },
+            { "bavarian", new string[] { "bar" } },
+            { "bohemian", new string[] { "cs" } },
+            { "bolghar", new string[] { "xbo" } },
+            { "breton", new string[] { "xbm", "obt", "br" } },
+            { "carantanian", new string[] { "sl" } },
+            { "castillan", new string[] { "osp", "es" } },
+            { "catalan", new string[] { "ca" } },
+            { "cornish", new string[] { "cnx", "oco", "kw" } },
+            { "croatian", new string[] { "hr" } },
+            { "cuman", new string[] { "qwm" } },
+            { "cumbric", new string[] { "xcb" } },
+            { "dalmatian", new string[] { "dlm" } },
+            { "danish", new string[] { "da" } },
+            { "dutch", new string[] { "dum", "odt", "nl" } },
+            { "egyptian_arabic", new string[] { "egx", "arz", "avl" } },
+            { "english", new string[] { "enm" } },
+            { "finnish", new string[] { "fi", "fit", "fkv" } },
+            { "franconian", new string[] { "vmf" } },
+            { "frankish", new string[] { "fro", "frm", "fr" } },
+            { "frisian", new string[] { "ofs", "fy", "fry", "frs", "frr" } },
+            { "galician", new string[] { "gl" } },
+            { "german", new string[] { "goh", "gmh", "gml", "de" } },
+            { "gothic", new string[] { "got" } },
+            { "hausa", new string[] { "ha" } },
+            { "hungarian", new string[] { "ohu", "hu" } },
+            { "icelandic", new string[] { "is" } },
+            { "irish", new string[] { "mga", "sga", "ga" } },
+            { "italian", new string[] { "it" } },
+            { "jurchen", new string[] { "juc" } },
+            { "kanuri", new string[] { "kr" } },
+            { "karelian", new string[] { "krl" } },
+            { "kasogi", new string[] { "zsk" } },
+            { "khalaj", new string[] { "kjf", "klj" } },
+            { "khanty", new string[] { "kca" } },
+            { "khazar", new string[] { "zkz" } },
+            { "khitan", new string[] { "zkt" } },
+            { "langobardisch", new string[] { "lng" } },
+            { "lappish", new string[] { "smi" } },
+            { "leonese", new string[] { "ast" } },
+            { "lettigallish", new string[] { "lv" } },
+            { "ligurian", new string[] { "lij" } },
+            { "lithuanian", new string[] { "olt", "lt" } },
+            { "livonian", new string[] { "liv" } },
+            { "lombard", new string[] { "lmo" } },
+            { "low_german", new string[] { "nds" } },
+            { "low_saxon", new string[] { "nds" } },
+            { "mari", new string[] { "chm" } },
+            { "nahuatl", new string[] { "nci", "nah", "nhn", "azd", "azm", "azz", "cbs", "iss", "isc", "kaq" } },
+            { "neapolitan", new string[] { "nap" } },
+            { "norman", new string[] { "nrf" } },
+            { "norse", new string[] { "non" } },
+            { "norwegian", new string[] { "no", "nn", "nb" } },
+            { "occitan", new string[] { "pro", "oc" } }, // i don't think it's mediaevalval
+            { "old_frankish", new string[] { "frk" } },
+            { "old_saxon", new string[] { "osx" } },
+            { "pahlavi", new string[] { "pal" } },
+            { "pecheneg", new string[] { "xpc" } },
+            { "pictish", new string[] { "xpi" } },
+            { "polish", new string[] { "pl" } },
+            { "portuguese", new string[] { "pt" } },
+            { "prussian", new string[] { "prg" } },
+            { "roman", new string[] { "la" } },
+            { "romanian", new string[] { "ro", "rup", "ruo", "ruq" } },
+            { "samoyed", new string[] { "syd" } },
+            { "sardinian", new string[] { "sc", "sro", "src", "sdn", "sdc" } },
+            { "scottish", new string[] { "gd", "ghc", "sco" } },
+            { "sicilian", new string[] { "scn" } },
+            { "slovieni", new string[] { "sk" } },
+            { "somali", new string[] { "so" } },
+            { "swabian", new string[] { "swg" } },
+            { "swedish", new string[] { "sv" } },
+            { "turkish", new string[] { "otk", "ota", "tr", "bgx", "crh", "kmz" } },
+            { "turkmen", new string[] { "tk" } },
+            { "udi", new string[] { "udi" } },
+            { "ugricbaltic", new string[] { "et" } },
+            { "umbrian", new string[] { "xum" } },
+            { "venetian", new string[] { "vec" } },
+            { "vepsian", new string[] { "vep" } },
+            { "welsh", new string[] { "wlm", "owl", "cy" } },
+            { "wolof", new string[] { "wo" } },
+            //{ "armenian", new string[] { "axm", "hy" } }, // non-latin
+            //{ "bashkir", new string[] { "ba" } }, // non-latin
+            //{ "bengali", new string[] { "bn" } }, // non-latin
+            //{ "bosnian", new string[] { "bs" } }, // non-latin
+            //{ "bulgarian", new string[] { "cu", "bg" } }, // non-latin
+            //{ "georgian", new string[] { "oge", ka" } }, // non-latin
+            //{ "greek", new string[] { "grc", "el" } }, // non-latin
+            //{ "han", new string[] { "ltc", "zh" } }, // non-latin
+            //{ "hijazi", new string[] { "acv" } }, // non-latin
+            //{ "hindustani", new string[] { "hi" } }, // non-latin
+            //{ "kannada", new string[] { "kn" } }, // non-latin
+            //{ "kirghiz", new string[] { "ky" } }, // non-latin
+            //{ "komi", new string[] { "kv", "koi", "kpv" } }, // non-latin
+            //{ "kurdish", new string[] { "ku" } }, // non-latin
+            //{ "maghreb_arabic", new string[] { "ar" } }, // non-latin
+            //{ "marathi", new string[] { "mr" } }, // non-latin
+            //{ "mongol", new string[] { "xng", "cmg", "mn" } }, // non-latin
+            //{ "nepali", new string[] { "ne" } }, // non-latin
+            //{ "oriya", new string[] { "or" } }, // non-latin
+            //{ "panjabi", new string[] { "pa" } }, // non-latin
+            //{ "persian", new string[] { "fa" } }, // non-latin
+            //{ "russian", new string[] { "orv", ru" } }, // non-latin
+            //{ "sindhi", new string[] { "sd" } }, // non-latin
+            //{ "sinhala", new string[] { "si" } }, // non-latin
+            //{ "tajik", new string[] { "tg" } }, // non-latin
+            //{ "tamil", new string[] { "oty", ta" } }, // non-latin
+            //{ "telugu", new string[] { "te" } }, // non-latin
+            //{ "uyghur", new string[] { "oui", ug" } }, // non-latin
         };
     }
 }
