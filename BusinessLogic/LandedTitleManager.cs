@@ -330,7 +330,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 0; i < 2250; i++)
+            for (int i = 0; i < 3000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
@@ -601,6 +601,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
                 "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian"),
 
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "norsegaelic" ),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "scottish", "welsh"),
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "scottish", "cumbric", "pictish"),
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"),
@@ -637,28 +638,31 @@ namespace CK2LandedTitlesManager.BusinessLogic
         readonly IDictionary<string, string[]> CultureLanguages = new Dictionary<string, string[]>
         {
             { "afar", new string[] { "AA" } },
+            { "andalusian_arabic", new string[] { "XAA" } },
+            { "anglonorse", new string[] { "ANG" } },
             { "aragonese", new string[] { "AN" } },
             { "arberian", new string[] { "AAE" } },
             { "arpitan", new string[] { "FRP" } },
             { "assamese", new string[] { "AS" } },
-            { "avar", new string[] { "AV" } },
+            { "avar", new string[] { "OAV", "AV" } },
             { "basque", new string[] { "EU", "EUS" } },
             { "bavarian", new string[] { "BAR" } },
-            { "bohemian", new string[] { "CZ" } },
+            { "bohemian", new string[] { "CS" } },
             { "bolghar", new string[] { "XBO" } },
-            { "breton", new string[] { "BR" } },
+            { "breton", new string[] { "XBM", "OBT", "BR" } },
             { "carantanian", new string[] { "SL" } },
-            { "castillan", new string[] { "ES" } },
+            { "castillan", new string[] { "OSP", "ES" } },
             { "catalan", new string[] { "CA" } },
-            { "cornish", new string[] { "KW" } },
+            { "cornish", new string[] { "CNX", "OCO", "KW" } },
             { "croatian", new string[] { "HR" } },
             { "cuman", new string[] { "QWM" } },
             { "cumbric", new string[] { "XCB" } },
             { "dalmatian", new string[] { "DLM" } },
             { "danish", new string[] { "DA" } },
             { "dutch", new string[] { "DUM", "NL" } },
+            { "egyptian_arabic", new string[] { "EGX", "ARZ", "AVL" } },
             { "english", new string[] { "ENM" } },
-            { "finnish", new string[] { "FI" } },
+            { "finnish", new string[] { "FI", "FIT", "FKV" } },
             { "franconian", new string[] { "VMF" } },
             { "frankish", new string[] { "FRO", "FRM", "FR" } },
             { "frisian", new string[] { "FY", "FRY", "FRS", "FRR" } },
@@ -666,7 +670,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "german", new string[] { "GOH", "GMH", "GML", "DE" } },
             { "gothic", new string[] { "GOT" } },
             { "hausa", new string[] { "HA" } },
-            { "hungarian", new string[] { "HU" } },
+            { "hungarian", new string[] { "OHU", "HU" } },
             { "icelandic", new string[] { "IS" } },
             { "irish", new string[] { "MGA", "GA" } },
             { "italian", new string[] { "IT" } },
@@ -674,7 +678,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "kanuri", new string[] { "KR" } },
             { "karelian", new string[] { "KRL" } },
             { "kasogi", new string[] { "ZSK" } },
-            { "khalaj", new string[] { "KLJ" } },
+            { "khalaj", new string[] { "KJF", "KLJ" } },
             { "khanty", new string[] { "KCA" } },
             { "khazar", new string[] { "ZKZ" } },
             { "khitan", new string[] { "ZKT" } },
@@ -689,13 +693,14 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "low_german", new string[] { "NDS" } },
             { "low_saxon", new string[] { "NDS" } },
             { "mari", new string[] { "CHM" } },
-            { "nahuatl", new string[] { "NCI", "NAH", "NHN" } },
+            { "nahuatl", new string[] { "NCI", "NAH", "NHN", "AZD", "AZM", "AZZ", "CBS", "ISC", "KAQ" } },
             { "neapolitan", new string[] { "NAP" } },
             { "norman", new string[] { "NRF" } },
             { "norse", new string[] { "NON" } },
-            { "norwegian", new string[] { "NO" } },
+            { "norwegian", new string[] { "NO", "NN", "NB" } },
             { "occitan", new string[] { "PRO", "OC" } }, // i don't think it's mediaeval
             { "old_frankish", new string[] { "FRK" } },
+            { "old_saxon", new string[] { "OSX" } },
             { "pahlavi", new string[] { "PAL" } },
             { "pecheneg", new string[] { "XPC" } },
             { "pictish", new string[] { "XPI" } },
@@ -703,40 +708,40 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "portuguese", new string[] { "PT" } },
             { "prussian", new string[] { "PRG" } },
             { "roman", new string[] { "LA" } },
-            { "romanian", new string[] { "RO", "RUP" } },
+            { "romanian", new string[] { "RO", "RUP", "RUO", "RUQ" } },
             { "samoyed", new string[] { "SYD" } },
-            { "sardinian", new string[] { "SC" } },
-            { "scottish", new string[] { "GD" } },
+            { "sardinian", new string[] { "SC", "SRO", "SRC", "SDN", "SDC" } },
+            { "scottish", new string[] { "GD", "GHC", "SCO" } },
             { "sicilian", new string[] { "SCN" } },
             { "slovieni", new string[] { "SK" } },
             { "somali", new string[] { "SO" } },
             { "swabian", new string[] { "SWG" } },
             { "swedish", new string[] { "SV" } },
-            { "turkish", new string[] { "TR" } },
+            { "turkish", new string[] { "OTK", "OTA", "TR", "BGX", "CRH", "KMZ" } },
             { "turkmen", new string[] { "TK" } },
             { "udi", new string[] { "UDI" } },
             { "ugricbaltic", new string[] { "ET" } },
             { "umbrian", new string[] { "XUM" } },
             { "venetian", new string[] { "VEC" } },
             { "vepsian", new string[] { "VEP" } },
-            { "welsh", new string[] { "CY" } },
+            { "welsh", new string[] { "WLM", "OWL", "CY" } },
             { "wolof", new string[] { "WO" } },
-            //{ "armenian", new string[] { "HY" } }, // non-latin
+            //{ "armenian", new string[] { "AXM", "HY" } }, // non-latin
             //{ "bashkir", new string[] { "BA" } }, // non-latin
             //{ "bengali", new string[] { "BN" } }, // non-latin
             //{ "bosnian", new string[] { "BS" } }, // non-latin
-            //{ "bulgarian", new string[] { "BG" } }, // non-latin
+            //{ "bulgarian", new string[] { "CU", "BG" } }, // non-latin
             //{ "georgian", new string[] { "KA" } }, // non-latin
             //{ "greek", new string[] { "GRC", "EL" } }, // non-latin
             //{ "han", new string[] { "ZH" } }, // non-latin
             //{ "hindustani", new string[] { "HI" } }, // non-latin
             //{ "kannada", new string[] { "KN" } }, // non-latin
             //{ "kirghiz", new string[] { "KY" } }, // non-latin
-            //{ "komi", new string[] { "KV" } }, // non-latin
+            //{ "komi", new string[] { "KV", "KOI", "KPV" } }, // non-latin
             //{ "kurdish", new string[] { "KU" } }, // non-latin
             //{ "maghreb_arabic", new string[] { "AR" } }, // non-latin
             //{ "marathi", new string[] { "MR" } }, // non-latin
-            //{ "mongolia", new string[] { "MN" } }, // non-latin
+            //{ "mongol", new string[] { "CMG", "MN" } }, // non-latin
             //{ "nepali", new string[] { "NE" } }, // non-latin
             //{ "oriya", new string[] { "OR" } }, // non-latin
             //{ "panjabi", new string[] { "PA" } }, // non-latin
