@@ -19,7 +19,7 @@ namespace CK2LandedTitlesManager.Communication
 
         readonly IEnumerable<string> Usernames = new List<string>
         { 
-            "geonamesfreeaccountt", "freacctest1", "freacctest2", "commando.gaztons", "berestesievici", "izvoli.prostagma",
+            "geonamesfreeaccountt", "freacctest1", "commando.gaztons", "berestesievici", "izvoli.prostagma",
             "gesturioso", "random.name.ftw", "b75268", "b75375", "b75445", "b75445",
             "botu0", "botu1", "botu2", "botu3", "botu4", "botu5", "botu6", "botu7", "botu8", "botu9",
             "elBot0", "elBot1", "elBot2", "elBot3", "elBot4", "elBot5", "elBot6", "elBot7", "elBot8", "elBot9",
@@ -67,7 +67,6 @@ namespace CK2LandedTitlesManager.Communication
             
             if (exonym is null)
             {
-                //Console.WriteLine($"Web HIT for '{placeName}' in {language}");
                 exonym = await GetExonymFromApi(normalisedPlaceName, language);
             }
 
@@ -76,7 +75,7 @@ namespace CK2LandedTitlesManager.Communication
                 return null;
             }
 
-            return exonym;
+            return CleanName(exonym);
         }
 
         async Task<string> GetExonymFromApi(string placeName, string language)
@@ -189,7 +188,7 @@ namespace CK2LandedTitlesManager.Communication
         {
             string normalisedName = CleanName(name);
 
-            normalisedName = Regex.Replace(normalisedName, "-|'", "");
+            normalisedName = Regex.Replace(normalisedName, "-|'", string.Empty);
 
             /*
             normalisedName = Regex.Replace(normalisedName, "âăãáä", "a");
@@ -212,6 +211,11 @@ namespace CK2LandedTitlesManager.Communication
 
         string CleanName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return name;
+            }
+
             string cleanName = name
                 .Split('/')[0]
                 .Split('.')[0]
@@ -225,52 +229,74 @@ namespace CK2LandedTitlesManager.Communication
             cleanName = Regex.Replace(cleanName, "ß", "ss");
             cleanName = Regex.Replace(cleanName, "ĳ", "ij");
 
-            cleanName = Regex.Replace(cleanName, " BL$", "");
-            cleanName = Regex.Replace(cleanName, " bykommune$", "");
-            cleanName = Regex.Replace(cleanName, " ili$", "");
-            cleanName = Regex.Replace(cleanName, " kommune$", "");
-            cleanName = Regex.Replace(cleanName, " miestas$", "");
-            cleanName = Regex.Replace(cleanName, " SH$", "");
-            cleanName = Regex.Replace(cleanName, " TG$", "");
-            cleanName = Regex.Replace(cleanName, " AG$", "");
-            cleanName = Regex.Replace(cleanName, " valsčius$", "");
-            cleanName = Regex.Replace(cleanName, "^Abbaye d'", "");
-            cleanName = Regex.Replace(cleanName, "^Arrondissement de ", "");
-            cleanName = Regex.Replace(cleanName, "^Campo di sterminio di ", "");
-            cleanName = Regex.Replace(cleanName, "^Cathair ", "");
-            cleanName = Regex.Replace(cleanName, "^Circondario del ", "");
-            cleanName = Regex.Replace(cleanName, "^Ciudad de ", "");
-            cleanName = Regex.Replace(cleanName, "^Ciutat d'", "");
-            cleanName = Regex.Replace(cleanName, "^Ciutat de ", "");
-            cleanName = Regex.Replace(cleanName, "^Comuna de ", "");
-            cleanName = Regex.Replace(cleanName, "^Dinas ", "");
-            cleanName = Regex.Replace(cleanName, "^Districte de ", "");
-            cleanName = Regex.Replace(cleanName, "^Districtul ", "");
-            cleanName = Regex.Replace(cleanName, "^Distrito de ", "");
-            cleanName = Regex.Replace(cleanName, "^Estado de ", "");
-            cleanName = Regex.Replace(cleanName, "^Gmina ", "");
-            cleanName = Regex.Replace(cleanName, "^Kreis ", "");
-            cleanName = Regex.Replace(cleanName, "^Loster ", "");
-            cleanName = Regex.Replace(cleanName, "^Magaalada ", "");
-            cleanName = Regex.Replace(cleanName, "^Mestna občina ", "");
-            cleanName = Regex.Replace(cleanName, "^Powiat ", "");
-            cleanName = Regex.Replace(cleanName, "^Prowincja ", "");
-            cleanName = Regex.Replace(cleanName, "^Statul ", "");
+            IEnumerable<string> removePatterns = new List<string>
+            {
+                " - .*",
+                " [A-Z][A-Z]$",
+                " am \\p{Lu}\\p{Ll}* See$",
+                " am \\p{Lu}\\p{Ll}*$",
+                " an der \\p{Lu}\\p{Ll}*$",
+                " bykommune$",
+                " civitas$",
+                " d\\p{Lu}\\p{Ll}*$",
+                " de \\p{Lu}\\p{Ll}*$",
+                " ili$",
+                " im \\p{Lu}\\p{Ll}*$",
+                " in \\p{Lu}\\p{Ll}*$",
+                " kommune$",
+                " miestas$",
+                " pie \\p{Lu}\\p{Ll}*$",
+                " valsčius$",
+                " ved \\p{Lu}\\p{Ll}*$",
+                "^Abbaye d'",
+                "^Arrondissement de ",
+                "^Campo di sterminio di ",
+                "^Cathair ",
+                "^Circondario del ",
+                "^Ciudad de ",
+                "^Ciutat d'",
+                "^Ciutat de ",
+                "^Comuna de ",
+                "^Dinas ",
+                "^Districte de ",
+                "^Districtul ",
+                "^Distrito de ",
+                "^Estado de ",
+                "^Gemeen ",
+                "^Gmina ",
+                "^Kreis ",
+                "^Loster ",
+                "^Lutherstadt ",
+                "^Magaalada ",
+                "^Mestna občina ",
+                "^Mont ",
+                "^Monte ",
+                "^Powiat ",
+                "^Prowincja ",
+                "^St$",
+                "^Statul "
+            };
+
+            string removePatternsCombined = "(";
+            removePatternsCombined += string.Join("|", removePatterns);
+            removePatternsCombined = removePatternsCombined.Substring(0, removePatternsCombined.Length - 1) + ")";
+
+            cleanName = Regex.Replace(cleanName, removePatternsCombined, string.Empty);
 
             // non-Windows1252 characters
-            cleanName = Regex.Replace(cleanName, "Ă", "Ã");
-            cleanName = Regex.Replace(cleanName, "İ", "I");
-            cleanName = Regex.Replace(cleanName, "Ż", "Z");
-            cleanName = Regex.Replace(cleanName, "ă", "ã");
-            cleanName = Regex.Replace(cleanName, "č", "c");
-            cleanName = Regex.Replace(cleanName, "ď", "d");
-            cleanName = Regex.Replace(cleanName, "ė", "e");
-            cleanName = Regex.Replace(cleanName, "ı", "i");
-            cleanName = Regex.Replace(cleanName, "ł", "l");
-            cleanName = Regex.Replace(cleanName, "ș", "s");
-            cleanName = Regex.Replace(cleanName, "ț", "t");
-            cleanName = Regex.Replace(cleanName, "ū", "u");
-            cleanName = Regex.Replace(cleanName, "ż", "z");
+            cleanName = Regex.Replace(cleanName, "[Ă]", "Ã");
+            cleanName = Regex.Replace(cleanName, "[İ]", "I");
+            cleanName = Regex.Replace(cleanName, "[Ż]", "Z");
+            cleanName = Regex.Replace(cleanName, "[ăā]", "ã");
+            cleanName = Regex.Replace(cleanName, "[č]", "c");
+            cleanName = Regex.Replace(cleanName, "[ď]", "d");
+            cleanName = Regex.Replace(cleanName, "[ėē]", "e");
+            cleanName = Regex.Replace(cleanName, "[ıī]", "i");
+            cleanName = Regex.Replace(cleanName, "[ł]", "l");
+            cleanName = Regex.Replace(cleanName, "[ș]", "s");
+            cleanName = Regex.Replace(cleanName, "[ț]", "t");
+            cleanName = Regex.Replace(cleanName, "[ū]", "u");
+            cleanName = Regex.Replace(cleanName, "[ż]", "z");
 
             return cleanName.Trim();
         }
