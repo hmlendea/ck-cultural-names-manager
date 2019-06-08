@@ -89,7 +89,7 @@ namespace CK2LandedTitlesManager.Communication
 
             SaveExonymInCache(placeName, language, exonym);
 
-            return exonym;
+            return CleanName(exonym);
         }
 
         string GetExonymFromCache(string placeName, string language)
@@ -142,11 +142,6 @@ namespace CK2LandedTitlesManager.Communication
                 string errorMessage = await DeserialiseErrorResponse(httpResponse);
                 throw new Exception(errorMessage);
             }
-
-            if (responseString.Contains("<totalResultsCount>0</totalResultsCount>"))
-            {
-                throw new Exception("No results");
-            }
         }
 
         // TODO: The searchName parameter doesn't belong here
@@ -156,10 +151,14 @@ namespace CK2LandedTitlesManager.Communication
             const string alternateNamePattern = "<name>(.*)</name>";
 
             string responseString = await httpResponse.Content.ReadAsStringAsync();
+
+            if (responseString.Contains("<totalResultsCount>0</totalResultsCount>"))
+            {
+                return "NO_RESULTS";
+            }
+
             string toponymName = Regex.Match(responseString, toponymNamePattern).Groups[1].Value;
             string alternateName = Regex.Match(responseString, alternateNamePattern).Groups[1].Value;
-
-            alternateName = CleanName(alternateName);
 
             string normalisedToponymName = NormalisePlaceName(toponymName);
             string normalisedAlternateName = NormalisePlaceName(alternateName);
@@ -246,6 +245,7 @@ namespace CK2LandedTitlesManager.Communication
                 " kommune$",
                 " miestas$",
                 " pie \\p{Lu}\\p{Ll}*$",
+                " saar$",
                 " valsčius$",
                 " ved \\p{Lu}\\p{Ll}*$",
                 "^Abbaye d'",
@@ -274,7 +274,9 @@ namespace CK2LandedTitlesManager.Communication
                 "^Powiat ",
                 "^Prowincja ",
                 "^St$",
-                "^Statul "
+                "^Statul ",
+                "i vald$",
+                "NO_RESULTS",
             };
 
             string removePatternsCombined = "(";
