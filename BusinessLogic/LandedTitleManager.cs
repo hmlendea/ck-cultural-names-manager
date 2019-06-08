@@ -330,10 +330,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 113; i < 1000; i++)
+            for (int i = 0; i < 2250; i++)
             {
                 LandedTitle title = landedTitles[i];
-                Console.WriteLine($"{i} - {title.Id}");
+                string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
+                
+                Console.WriteLine($"{i} - {title.Id} ({placeName})");
 
                 foreach (string cultureId in CultureLanguages.Keys)
                 {
@@ -341,8 +343,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     {
                         continue;
                     }
-
-                    string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
 
                     if (string.IsNullOrWhiteSpace(placeName))
                     {
@@ -610,7 +610,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "finnish", "komi", "lappish", "livonian", "ugricbaltic"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "lithuanian", "prussian", "lettigallish"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "khanty", "mari", "vespian", "mordvin", "karelian", "samoyed"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "khanty", "mari", "vepsian", "mordvin", "karelian", "samoyed"),
 
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "greek", "crimean_gothic"),
 
@@ -663,7 +663,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "frankish", new string[] { "FRO", "FRM", "FR" } },
             { "frisian", new string[] { "FY", "FRY", "FRS", "FRR" } },
             { "galician", new string[] { "GL" } },
-            { "german", new string[] { "GOH", "GMH", "DE" } },
+            { "german", new string[] { "GOH", "GMH", "GML", "DE" } },
             { "gothic", new string[] { "GOT" } },
             { "hausa", new string[] { "HA" } },
             { "hungarian", new string[] { "HU" } },
@@ -695,6 +695,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "norse", new string[] { "NON" } },
             { "norwegian", new string[] { "NO" } },
             { "occitan", new string[] { "PRO", "OC" } }, // i don't think it's mediaeval
+            { "old_frankish", new string[] { "FRK" } },
             { "pahlavi", new string[] { "PAL" } },
             { "pecheneg", new string[] { "XPC" } },
             { "pictish", new string[] { "XPI" } },
@@ -714,9 +715,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
             { "turkish", new string[] { "TR" } },
             { "turkmen", new string[] { "TK" } },
             { "udi", new string[] { "UDI" } },
+            { "ugricbaltic", new string[] { "ET" } },
             { "umbrian", new string[] { "XUM" } },
             { "venetian", new string[] { "VEC" } },
-            { "vespian", new string[] { "VEP" } },
+            { "vepsian", new string[] { "VEP" } },
             { "welsh", new string[] { "CY" } },
             { "wolof", new string[] { "WO" } },
             //{ "armenian", new string[] { "HY" } }, // non-latin

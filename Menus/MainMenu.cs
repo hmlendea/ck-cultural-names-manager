@@ -222,7 +222,7 @@ namespace CK2LandedTitlesManager.Menus
                 return;
             }
             
-            foreach (string titleId in titlesWithGeoNameSuggestions)
+            foreach (string titleId in titlesWithGeoNameSuggestions.Reverse())
             //foreach (string titleId in titlesWithSuggestions)
             {
                 IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestionForTitle = culturalGroupSuggestions
