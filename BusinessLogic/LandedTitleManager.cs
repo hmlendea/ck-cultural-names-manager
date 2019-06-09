@@ -9,7 +9,6 @@ using NuciExtensions;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
 using CK2LandedTitlesManager.BusinessLogic.Models;
-using CK2LandedTitlesManager.Communication;
 using CK2LandedTitlesManager.DataAccess.IO;
 using CK2LandedTitlesManager.Models;
 
@@ -21,16 +20,17 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         readonly IRepository<TitleLocalisation> localisationRepository;
 
+        readonly ILocalisationProvider localisationProvider;
+
         readonly IGeoNamesCommunicator geoNamesCommunicator;
 
         public LandedTitleManager()
         {
             landedTitles = new List<LandedTitle>();
             localisationRepository = new CsvRepository<TitleLocalisation>("localisations.csv");
+            localisationProvider = new LocalisationProvider(localisationRepository);
 
-            Console.WriteLine(localisationRepository.GetAll().Count());
-
-            this.geoNamesCommunicator = new GeoNamesCommunicator();
+            this.geoNamesCommunicator = new GeoNamesCommunicator(localisationProvider);
         }
 
         public LandedTitle Get(string id)
@@ -113,7 +113,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach (LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
-                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
+                string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 IList<string> cultureIdsToRemove = new List<string>();
 
@@ -124,8 +124,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     {
                         cultureIdsToRemove.Add(cultureId);
                     }
-                    else if (!string.IsNullOrWhiteSpace(localisation) &&
-                             localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
+                    else if (localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
                     {
                         cultureIdsToRemove.Add(cultureId);
                     }
@@ -150,7 +149,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach(LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
-                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
+                string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 if (landedTitles.Count(x => x.Id == title.Id) > 1)
                 {
@@ -177,8 +176,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     {
                         AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
                     }
-                    else if (!string.IsNullOrWhiteSpace(localisation) &&
-                             localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
+                    else if (localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
                     {
                         AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
                     }
@@ -266,7 +264,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     continue;
                 }
 
-                string localisation = localisationRepository.TryGet(title.Id)?.Localisation;
+                string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 foreach (CultureGroup cultureGroup in cultureGroups)
                 {
@@ -298,7 +296,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                         string name = title.DynamicNames[foundTitleCultureId];
 
-                        if (!string.IsNullOrWhiteSpace(localisation) && localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                        if (localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase))
                         {
                             continue;
                         }
@@ -330,36 +328,21 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 0; i < 600; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 LandedTitle title = landedTitles[i];
-                string placeName = localisationRepository.TryGet(title.Id)?.Localisation;
+                string localisation = localisationProvider.GetLocalisation(title.Id);
                 
-                Console.WriteLine($"{i} - {title.Id} ({placeName})");
+                Console.WriteLine($"{i} - {title.Id} ({localisation})");
 
-                foreach (string cultureId in CultureLanguages.Keys)
+                foreach (string cultureId in geoNamesCommunicator.CultureLanguages.Keys)
                 {
                     if (title.DynamicNames.ContainsKey(cultureId))
                     {
                         continue;
                     }
 
-                    if (string.IsNullOrWhiteSpace(placeName))
-                    {
-                        placeName = title.IdWithoutLevel;
-                    }
-
-                    string exonym = null;
-                    
-                    foreach (string languageCode in CultureLanguages[cultureId])
-                    {
-                        exonym = geoNamesCommunicator.TryGatherExonym(placeName, languageCode).Result; // TODO: Broken async
-
-                        if (placeName.Equals(exonym ?? string.Empty, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            exonym = null;
-                        }
-                    }
+                    string exonym = geoNamesCommunicator.TryGatherExonym(localisation, cultureId).Result; // TODO: Broken async
 
                     if (string.IsNullOrWhiteSpace(exonym))
                     {
@@ -632,127 +615,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "persian", "tajik", "khwarezmi", "adhari", "khorasani"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "daylamite", "khalaj")
-        };
-
-        readonly IDictionary<string, string[]> CultureLanguages = new Dictionary<string, string[]>
-        {
-            { "afar", new string[] { "aa" } },
-            { "andalusian_arabic", new string[] { "xaa" } },
-            { "anglonorse", new string[] { "ang" } },
-            { "aragonese", new string[] { "an" } },
-            { "arberian", new string[] { "aae" } },
-            { "arpitan", new string[] { "frp" } },
-            { "assamese", new string[] { "as" } },
-            { "avar", new string[] { "oav", "av" } },
-            { "basque", new string[] { "eu", "eus" } },
-            { "bavarian", new string[] { "bar" } },
-            { "bohemian", new string[] { "cs" } },
-            { "bolghar", new string[] { "xbo" } },
-            { "breton", new string[] { "xbm", "obt", "br" } },
-            { "carantanian", new string[] { "sl" } },
-            { "castillan", new string[] { "osp", "es" } },
-            { "catalan", new string[] { "ca" } },
-            { "cornish", new string[] { "cnx", "oco", "kw" } },
-            { "croatian", new string[] { "hr" } },
-            { "cuman", new string[] { "qwm" } },
-            { "cumbric", new string[] { "xcb" } },
-            { "dalmatian", new string[] { "dlm" } },
-            { "danish", new string[] { "da" } },
-            { "dutch", new string[] { "dum", "odt", "nl" } },
-            { "egyptian_arabic", new string[] { "egx", "arz", "avl" } },
-            { "english", new string[] { "enm" } },
-            { "finnish", new string[] { "fi", "fit", "fkv" } },
-            { "franconian", new string[] { "vmf" } },
-            { "frankish", new string[] { "fro", "frm", "fr" } },
-            { "frisian", new string[] { "ofs", "fy", "fry", "frs", "frr" } },
-            { "galician", new string[] { "gl" } },
-            { "german", new string[] { "goh", "gmh", "gml", "de" } },
-            { "gothic", new string[] { "got" } },
-            { "hausa", new string[] { "ha" } },
-            { "hungarian", new string[] { "ohu", "hu" } },
-            { "icelandic", new string[] { "is" } },
-            { "irish", new string[] { "mga", "sga", "ga" } },
-            { "italian", new string[] { "it" } },
-            { "jurchen", new string[] { "juc" } },
-            { "kanuri", new string[] { "kr" } },
-            { "karelian", new string[] { "krl" } },
-            { "kasogi", new string[] { "zsk" } },
-            { "khalaj", new string[] { "kjf", "klj" } },
-            { "khanty", new string[] { "kca" } },
-            { "khazar", new string[] { "zkz" } },
-            { "khitan", new string[] { "zkt" } },
-            { "langobardisch", new string[] { "lng" } },
-            { "lappish", new string[] { "smi" } },
-            { "leonese", new string[] { "ast" } },
-            { "lettigallish", new string[] { "lv" } },
-            { "ligurian", new string[] { "lij" } },
-            { "lithuanian", new string[] { "olt", "lt" } },
-            { "livonian", new string[] { "liv" } },
-            { "lombard", new string[] { "lmo" } },
-            { "low_german", new string[] { "nds" } },
-            { "low_saxon", new string[] { "nds" } },
-            { "mari", new string[] { "chm" } },
-            { "nahuatl", new string[] { "nci", "nah", "nhn", "azd", "azm", "azz", "cbs", "iss", "isc", "kaq" } },
-            { "neapolitan", new string[] { "nap" } },
-            { "norman", new string[] { "nrf" } },
-            { "norse", new string[] { "non" } },
-            { "norwegian", new string[] { "no", "nn", "nb" } },
-            { "occitan", new string[] { "pro", "oc" } }, // i don't think it's mediaevalval
-            { "old_frankish", new string[] { "frk" } },
-            { "old_saxon", new string[] { "osx" } },
-            { "pahlavi", new string[] { "pal" } },
-            { "pecheneg", new string[] { "xpc" } },
-            { "pictish", new string[] { "xpi" } },
-            { "polish", new string[] { "pl" } },
-            { "portuguese", new string[] { "pt" } },
-            { "prussian", new string[] { "prg" } },
-            { "roman", new string[] { "la" } },
-            { "romanian", new string[] { "ro", "rup", "ruo", "ruq" } },
-            { "samoyed", new string[] { "syd" } },
-            { "sardinian", new string[] { "sc", "sro", "src", "sdn", "sdc" } },
-            { "scottish", new string[] { "gd", "ghc", "sco" } },
-            { "sicilian", new string[] { "scn" } },
-            { "slovieni", new string[] { "sk" } },
-            { "somali", new string[] { "so" } },
-            { "swabian", new string[] { "swg" } },
-            { "swedish", new string[] { "sv" } },
-            { "turkish", new string[] { "otk", "ota", "tr", "bgx", "crh", "kmz" } },
-            { "turkmen", new string[] { "tk" } },
-            { "udi", new string[] { "udi" } },
-            { "ugricbaltic", new string[] { "et" } },
-            { "umbrian", new string[] { "xum" } },
-            { "venetian", new string[] { "vec" } },
-            { "vepsian", new string[] { "vep" } },
-            { "welsh", new string[] { "wlm", "owl", "cy" } },
-            { "wolof", new string[] { "wo" } },
-            //{ "armenian", new string[] { "axm", "hy" } }, // non-latin
-            //{ "bashkir", new string[] { "ba" } }, // non-latin
-            //{ "bengali", new string[] { "bn" } }, // non-latin
-            //{ "bosnian", new string[] { "bs" } }, // non-latin
-            //{ "bulgarian", new string[] { "cu", "bg" } }, // non-latin
-            //{ "georgian", new string[] { "oge", ka" } }, // non-latin
-            //{ "greek", new string[] { "grc", "el" } }, // non-latin
-            //{ "han", new string[] { "ltc", "zh" } }, // non-latin
-            //{ "hijazi", new string[] { "acv" } }, // non-latin
-            //{ "hindustani", new string[] { "hi" } }, // non-latin
-            //{ "kannada", new string[] { "kn" } }, // non-latin
-            //{ "kirghiz", new string[] { "ky" } }, // non-latin
-            //{ "komi", new string[] { "kv", "koi", "kpv" } }, // non-latin
-            //{ "kurdish", new string[] { "ku" } }, // non-latin
-            //{ "maghreb_arabic", new string[] { "ar" } }, // non-latin
-            //{ "marathi", new string[] { "mr" } }, // non-latin
-            //{ "mongol", new string[] { "xng", "cmg", "mn" } }, // non-latin
-            //{ "nepali", new string[] { "ne" } }, // non-latin
-            //{ "oriya", new string[] { "or" } }, // non-latin
-            //{ "panjabi", new string[] { "pa" } }, // non-latin
-            //{ "persian", new string[] { "fa" } }, // non-latin
-            //{ "russian", new string[] { "orv", ru" } }, // non-latin
-            //{ "sindhi", new string[] { "sd" } }, // non-latin
-            //{ "sinhala", new string[] { "si" } }, // non-latin
-            //{ "tajik", new string[] { "tg" } }, // non-latin
-            //{ "tamil", new string[] { "oty", ta" } }, // non-latin
-            //{ "telugu", new string[] { "te" } }, // non-latin
-            //{ "uyghur", new string[] { "oui", ug" } }, // non-latin
         };
     }
 }

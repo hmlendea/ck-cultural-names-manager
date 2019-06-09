@@ -36,6 +36,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .Replace("'", "")
                 .Replace("Æ", "Ae")
                 .Replace("æ", "ae")
+                .Replace("œ", "oe")
                 .Replace("ß", "ss")
                 .RemoveDiacritics()
                 .ToLower();
@@ -72,7 +73,19 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 return cleanName;
             }
 
-            cleanName = Regex.Replace(cleanName, RemovalPattern, string.Empty);
+            while (true)
+            {
+                string newCleanName = Regex.Replace(cleanName, RemovalPattern, string.Empty);
+
+                if (newCleanName == cleanName)
+                {
+                    break;
+                }
+
+                cleanName = newCleanName;
+            }
+
+
             cleanName = ReplaceNonWindows1252Characters(cleanName);
             cleanName = cleanName.Trim();
 
@@ -105,7 +118,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             compliantName = Regex.Replace(compliantName, "[ıī]", "i");
             compliantName = Regex.Replace(compliantName, "[ĳ]", "ij");
             compliantName = Regex.Replace(compliantName, "[ł]", "l");
-            compliantName = Regex.Replace(compliantName, "[ň]", "n");
+            compliantName = Regex.Replace(compliantName, "[ńňņ]", "n");
             compliantName = Regex.Replace(compliantName, "[ș]", "s");
             compliantName = Regex.Replace(compliantName, "[ț]", "t");
             compliantName = Regex.Replace(compliantName, "[ū]", "u");
@@ -127,45 +140,51 @@ namespace CK2LandedTitlesManager.BusinessLogic
             
         readonly IEnumerable<string> cleaningRemovalPatterns = new List<string>
         {
-            " - .*",
-            " [A-Z][A-Z]$",
-            " am \\p{Lu}\\p{Ll}* See$",
-            " am \\p{Lu}\\p{Ll}*$",
-            " an der \\p{Lu}\\p{Ll}*$",
-            " bykommune$",
-            " civitas$",
-            " d\\p{Lu}\\p{Ll}*$",
-            " de \\p{Lu}\\p{Ll}*$",
-            " ili$",
-            " im \\p{Lu}\\p{Ll}*$",
-            " in \\p{Lu}\\p{Ll}*$",
-            " kommune$",
-            " mäed$",
-            " miestas$",
-            " nad \\p{Lu}\\p{Ll}*$",
-            " pie \\p{Lu}\\p{Ll}*$",
-            " saar$",
-            " valsčius$",
-            " ved \\p{Lu}\\p{Ll}*$",
-            "-hegység$",
             "^Abbaye d'",
+            "^Afon ",
+            "^Arondisamant ",
             "^Arrondissement de ",
+            "^Arrondissement di ",
+            "^Bad ",
+            "^Bezirk ",
             "^Campo di sterminio di ",
+            "^Cantó de ",
+            "^Canton ",
+            "^Cantón de ",
+            "^Cantone di ",
+            "^Castell ",
+            "^Castell'",
             "^Cathair ",
+            "^Cerro ",
+            "^Château de la ",
             "^Circondario del ",
+            "^Circondario di ",
+            "^Circulus ",
+            "^Città di ",
+            "^Città di ",
             "^Ciudad de ",
             "^Ciutat d'",
             "^Ciutat de ",
+            "^Comuna ",
             "^Comuna de ",
             "^Dinas ",
+            "^Distretto di ",
             "^Districte de ",
             "^Districtul ",
             "^Distrito de ",
+            "^Dvorac ",
             "^Estado de ",
+            "^Estat d'",
+            "^Försterei ",
+            "^Freie Hansestod ",
             "^Gemeen ",
             "^Gmina ",
             "^Kanton ",
+            "^Kastell ",
+            "^Kloster ",
+            "^Kommun ",
             "^Kreis ",
+            "^Landkreis ",
             "^Loster ",
             "^Lutherstadt ",
             "^Magaalada ",
@@ -175,11 +194,87 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Monte ",
             "^Obsjtina ",
             "^Powiat ",
+            "^Provincia d",
             "^Prowincja ",
+            "^Río ",
+            "^Ruine ",
+            "^Schloss ",
+            "^Schloß ",
+            "^Seno ",
             "^St$",
             "^Statul ",
+            "^Zemský okres ",
+
+
+            " [Cc]oonty$",
+            " [Mm]aakond$",
+            " bykommune$",
+            " civitas$",
+            " ili$",
+            " járás$",
+            " kommun$",
+            " kommune$",
+            " mäed$",
+            " megye$",
+            " miestas$",
+            " saar$",
+            " valsčius$",
+            " vár$",
+            "-hegység$",
+            "-hérað$",
+            "-Lutherstadt$",
             "i liidumaa$",
+            "i ringkond$",
             "i vald$",
+
+            " ringkond$",
+            " vald$",
+
+
+            "^Nagy Magyar ",
+
+
+            "·",
+            " - .*",
+            " [A-Z][A-Z]$",
+            " [ab]$",
+
+
+            " a[dmn] \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
+            " a[dmn] \\p{Lu}\\p{Ll}*$",
+            " an da \\p{Lu}\\p{Ll}*$",
+            " an der \\p{Lu}\\p{Ll}*$",
+            " an['’]n \\p{Lu}\\p{Ll}*$",
+            " bei \\p{Lu}\\p{Ll}*$",
+            " d'\\p{Lu}\\p{Ll}*$",
+            " d'o \\p{Lu}\\p{Ll}*$",
+            " d[eio] \\p{Lu}\\p{Ll}*$",
+            " d\\p{Lu}\\p{Ll}*$",
+            " del \\p{Lu}\\p{Ll}*$",
+            " en \\p{Lu}\\p{Ll}*$",
+            " en el \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
+            " en el \\p{Lu}\\p{Ll}*$",
+            " en la \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
+            " i \\p{Lu}\\p{Ll}*-\\p{Lu}\\p{Ll}*$",
+            " i \\p{Lu}\\p{Ll}*$",
+            " i[mn] \\p{Lu}\\p{Ll}*$",
+            " na \\p{Lu}\\p{Ll}*$",
+            " nad \\p{Lu}\\p{Ll}*$",
+            " ob der \\p{Lu}\\p{Ll}*$",
+            " pie \\p{Lu}\\p{Ll}*$",
+            " prie \\p{Lu}\\p{Ll}*$",
+            " s[uü]l \\p{Lu}\\p{Ll}*$",
+            " sulla \\p{Lu}\\p{Ll}*$",
+            " suprô \\p{Lu}\\p{Ll}*$",
+            " ved \\p{Lu}\\p{Ll}*$",
+            "-[Aa]m-\\p{Lu}\\p{Ll}*$",
+            "-[ae]n-\\p{Lu}\\p{Ll}*$",
+            "-an-der-\\p{Lu}\\p{Ll}*$",
+            "-l['’]\\p{Lu}\\p{Ll}*$",
+            "-le-\\p{Lu}\\p{Ll}*$",
+            "-sur-\\p{Lu}\\p{Ll}*$",
+            "-sur-l['’]\\p{Lu}\\p{Ll}*$",
+            "-sur-le-\\p{Lu}\\p{Ll}*$",
         };
     }
 }

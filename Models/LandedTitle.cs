@@ -17,8 +17,6 @@ namespace CK2LandedTitlesManager.Models
         [Key]
         public string Id { get; set; }
 
-        public string IdWithoutLevel => Id.Substring(2);
-
         /// <summary>
         /// Gets or sets the identifier of the de-jure title it belongs to.
         /// </summary>

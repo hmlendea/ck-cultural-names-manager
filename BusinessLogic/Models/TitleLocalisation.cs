@@ -4,6 +4,6 @@ namespace CK2LandedTitlesManager.BusinessLogic.Models
 {
     public sealed class TitleLocalisation : EntityBase
     {
-        public string Localisation { get; set; }
+        public string Value { get; set; }
     }
 }

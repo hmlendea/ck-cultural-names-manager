@@ -1,6 +1,6 @@
 using NuciDAL.DataObjects;
 
-namespace CK2LandedTitlesManager.Communication
+namespace CK2LandedTitlesManager.BusinessLogic.Models
 {
     public sealed class CachedGeoNameExonym : EntityBase
     {
