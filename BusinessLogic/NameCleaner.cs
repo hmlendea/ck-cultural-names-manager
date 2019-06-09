@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 using NuciExtensions;
@@ -57,8 +58,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             {
                 return cleaningCache[name];
             }
-
-            string cleanName = name
+            
+            byte[] bytes = Encoding.Default.GetBytes(name);
+            string cleanName = Encoding.UTF8.GetString(bytes)
                 .Replace("_", " ")
                 .Replace("NoResultsFound", "")
                 .Split('/')[0]
@@ -103,13 +105,16 @@ namespace CK2LandedTitlesManager.BusinessLogic
             string compliantName = name;
 
             compliantName = Regex.Replace(compliantName, "[ľ]", "l'");
+            compliantName = Regex.Replace(compliantName, "[ť]", "t'");
 
-            compliantName = Regex.Replace(compliantName, "[ĂĀĚ]", "Ã");
-            compliantName = Regex.Replace(compliantName, "[ĖĒ]", "E");
+            compliantName = Regex.Replace(compliantName, "[ĂĀ]", "Ã");
+            compliantName = Regex.Replace(compliantName, "[Č]", "C");
+            compliantName = Regex.Replace(compliantName, "[ĖĒĚ]", "E");
             compliantName = Regex.Replace(compliantName, "[İĪ]", "I");
-            compliantName = Regex.Replace(compliantName, "[Ł]", "L");
+            compliantName = Regex.Replace(compliantName, "[ŁĻ]", "L");
+            compliantName = Regex.Replace(compliantName, "[Ř]", "R");
             compliantName = Regex.Replace(compliantName, "[Ș]", "S");
-            compliantName = Regex.Replace(compliantName, "[Ț]", "T");
+            compliantName = Regex.Replace(compliantName, "[ȚŢ]", "T");
             compliantName = Regex.Replace(compliantName, "[ŪŬ]", "U");
             compliantName = Regex.Replace(compliantName, "[Ż]", "Z");
             compliantName = Regex.Replace(compliantName, "[ăā]", "ã");
@@ -117,12 +122,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
             compliantName = Regex.Replace(compliantName, "[ď]", "d");
             compliantName = Regex.Replace(compliantName, "[ėēě]", "e");
             compliantName = Regex.Replace(compliantName, "[ğ]", "g");
-            compliantName = Regex.Replace(compliantName, "[ıī]", "i");
+            compliantName = Regex.Replace(compliantName, "[ıīі]", "i");
             compliantName = Regex.Replace(compliantName, "[ĳ]", "ij");
-            compliantName = Regex.Replace(compliantName, "[łļ]", "l");
+            compliantName = Regex.Replace(compliantName, "[łļļ]", "l");
             compliantName = Regex.Replace(compliantName, "[ńňņ]", "n");
-            compliantName = Regex.Replace(compliantName, "[ș]", "s");
-            compliantName = Regex.Replace(compliantName, "[ț]", "t");
+            compliantName = Regex.Replace(compliantName, "[ř]", "r");
+            compliantName = Regex.Replace(compliantName, "[șş]", "s");
+            compliantName = Regex.Replace(compliantName, "[țţ]", "t");
             compliantName = Regex.Replace(compliantName, "[ūŭ]", "u");
             compliantName = Regex.Replace(compliantName, "[ƿ]", "w");
             compliantName = Regex.Replace(compliantName, "[ż]", "z");
@@ -152,6 +158,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Betelried ",
             "^Bezirk ",
             "^Byen ",
+            "^Camp de ",
+            "^Campo de concentración ",
             "^Campo di sterminio di ",
             "^Cantó de ",
             "^Canton ",
@@ -188,7 +196,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Kastell ",
             "^Kloster ",
             "^Kommun ",
+            "^Koncentračný tábor ",
+            "^Konzentrationslager ",
             "^Kreis ",
+            "^Lagărul de exterminare ",
             "^Landkreis ",
             "^Loster ",
             "^Lutherstadt ",
@@ -225,11 +236,14 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " hiria$",
             " ili$",
             " járás$",
+            " keskitysleiri$",
             " kommun$",
             " kommune$",
+            " koncentrationslejr$",
             " mäed$",
             " megye$",
             " miestas$",
+            " montes$",
             " saar$",
             " valsčius$",
             " vár$",
@@ -244,11 +258,18 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " vald$",
 
 
-            "^Czeska ",
+            " [Vv]eliki$",
+            " [Vv]elikij$",
+
+
+            " Moldawski$",
             "^[CČ]esk[aáeéyý] ",
+            "^Bosanski ",
+            "^Czeska ",
             "^Nagy Magyar ",
             "^Schwäbisch ",
             "^Švabijos ",
+            "^Wendisch ",
 
 
             " - .*",
@@ -257,8 +278,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " i\\.d\\. OPf\\.$",
             " i\\.d\\.OPf\\.$",
             "·",
+            "^[A-Z][A-Z] ",
 
 
+            " [ií] \\p{Lu}\\p{Ll}*-\\p{Lu}\\p{Ll}*$",
+            " [ií] \\p{Lu}\\p{Ll}*$",
             " \\p{Lu}\\p{Ll}* ääres$",
             " a[dmn] \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
             " a[dmn] \\p{Lu}\\p{Ll}*$",
@@ -277,13 +301,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " en el \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
             " en el \\p{Lu}\\p{Ll}*$",
             " en la \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
-            " i \\p{Lu}\\p{Ll}*-\\p{Lu}\\p{Ll}*$",
-            " i \\p{Lu}\\p{Ll}*$",
             " i[mn] \\p{Lu}\\p{Ll}*$",
             " in der \\p{Lu}\\p{Ll}*$",
             " na \\p{Lu}\\p{Ll}*$",
             " nad \\p{Lu}\\p{Ll}*$",
             " ob der \\p{Lu}\\p{Ll}*$",
+            " o[gn] \\p{Lu}\\p{Ll}*$",
             " pe \\p{Lu}\\p{Ll}*$",
             " pie \\p{Lu}\\p{Ll}*$",
             " prie \\p{Lu}\\p{Ll}*$",
@@ -294,10 +317,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " vorm \\p{Lu}\\p{Ll}*$",
             "-[Aa]m-\\p{Lu}\\p{Ll}*$",
             "-[ae]n-\\p{Lu}\\p{Ll}*$",
-            "-an-der-\\p{Lu}\\p{Ll}*$",
-            "-l['’]\\p{Lu}\\p{Ll}*$",
             "-[lp]e-\\p{Lu}\\p{Ll}*$",
+            "-an-der-\\p{Lu}\\p{Ll}*$",
             "-ar-\\p{Lu}\\p{Ll}*$",
+            "-l['’]\\p{Lu}\\p{Ll}*$",
             "-na-\\p{Lu}\\p{Ll}*$",
             "-sur-\\p{Lu}\\p{Ll}*$",
             "-sur-l['’]\\p{Lu}\\p{Ll}*$",
@@ -307,6 +330,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             " by$",
             " i$",
+            "^de ",
         };
     }
 }

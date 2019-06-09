@@ -22,6 +22,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         readonly ILocalisationProvider localisationProvider;
 
+        readonly INameValidator nameValidator;
+
         readonly IGeoNamesCommunicator geoNamesCommunicator;
 
         public LandedTitleManager()
@@ -29,8 +31,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
             landedTitles = new List<LandedTitle>();
             localisationRepository = new CsvRepository<TitleLocalisation>("localisations.csv");
             localisationProvider = new LocalisationProvider(localisationRepository);
-
-            this.geoNamesCommunicator = new GeoNamesCommunicator(localisationProvider);
+            nameValidator = new NameValidator();
+            geoNamesCommunicator = new GeoNamesCommunicator(localisationProvider, nameValidator);
         }
 
         public LandedTitle Get(string id)
@@ -185,6 +187,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     {
                         AddReasonToViolations(violations, title.Id, $"Invalid character in title name ({cultureId})");
                     }
+
+                    if (!nameValidator.IsNameValid(title.DynamicNames[cultureId]))
+                    {
+                        AddReasonToViolations(violations, title.Id, $"Invalid name for {cultureId}");
+                    }
                 }
             }
 
@@ -296,7 +303,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                         string name = title.DynamicNames[foundTitleCultureId];
 
-                        if (localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                        if (localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                            !nameValidator.IsNameValid(name, cultureId))
                         {
                             continue;
                         }
@@ -345,7 +353,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                     string exonym = geoNamesCommunicator.TryGatherExonym(localisation, cultureId).Result; // TODO: Broken async
 
-                    if (string.IsNullOrWhiteSpace(exonym))
+                    if (string.IsNullOrWhiteSpace(exonym) ||
+                        !nameValidator.IsNameValid(exonym, cultureId))
                     {
                         continue;
                     }
@@ -601,6 +610,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "arpitan"),
 
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "croatian", "serbian", "bosnian", "carantanian"),
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian", "carantanian"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "slovieni"),
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"),

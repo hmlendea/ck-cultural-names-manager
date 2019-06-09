@@ -39,8 +39,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
         readonly IDictionary<string, string> responseCache;
 
         readonly ILocalisationProvider localisationProvider;
+        readonly INameValidator nameValidator;
 
-        public GeoNamesCommunicator(ILocalisationProvider localisationProvider)
+        public GeoNamesCommunicator(
+            ILocalisationProvider localisationProvider,
+            INameValidator nameValidator)
         {
             httpClient = new HttpClient();
             nameCleaner = new NameCleaner();
@@ -51,6 +54,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             lastCacheSave = DateTime.Now;
 
             this.localisationProvider = localisationProvider;
+            this.nameValidator = nameValidator;
         }
 
         public async Task<string> TryGatherExonym(string titleId, string cultureId)
@@ -236,8 +240,14 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     {
                         continue;
                     }
+
+                    // TODO: I shouldn't search for it each time
+                    string cultureId = CultureLanguages.First(x => x.Value.Contains(language)).Key;
                     
-                    return name;
+                    if (nameValidator.IsNameValid(name, cultureId))
+                    {
+                        return name;
+                    }
                 }
             }
 
