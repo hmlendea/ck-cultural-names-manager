@@ -235,7 +235,9 @@ namespace CK2LandedTitlesManager.Menus
 
                 NuciConsole.Write("Suggestions for ");
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.WriteLine(" :");
+                NuciConsole.Write(" (");
+                NuciConsole.Write(geoNamesSuggestionsForTitle.First().Localisation, NuciConsoleColour.White);
+                NuciConsole.WriteLine(") :");
 
                 string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
 
@@ -298,7 +300,9 @@ namespace CK2LandedTitlesManager.Menus
 
                 NuciConsole.Write("Suggestions for ");
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.WriteLine(" :");
+                NuciConsole.Write(" (");
+                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
+                NuciConsole.WriteLine(") :");
 
                 foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
                 {
@@ -326,12 +330,14 @@ namespace CK2LandedTitlesManager.Menus
                 IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
                     .Where(x => x.TitleId == titleId)
                     .OrderBy(x => x.CultureId);
-
+                
                 string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
 
                 NuciConsole.Write("Suggestions for ");
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.WriteLine(" :");
+                NuciConsole.Write(" (");
+                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
+                NuciConsole.WriteLine(") :");
 
                 foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
                 {

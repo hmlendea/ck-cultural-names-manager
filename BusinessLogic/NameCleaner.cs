@@ -85,7 +85,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 cleanName = newCleanName;
             }
 
-
             cleanName = ReplaceNonWindows1252Characters(cleanName);
             cleanName = cleanName.Trim();
 
@@ -103,25 +102,29 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             string compliantName = name;
 
-            compliantName = Regex.Replace(compliantName, "[ĂĀ]", "Ã");
+            compliantName = Regex.Replace(compliantName, "[ľ]", "l'");
+
+            compliantName = Regex.Replace(compliantName, "[ĂĀĚ]", "Ã");
             compliantName = Regex.Replace(compliantName, "[ĖĒ]", "E");
             compliantName = Regex.Replace(compliantName, "[İĪ]", "I");
             compliantName = Regex.Replace(compliantName, "[Ł]", "L");
             compliantName = Regex.Replace(compliantName, "[Ș]", "S");
             compliantName = Regex.Replace(compliantName, "[Ț]", "T");
-            compliantName = Regex.Replace(compliantName, "[Ū]", "U");
+            compliantName = Regex.Replace(compliantName, "[ŪŬ]", "U");
             compliantName = Regex.Replace(compliantName, "[Ż]", "Z");
             compliantName = Regex.Replace(compliantName, "[ăā]", "ã");
             compliantName = Regex.Replace(compliantName, "[č]", "c");
             compliantName = Regex.Replace(compliantName, "[ď]", "d");
-            compliantName = Regex.Replace(compliantName, "[ėē]", "e");
+            compliantName = Regex.Replace(compliantName, "[ėēě]", "e");
+            compliantName = Regex.Replace(compliantName, "[ğ]", "g");
             compliantName = Regex.Replace(compliantName, "[ıī]", "i");
             compliantName = Regex.Replace(compliantName, "[ĳ]", "ij");
-            compliantName = Regex.Replace(compliantName, "[ł]", "l");
+            compliantName = Regex.Replace(compliantName, "[łļ]", "l");
             compliantName = Regex.Replace(compliantName, "[ńňņ]", "n");
             compliantName = Regex.Replace(compliantName, "[ș]", "s");
             compliantName = Regex.Replace(compliantName, "[ț]", "t");
-            compliantName = Regex.Replace(compliantName, "[ū]", "u");
+            compliantName = Regex.Replace(compliantName, "[ūŭ]", "u");
+            compliantName = Regex.Replace(compliantName, "[ƿ]", "w");
             compliantName = Regex.Replace(compliantName, "[ż]", "z");
 
             return compliantName;
@@ -146,7 +149,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Arrondissement de ",
             "^Arrondissement di ",
             "^Bad ",
+            "^Betelried ",
             "^Bezirk ",
+            "^Byen ",
             "^Campo di sterminio di ",
             "^Cantó de ",
             "^Canton ",
@@ -192,24 +197,32 @@ namespace CK2LandedTitlesManager.BusinessLogic
             "^Mont ",
             "^Montañas ",
             "^Monte ",
+            "^Municipalità di ",
             "^Obsjtina ",
             "^Powiat ",
             "^Provincia d",
             "^Prowincja ",
+            "^Republica ",
+            "^Respublica ",
             "^Río ",
             "^Ruine ",
             "^Schloss ",
             "^Schloß ",
+            "^Schlote ",
             "^Seno ",
+            "^Södra ",
             "^St$",
             "^Statul ",
             "^Zemský okres ",
 
 
+            " [Cc]ity$",
             " [Cc]oonty$",
             " [Mm]aakond$",
             " bykommune$",
             " civitas$",
+            " grad$",
+            " hiria$",
             " ili$",
             " járás$",
             " kommun$",
@@ -231,25 +244,34 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " vald$",
 
 
+            "^Czeska ",
+            "^[CČ]esk[aáeéyý] ",
             "^Nagy Magyar ",
+            "^Schwäbisch ",
+            "^Švabijos ",
 
 
-            "·",
             " - .*",
             " [A-Z][A-Z]$",
             " [ab]$",
+            " i\\.d\\. OPf\\.$",
+            " i\\.d\\.OPf\\.$",
+            "·",
 
 
+            " \\p{Lu}\\p{Ll}* ääres$",
             " a[dmn] \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
             " a[dmn] \\p{Lu}\\p{Ll}*$",
+            " aan de \\p{Lu}\\p{Ll}*$",
             " an da \\p{Lu}\\p{Ll}*$",
             " an der \\p{Lu}\\p{Ll}*$",
-            " an['’]n \\p{Lu}\\p{Ll}*$",
+            " an['’]n] \\p{Lu}\\p{Ll}*$",
             " bei \\p{Lu}\\p{Ll}*$",
-            " d'\\p{Lu}\\p{Ll}*$",
-            " d'o \\p{Lu}\\p{Ll}*$",
+            " d['’]\\p{Lu}\\p{Ll}*$",
+            " d['’]o \\p{Lu}\\p{Ll}*$",
             " d[eio] \\p{Lu}\\p{Ll}*$",
             " d\\p{Lu}\\p{Ll}*$",
+            " de l['’]\\p{Lu}\\p{Ll}*$",
             " del \\p{Lu}\\p{Ll}*$",
             " en \\p{Lu}\\p{Ll}*$",
             " en el \\p{Lu}\\p{Ll}* \\p{Lu}\\p{Ll}*$",
@@ -258,23 +280,33 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " i \\p{Lu}\\p{Ll}*-\\p{Lu}\\p{Ll}*$",
             " i \\p{Lu}\\p{Ll}*$",
             " i[mn] \\p{Lu}\\p{Ll}*$",
+            " in der \\p{Lu}\\p{Ll}*$",
             " na \\p{Lu}\\p{Ll}*$",
             " nad \\p{Lu}\\p{Ll}*$",
             " ob der \\p{Lu}\\p{Ll}*$",
+            " pe \\p{Lu}\\p{Ll}*$",
             " pie \\p{Lu}\\p{Ll}*$",
             " prie \\p{Lu}\\p{Ll}*$",
-            " s[uü]l \\p{Lu}\\p{Ll}*$",
+            " s[uü][lr] \\p{Lu}\\p{Ll}*$",
             " sulla \\p{Lu}\\p{Ll}*$",
             " suprô \\p{Lu}\\p{Ll}*$",
             " ved \\p{Lu}\\p{Ll}*$",
+            " vorm \\p{Lu}\\p{Ll}*$",
             "-[Aa]m-\\p{Lu}\\p{Ll}*$",
             "-[ae]n-\\p{Lu}\\p{Ll}*$",
             "-an-der-\\p{Lu}\\p{Ll}*$",
             "-l['’]\\p{Lu}\\p{Ll}*$",
-            "-le-\\p{Lu}\\p{Ll}*$",
+            "-[lp]e-\\p{Lu}\\p{Ll}*$",
+            "-ar-\\p{Lu}\\p{Ll}*$",
+            "-na-\\p{Lu}\\p{Ll}*$",
             "-sur-\\p{Lu}\\p{Ll}*$",
             "-sur-l['’]\\p{Lu}\\p{Ll}*$",
+            "-sur-l\\p{Lu}\\p{Ll}*$",
             "-sur-le-\\p{Lu}\\p{Ll}*$",
+
+
+            " by$",
+            " i$",
         };
     }
 }

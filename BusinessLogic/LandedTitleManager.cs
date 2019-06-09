@@ -304,6 +304,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         CulturalGroupSuggestion suggestion = new CulturalGroupSuggestion
                         {
                             TitleId = title.Id,
+                            Localisation = localisation,
                             SourceCultureId = foundTitleCultureId,
                             TargetCultureId = cultureId,
                             SuggestedName = name
@@ -328,7 +329,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 0; i < 1000; i++)
+            for (int i = 3000; i < 4000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 string localisation = localisationProvider.GetLocalisation(title.Id);
@@ -352,6 +353,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     GeoNamesSuggestion suggestion = new GeoNamesSuggestion
                     {
                         TitleId = title.Id,
+                        Localisation = localisation,
                         CultureId = cultureId,
                         SuggestedName = exonym
                     };

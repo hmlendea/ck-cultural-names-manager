@@ -4,6 +4,8 @@ namespace CK2LandedTitlesManager.Models
     {
         public string TitleId { get; set; }
 
+        public string Localisation { get; set; }
+
         public string CultureId { get; set; }
 
         public string SuggestedName { get; set; }

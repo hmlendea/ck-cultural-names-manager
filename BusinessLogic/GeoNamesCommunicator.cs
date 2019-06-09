@@ -94,9 +94,10 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                 if (!string.IsNullOrWhiteSpace(exonym))
                 {
-                    string cleanExonym = nameCleaner.Clean(exonym);
+                    string normalisedExonym = nameCleaner.Normalise(exonym);
+                    string normalisedSearchname = nameCleaner.Normalise(searchName);
 
-                    if (cleanExonym.Equals(searchName, StringComparison.InvariantCultureIgnoreCase))
+                    if (normalisedExonym.Equals(normalisedSearchname, StringComparison.InvariantCultureIgnoreCase))
                     {
                         return null;
                     }
@@ -198,6 +199,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             JObject o = JObject.Parse(content);
             IList<JToken> geoNames = o["geonames"].Children().ToList();
+            string normalisedSearchName = nameCleaner.Normalise(searchName);
             string exonym = null;
 
             foreach (JToken geoName in geoNames)
@@ -214,15 +216,28 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     continue;
                 }
 
+                string toponymName = (string)geoName["toponymName"];
+
                 foreach(JToken alternateName in alternateNames.Children())
                 {
                     string lang = (string)alternateName["lang"];
                     string name = (string)alternateName["name"];
 
-                    if (lang == language)
+                    if (lang != language)
                     {
-                        return name;
+                        continue;
                     }
+
+                    string normalisedName = nameCleaner.Normalise(name);
+                    string normalisedToponymName = nameCleaner.Normalise(toponymName);
+
+                    if (normalisedName.Equals(normalisedSearchName) ||
+                        normalisedName.Equals(normalisedToponymName))
+                    {
+                        continue;
+                    }
+                    
+                    return name;
                 }
             }
 
@@ -231,7 +246,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         bool IsToponymValidCandidate(JToken geoName, string searchName)
         {
-            string normalisedSearchName = nameCleaner.Normalise(searchName);
             string toponymName = (string)geoName["toponymName"];
             string name = (string)geoName["name"];
             string asciiName = (string)geoName["asciiName"];
@@ -242,17 +256,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 return false;
             }
 
-            if (toponymName.Contains(searchName, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return true;
-            }
-            
-            if (name.Contains(searchName, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return true;
-            }
-            
-            if (asciiName.Contains(normalisedSearchName, StringComparison.InvariantCultureIgnoreCase))
+            if (DoNamesMatch(toponymName, searchName) ||
+                DoNamesMatch(name, searchName) ||
+                DoNamesMatch(asciiName, searchName))
             {
                 return true;
             }
@@ -268,10 +274,23 @@ namespace CK2LandedTitlesManager.BusinessLogic
             {
                 string alternateNameValue = (string)alternateName["name"];
 
-                if (alternateNameValue.Contains(searchName, StringComparison.InvariantCultureIgnoreCase))
+                if (DoNamesMatch(alternateNameValue, searchName))
                 {
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        bool DoNamesMatch(string name1, string name2)
+        {
+            string normalisedName1 = nameCleaner.Normalise(name1);
+            string normalisedName2 = nameCleaner.Normalise(name2);
+
+            if (normalisedName1.Contains(normalisedName2))
+            {
+                return true;
             }
 
             return false;
@@ -293,7 +312,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 //"&featureClass=H" +
                 //"&featureClass=T" +
                 "&isNameRequired=true" +
-                "&maxRows=30" +
+                "&maxRows=15" +
                 "&orderby=relevance" +
                 "&style=FULL";
         }
