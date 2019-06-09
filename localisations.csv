@@ -1,3 +1,4 @@
+b_Regneville,Regnéville
 b_aabenraa,Opnør
 b_aachen,Aachen
 b_aahus,Aos
@@ -11,8 +12,8 @@ b_aarstad,Álreksstaðir
 b_aas,As
 b_aasmul,Aasmul
 b_aatloeyna,Atley
-b_aba-qom,Ábe-Qom
 b_aba,Ába
+b_aba-qom,Ábe-Qom
 b_abada,Ábáde
 b_abalak,Abalak
 b_abarquh,Abarqúh
@@ -73,6 +74,7 @@ b_adel,Adel
 b_adelon,Adelon
 b_aderno,Aderno
 b_adfert,Adfert
+b_adjud,Adjud
 b_admont,Admont
 b_adony,Adony
 b_adra,Adra
@@ -82,8 +84,8 @@ b_adrianeia,Adrianeia
 b_adrianoi,Adrianoi
 b_adrianopolis,Adrianople
 b_aegina,Aigina
-b_aetos_bulgaria,Aytos
 b_aetos,Aetos
+b_aetos_bulgaria,Aytos
 b_afera,Afera
 b_affligem,Affligem
 b_aflu,Aflu
@@ -91,8 +93,8 @@ b_afrag,Áfrág
 b_afridhan,Afrídhán
 b_agades,Agadés
 b_agadez,Agadez
-b_agadir_tlemcen,Agádír
 b_agadir,Agadir
+b_agadir_tlemcen,Agádír
 b_agaldar,Agaldar
 b_agarak,Agarak
 b_agathopolis,Agathoúpolis
@@ -156,8 +158,8 @@ b_akhaltsikhe,Akhaltsikhe
 b_akhieli,Akhieli
 b_akhiza,Akhiza
 b_akhlat,Khlat
-b_akhor_dishistan,Akhor
 b_akhor,Ákhor
+b_akhor_dishistan,Akhor
 b_akhsikak,Akhsíkak
 b_akhsiket,Akhsíket
 b_akhtala,Akhtala
@@ -260,8 +262,8 @@ b_algiers,Al-Jazáir
 b_alhabis,Al-Habis
 b_alhadat,Al-Hadat
 b_alhamadearagon,Alhama de Aragón
-b_alhamma_qashtiliya,al-Hamma
 b_alhamma,Al-Hamma
+b_alhamma_qashtiliya,al-Hamma
 b_alharuniya,Eirenoupolis
 b_alhasun,Al-Hasún
 b_alhawra,Al-Hawra
@@ -331,8 +333,8 @@ b_altdorf,Altdorf
 b_altekaina,Altekaina
 b_altena,Altena
 b_altenberg,Altenberg
-b_altenburg_krain,Altenburg
 b_altenburg,Altenburg
+b_altenburg_krain,Altenburg
 b_altenkirchen,Altenkirchen
 b_altit,Altit
 b_altkirch,Altkirch
@@ -345,8 +347,8 @@ b_alushta,Álouston
 b_alvaiazere,Alvaiázere
 b_alvensleben,Alvensleben
 b_alviano,Alviano
-b_alvito_beja,Alvito
 b_alvito,Alvito
+b_alvito_beja,Alvito
 b_alwa,Alwa
 b_alwajh,Al-Wajh
 b_alwuayra,Al-Wu'ayra
@@ -386,8 +388,8 @@ b_anastasiopolis,Lagania
 b_anatoliaheraklea,Herakleia Kybistra
 b_anauyar,Anauyar
 b_anazarba,Anazarbos
-b_anbar_iraq,Al-Anbar
 b_anbar,Anbár
+b_anbar_iraq,Al-Anbar
 b_ancona,Ancona
 b_andechs,Andechs
 b_andenne,Andenne
@@ -563,16 +565,16 @@ b_arus-al-falak,Arús al-Falak
 b_arva,Árva
 b_arzakiya,Arzakíya
 b_arzan,Ardzen
-b_asadabad_arghiyan,Asadábád
 b_asadabad,Asadabád
+b_asadabad_arghiyan,Asadábád
 b_asch,Asch
 b_aschaffenburg,Aschaffenburg
 b_aschersleben,Aschersleben
 b_asciano,Asciano
-b_ascoli_piceno,Ascoli Piceno
 b_ascoli,Ascoli
-b_asenscastle_petrich,Petrich
+b_ascoli_piceno,Ascoli Piceno
 b_asenscastle,Petrich
+b_asenscastle_petrich,Petrich
 b_asfanjay,Asfanjáy
 b_ashby_de_la_zouch,Ashby
 b_ashli,Ashli
@@ -611,8 +613,8 @@ b_asyut,Asyút
 b_atbara,Atbara
 b_atbash,Atbash
 b_ateni,Ateni
-b_ath_taqab,Ath Thaqab
 b_ath,Ath
+b_ath_taqab,Ath Thaqab
 b_athenry,Athenry
 b_athens,Athenai
 b_athlith,Pèlerin
@@ -778,8 +780,8 @@ b_banbury,Banbury
 b_bandanijin,Bandanijin
 b_bandiagara,Bandiagara
 b_banff,Banff
-b_bangor_wales,Bangor
 b_bangor,Bangor
+b_bangor_wales,Bangor
 b_banha,Banhá
 b_baniwaled,Baní Walíd
 b_banyas,Belinas
@@ -819,8 +821,8 @@ b_bari,Bari
 b_barimma,Barimma
 b_barinsyria,Barin
 b_bariq,Bariq
-b_baris_buhairya,Baris
 b_baris,Baris
+b_baris_buhairya,Baris
 b_barisa,Barísá
 b_barladmoldavia,Bârlad
 b_barleduc,Bar-le-Duc
@@ -858,8 +860,8 @@ b_bastogne,Bastogne
 b_bata,Sogucak
 b_batalha,Batalha
 b_bath,Bath
-b_bati_kaba,Bati
 b_bati,Bati
+b_bati_kaba,Bati
 b_batna,Batna
 b_batorkeszi,Bátorkeszi
 b_batum,Batumi
@@ -872,8 +874,8 @@ b_bavay,Bavay
 b_bawazij,Bawazij
 b_bawit,Bawít
 b_bayan,Bayan
-b_bayda_shiraz,Bayda
 b_bayda,Baydá
+b_bayda_shiraz,Bayda
 b_baydabenghazi,Baydá
 b_baydbert,Baydbert
 b_bayerburg,Raudoné
@@ -932,9 +934,9 @@ b_belmonte,Belmonte
 b_belogradchik,Belogradchik
 b_belomorsk,Soroka
 b_belozersk,Belozersk
+b_belvoir,Belvoir
 b_belvoir_comte,Belvoir
 b_belvoir_leicester,Belvoir
-b_belvoir,Belvoir
 b_belyov,Belëv
 b_belyy,Belaya
 b_belz,Belz
@@ -943,8 +945,8 @@ b_benabarre,Benabarre
 b_benaket,Benáket
 b_benalmadena,Benalmádena
 b_benasque,Benasque
-b_benavente_setubal,Benavente
 b_benavente,Benavente de Lemos
+b_benavente_setubal,Benavente
 b_benevento,Benevento
 b_benghazi,Benghází
 b_beni_isguen,Beni Isgen
@@ -966,8 +968,8 @@ b_berezoveckholmsky,Berezovec
 b_berg,Berg
 b_bergamo,Bergamo
 b_berge,Berge
-b_bergen_auf_rugen,Bergen
 b_bergen,Biorgvín
+b_bergen_auf_rugen,Bergen
 b_bergenhus,Hákonarhella
 b_bergenopzoom,Bergenopzoom
 b_bergh,Bergh
@@ -1083,8 +1085,8 @@ b_bjerkestrand,Birkistrond
 b_bjni,Bjni
 b_blachernae,Blachérnai
 b_blackburn,Blackburn
-b_blagaj_japra,Blagajgrad
 b_blagaj,Blagaj
+b_blagaj_japra,Blagajgrad
 b_blair_atholl,Blair Atholl
 b_blamont,Blâmont
 b_blanchegarde,Blanche Garde
@@ -1190,8 +1192,8 @@ b_bourem,Bourem
 b_bourg,Bourg
 b_bourgas,Pyrgos
 b_bourgmoyen,Bourgmoyen
-b_bourmont_mousson,Bourmont
 b_bourmont,Bourmont
+b_bourmont_mousson,Bourmont
 b_bourn,Bourn
 b_bourscheid,Bourscheid
 b_bourzeycastle,Berzieh
@@ -1279,8 +1281,8 @@ b_broumovkladsko,Broumov
 b_brskovo,Brskovo
 b_brstanik,Brstanik
 b_bruchhausen,Bruchhausen
-b_bruck_an_der_drava,Brück an der Drava
 b_bruck,Bruck
+b_bruck_an_der_drava,Brück an der Drava
 b_brugge,Brugge
 b_brunflo,Hagnastadha
 b_bruntal,Bruntal
@@ -1574,8 +1576,8 @@ b_chalkis,Euripos
 b_challantaosta,Challant
 b_chalons,Châlons
 b_chalovsk,Vasilyeva
-b_chalus_ruyan,Chalus
 b_chalus,Chasluç
+b_chalus_ruyan,Chalus
 b_cham,Cham
 b_chamaret,Chamaret
 b_champagny,Champagny
@@ -1639,12 +1641,12 @@ b_chernigov,Chernigov
 b_chernobel,Chernobyl'
 b_chersonissos,Chersonissos
 b_chertsey,Chertsey
-b_cherven_bulgaria,Cherven
 b_cherven,Cetvertnja
+b_cherven_bulgaria,Cherven
 b_chervenbelzskij,Cerven
 b_chervyen,Cerven
-b_chester-le-street,Chester-le-Street
 b_chester,Chester
+b_chester-le-street,Chester-le-Street
 b_chesterfield,Chesterfield
 b_chevreuse,Chevreuse
 b_chiari,Chiari
@@ -1721,8 +1723,8 @@ b_clarendon,Claredon
 b_clavesana,Clavesana
 b_clecy,Clécy
 b_clerf,Clerf
-b_clermont_en_argonne,Clermont-en-Argonne
 b_clermont,Clermont
+b_clermont_en_argonne,Clermont-en-Argonne
 b_clifford,Clifford
 b_clisson,Clisson
 b_clitheroe,Clitheroe
@@ -1917,8 +1919,8 @@ b_darlington,Darlington
 b_darlowo,Rügenwalde
 b_darmstadt,Darmstadt
 b_daroca,Daroca
-b_daroynk_erzurum,Daroynk
 b_daroynk,Daroynk
+b_daroynk_erzurum,Daroynk
 b_dartmouth,Dartmouth
 b_darum,Darom
 b_darzangi,Dárzangí
@@ -1995,8 +1997,8 @@ b_diest,Diest
 b_diez,Diez
 b_digne,Digne
 b_digoine,Digoin
-b_dihistan-ganj,Dihistán-Ganj
 b_dihistan,Dihistan
+b_dihistan-ganj,Dihistán-Ganj
 b_dijon,Dijon
 b_dikhil,Dikhil
 b_dillaim,Dillaim
@@ -2018,8 +2020,8 @@ b_dirku,Dirku
 b_disentis,Disentis
 b_divitz,Divitz
 b_diza,Diza
-b_dizak_ustrushana,Dízak
 b_dizak,Dizak
+b_dizak_ustrushana,Dízak
 b_dizbad,Dizbád
 b_djado,Djado
 b_djadojafran,Djado
@@ -2030,8 +2032,8 @@ b_djarhum,Jarhum
 b_djarin,Djarin
 b_djarma,Djarma
 b_djarmaq,Jarmaq
-b_djebel_barka,Jebel Barka
 b_djebel-fidda,Jebel Fidda
+b_djebel_barka,Jebel Barka
 b_djelfa,Djelfa
 b_djenne,Djenne
 b_djerba,Jarba
@@ -2229,8 +2231,8 @@ b_egerberk,Egerberk
 b_egernfoerde,Ykærnæburgh
 b_egerszeg,Egerszeg
 b_egge,Egg
-b_egmond_aan_den_hof,Egmont
 b_egmond,Egmond
+b_egmond_aan_den_hof,Egmont
 b_egremont,Egremont
 b_ehingen,Ehingen
 b_eibar,Eibar
@@ -2372,8 +2374,8 @@ b_fakhrabad,Fakhrábád
 b_fakhraldinalmaani,Fakhr-al-Din al-Ma'ani
 b_fakiha,Al-Fakiha
 b_falkenberg,Falkynbergh
-b_falkenstein_bayern,Falkenstein
 b_falkenstein,Falkenstein
+b_falkenstein_bayern,Falkenstein
 b_famagusta,Ammókhõstos
 b_famia,Apamea
 b_fammassilh,Famm as-Silh
@@ -2501,8 +2503,8 @@ b_frakno,Fraknó
 b_framlingham,Framlingham
 b_franchimont,Franchimont
 b_franeker,Franeker
-b_frankfurt_oder,Frankfurt an der Oder
 b_frankfurt,Frankfurt
+b_frankfurt_oder,Frankfurt an der Oder
 b_fraunberg,Fraunberg
 b_freiberg,Freiberg
 b_freiburg,Freiburg
@@ -2553,8 +2555,8 @@ b_galati,Galati
 b_galaxidi,Galaxeidion
 b_galgoc,Galgóc
 b_gallerate,Gallerate
-b_gallipoli_puglia,Puglia
 b_gallipoli,Kallipolis
+b_gallipoli_puglia,Puglia
 b_galsenik_castle_hvar,Grad
 b_galtelli,Galtelli
 b_gamberk,Gallenberg
@@ -2801,8 +2803,8 @@ b_groitzsch,Groitzsch
 b_grojec,Grójec
 b_grolee,Grolée
 b_gronau,Gronau
-b_groningen_blankenburg,Gröningen
 b_groningen,Groningen
+b_groningen_blankenburg,Gröningen
 b_grosin,Grosin
 b_grosseto,Grosseto
 b_groswin,Groswin
@@ -2822,7 +2824,7 @@ b_gudensberg,Gudensberg
 b_guede,Guédé
 b_guelmim,Guelmín
 b_guerande,Guérande
-b_guercif,Guercif
+b_guercif,Garsíf
 b_guernica,Guernica
 b_guerrah,Guerrah
 b_guichen,Gwizien
@@ -2870,8 +2872,8 @@ b_hadeja,Hadeja
 b_hadeln,Hadeln
 b_hadensleben,Hadensleben
 b_haderslev,Hathærslef
-b_haditha_anbar,Al-Haditha
 b_haditha,Haditha
+b_haditha_anbar,Al-Haditha
 b_hadleigh,Hadleigh
 b_hagaslot,Haga
 b_hagenau,Hagenau
@@ -3068,9 +3070,9 @@ b_holopojgorodokmologa,Nizhny Holopij Gorodok
 b_holstebro,Holstathbro
 b_holt,Holt
 b_homberg,Homberg
+b_homburg,Homburg
 b_homburg_berg,Homburg
 b_homburg_saar,Homburg
-b_homburg,Homburg
 b_homs,Hims
 b_hon,Hón
 b_honnecourt,Honnecourt
@@ -3127,8 +3129,8 @@ b_huntingdon,Huntingdon
 b_hurmuzferra,Hurmuzferra
 b_husavik,Húsavík
 b_husimoldavia,Husi
-b_hustad_romsdal,Húsastaðir
 b_hustad,Húsastaðir
+b_hustad_romsdal,Húsastaðir
 b_huth,Huth
 b_huwayza,Huwayza
 b_huy,Huy
@@ -3221,8 +3223,8 @@ b_isfarain,Isfará'in
 b_ishkashim,Ishkáshim
 b_isilkul,Isilkul
 b_isjum,Izjum
-b_iskaf_nahrawan,Iskaf
 b_iskaf,Iskaf
+b_iskaf_nahrawan,Iskaf
 b_iskor,Iskor
 b_iskorosten,Ikorosten
 b_isleworth,Isleoworth
@@ -3311,8 +3313,8 @@ b_jerez,Jerez
 b_jerezdeloscaballeros,Jerez de los Caballeros
 b_jerichow,Jerichow
 b_jerm,Jerm
-b_jermuk_erzurum,Jermuk
 b_jermuk,Jermuk
+b_jermuk_erzurum,Jermuk
 b_jersika,Gerzike
 b_jerusalem,Jérusalem
 b_jerzejow,Jerzejow
@@ -3435,13 +3437,13 @@ b_kaptol,Kaptol
 b_kapuvar,Kapuvár
 b_kapyl,Kopyl'
 b_karachev,Karachev
-b_karadj_igharayn,Karaj
 b_karadj,Karaj
+b_karadj_igharayn,Karaj
 b_karakiya,Karakiya
 b_karako,Karakó
 b_karakol,Karakol
-b_karasu_ayaguz,Karasu
 b_karasu,Karasu
+b_karasu_ayaguz,Karasu
 b_karatiyya,Galatie
 b_karbas,Karbas
 b_karcsa,Karcsa
@@ -3482,8 +3484,8 @@ b_kasina,Kašina
 b_kasira,Kasira
 b_kasplya,Kasplja
 b_kasr-i-kand,Kasr-i-Kand
-b_kasra_sakmar,Kasra
 b_kasra,Kasra
+b_kasra_sakmar,Kasra
 b_kasribnsinan,Kasr ibn Sinan
 b_kasriskari,Kasriskari
 b_kasrkutama,Kasr Kutáma
@@ -3583,8 +3585,8 @@ b_kharruba,Arnaldi
 b_kharsianon,Kharsianon
 b_kharton,Kharton
 b_khasht,Khasht
-b_khawr_nubt,Khawr Nubt
 b_khawr,Khawr
+b_khawr_nubt,Khawr Nubt
 b_khaysar,Khaysár
 b_khazaran,Qanbaliq
 b_khema,Khema
@@ -3797,8 +3799,8 @@ b_kotelnya,Kotel'nitsa
 b_kothel,Köthel
 b_kotoko,Kotoko
 b_kotonkoro,Kotonkoro
-b_kotor_varos,Kotor
 b_kotor,Kotor
+b_kotor_varos,Kotor
 b_kotovskolivia,Kotovsk
 b_kotyaion,Kotyaion
 b_kotyora,Kotyora
@@ -3849,8 +3851,8 @@ b_krnov,Krnov
 b_kromeriz,Kromeriz
 b_kromy,Krom
 b_kropelin,Kropelin
-b_krosno_odrzanskie,Krosno
 b_krosno,Krosno
+b_krosno_odrzanskie,Krosno
 b_kruje,Kroia
 b_krummediek,Krummediek
 b_krusevac,Krusevac
@@ -3921,8 +3923,8 @@ b_kyzikos,Kyzikos
 b_kyzistra,Kyzistra
 b_la_bisbal,La Bisbal
 b_la_chambre,la Chambre
-b_la_roche_montbeliard,La Roche
 b_la_roche-bernard,La Roche-Bernard
+b_la_roche_montbeliard,La Roche
 b_la_spezia,La Spezia
 b_laalgaba,La Algaba
 b_laar,Laar
@@ -3971,13 +3973,13 @@ b_lampsakos,Lampsakos
 b_lanark,Lanark
 b_lancaster,Lancaster
 b_land_stargard,Stargard
-b_landau_pfalz,Landau
 b_landau,Landau
+b_landau_pfalz,Landau
 b_landevennec,Landévennec
 b_landrecies,Landrecies
+b_landsberg,Landsberg
 b_landsberg_bayern,Landsberg
 b_landsberg_oder,Landsberg an der Oder
-b_landsberg,Landsberg
 b_landser,Landser
 b_landshut,Landshut
 b_landstejn,Landstejn
@@ -4070,8 +4072,8 @@ b_legnickie_pole,Pole
 b_lehe,Lehe
 b_lehnin,Lehnin
 b_lehsen,Lehsen
-b_leicester_abbey,St Mary de Pratis
 b_leicester,Leicester
+b_leicester_abbey,St Mary de Pratis
 b_leichfield,Lichfield
 b_leiden,Leiden
 b_leighton,Leighton
@@ -4154,8 +4156,8 @@ b_lillehammer,Lilþlæ Hamarr
 b_lillhardal,Lillhärdal
 b_limbazi,Lemsahl
 b_limbek,Limbekburgr
-b_limburg_lahn,Lahn
 b_limburg,Limburg
+b_limburg_lahn,Lahn
 b_limerick_castle,Limerick
 b_limmassol,Lemesos
 b_limotges,Limòtges
@@ -4163,8 +4165,8 @@ b_limoux,Limós
 b_limpurg,Limpurg
 b_linau,Linau
 b_lincoln,Lincoln
-b_lindau_sachsen,Lindau
 b_lindau,Lindau
+b_lindau_sachsen,Lindau
 b_lindisfarne,Lidnisfarne
 b_lindos,Lindos
 b_lingen,Lingen
@@ -4185,8 +4187,8 @@ b_lisle-en-barrois,Lisle-en-Barrois
 b_lislejourdain,L'Isla de Baish
 b_lisnatreanduff,Lisnatreanduff
 b_litomerice,Litomerice
-b_little_sarai_aqtobe,Aqtöbe
 b_little_sarai,Saray-Jük
+b_little_sarai_aqtobe,Aqtöbe
 b_littleport,Littelport
 b_livani,Livenhof
 b_liverpool,Liverpool
@@ -4260,8 +4262,8 @@ b_lopatyn,Lopatyn
 b_lora_del_rio,Lora del Río
 b_lorca,Lorca
 b_lorch,Lorch
-b_loreto_costiglione,Loreto
 b_loreto,Loreto
+b_loreto_costiglione,Loreto
 b_loriberd,Loriberd
 b_lorsch,Lorsch
 b_losk,Losk
@@ -4302,14 +4304,14 @@ b_luckau,Luckau
 b_ludgershall,Ludgershall
 b_ludlow,Ludlow
 b_ludza,Lutzen
-b_lugo_cunio,Lugo
 b_lugo,Lugo
+b_lugo_cunio,Lugo
 b_lugos,Lugos
 b_lukolm,Lukoml
 b_lukow,Lukow
 b_lukski,Lucin
-b_luna_ligure,Luna
 b_luna,Luna
+b_luna_ligure,Luna
 b_lund,Lund
 b_lundamo,Lundar
 b_lunden,Lunden
@@ -4415,8 +4417,8 @@ b_male,Male
 b_malgarten,Malgarten
 b_malikira,Mali Kira
 b_malikura,Malikura
-b_malin-bakharz,Málin-Bákharz
 b_malin,Málin
+b_malin-bakharz,Málin-Bákharz
 b_mallahsyria,Mallah
 b_malmedy,Malmedy
 b_malmesbury,Malmesbury
@@ -4448,9 +4450,9 @@ b_manresa,Manresa
 b_mansfeld,Mansfeld
 b_manshan,Manshán
 b_mansilladelasmulas,Mansilla de las Mulas
+b_mansura,Mansura
 b_mansura_mansura,Mansura
 b_mansura_tlemcen,al-Mansúra
-b_mansura,Mansura
 b_manteigas,Manteigas
 b_mantua,Mantua
 b_manu,Mánú
@@ -4485,8 +4487,8 @@ b_maridfortress,Marid
 b_maridin,Maridin
 b_marienkloster_meldorf,Marienkloster
 b_marienwaerdt,Mariënwaerdt
-b_marienwerder_diesdorf,Diesdorf
 b_marienwerder,Marienwerder
+b_marienwerder_diesdorf,Diesdorf
 b_markeli,Markeli
 b_market_harborough,Harborough
 b_marlborough,Marlborough
@@ -4526,11 +4528,11 @@ b_marya,Marya
 b_mashiz,Mashíz
 b_masila,Masíla
 b_masjidsad,Masjid Sa'd
-b_masra_sakmar,Masra
 b_masra,Masra
+b_masra_sakmar,Masra
+b_massa,Massa
 b_massa_ligure,Massa
 b_massa_marittima,Massa Marittima
-b_massa,Massa
 b_massillargues,Macilhargues
 b_massing,Massing
 b_massino,Massino
@@ -4771,8 +4773,8 @@ b_montalto,Montalto
 b_montanara,Montanara
 b_montanchez,Montanchez
 b_montargis,Montargis
-b_montauban_valentionis,Montauban
 b_montauban,Montalban
+b_montauban_valentionis,Montauban
 b_montauto_anghira,Montauto
 b_montbel,Montbel
 b_montbeliard,Montbéliard
@@ -4783,8 +4785,8 @@ b_montdemarsan,Lo Mont de Marsan
 b_monte_renzio,Monte Renzio
 b_monte_sant_angelo,Monte Sant'Angelo
 b_monte_santa_maria,Monte Santa Maria
-b_montebello_vicentino,Montebello
 b_montebello,Montebello
+b_montebello_vicentino,Montebello
 b_montebourg,Montebourg
 b_montebuoni,Montebuoni
 b_montecarloluccaveryniceplaceforaholiday,Montecarlo
@@ -4807,8 +4809,8 @@ b_monterondo,Monterondo
 b_montescagolioso,Montescagolioso
 b_montezone,Montezone
 b_montfaucon,Montfaucon
-b_montferrand_de_la_chateau,Montferrand
 b_montferrand,Montferrand
+b_montferrand_de_la_chateau,Montferrand
 b_montfort,Montfort
 b_montfortlamaury,Montfort
 b_montgiscard,Montgiscard
@@ -4821,9 +4823,9 @@ b_montlhery,Montlhéry
 b_montmaur,Montmaur
 b_montmedy,Montmedy
 b_montmelian,Montmelian
+b_montmirail,Montmirail
 b_montmirail_brie,Montmirail
 b_montmirail_vendome,Montmirail
-b_montmirail,Montmirail
 b_montmonrency,Château de Montmonrency
 b_montmort,Montmort
 b_montone_in_chianti,Montone
@@ -4886,8 +4888,8 @@ b_mstow,Mstow
 b_mtsensk,Mchensk
 b_mtsghun,Mtsghun
 b_mtskheta,Mtskheta
-b_muaskar_thlemcen,Mu'askar
 b_muaskar,Muaskar
+b_muaskar_thlemcen,Mu'askar
 b_muchelney,Muchelney
 b_muhawwal,Al-Muhawwal
 b_muhlberg,Mühlberg
@@ -4916,8 +4918,8 @@ b_murom,Murom
 b_murwab,Murwab
 b_murzuk,Murzuk
 b_mush,Muš
-b_mut_seleukeia,Klaudioupolis Ninica
 b_mut,Mut
+b_mut_seleukeia,Klaudioupolis Ninica
 b_mykonos,Mykonos
 b_mykulyntsi,Mikulin
 b_mykytyn_nikopol,Mykytyn
@@ -4928,8 +4930,8 @@ b_myshkin,Myshkin
 b_mytilene,Mytilene
 b_mzab,Mzab
 b_naantali,Nådendal
-b_naband_qohistan,Náband
 b_naband,Náband
+b_naband_qohistan,Náband
 b_nabbeborg,Nabbeborg
 b_nabiteh,Nabatieh
 b_nablus,Naples
@@ -5052,8 +5054,8 @@ b_neshapur,Níshápúr
 b_nesle,Nesle
 b_nesvizh,Nesvizh
 b_netley,Netley
-b_neuchatel_urtiere,Neuchâtel-Urtière
 b_neuchatel,Neuchâtel
+b_neuchatel_urtiere,Neuchâtel-Urtière
 b_neueaton,Eaton
 b_neuenahr,Neuenahr
 b_neuenkamp,Neuenkamp
@@ -5167,8 +5169,8 @@ b_nules,Nules
 b_nullamta,Núl Lamta
 b_numaniya,Numaniya
 b_nuoro,Nuoro
-b_nur_mazovia,Nur
 b_nur,Nur
+b_nur_mazovia,Nur
 b_nuri,Nuri
 b_nurmes,Nurmes
 b_nurnberg,Nürnberg
@@ -5179,12 +5181,12 @@ b_nyen,Nyen
 b_nyirbator,Nyírbator
 b_nyitra,Nyitravár
 b_nykobing,Nykoping
-b_nymphaion_korchev,Nymphaion
 b_nymphaion,Nymphaion
+b_nymphaion_korchev,Nymphaion
 b_nyon,Nyon
 b_nyons,Nions
-b_nysa_slaski,Nysa
 b_nysa,Nysa
+b_nysa_slaski,Nysa
 b_nyssa,Nyssa
 b_oakham,Oakham
 b_oancea,Oancea
@@ -5483,8 +5485,8 @@ b_pelusia,Pelusia
 b_pelvorm,Pylwærm
 b_pelym,Polum
 b_pempton,Pempton
-b_pemridge_castle,Newland
 b_pemridge,Pembridge
+b_pemridge_castle,Newland
 b_penacova,Penacova
 b_penalva_do_castelo,Penalva do Castelo
 b_penamacor,Penamacor
@@ -5571,8 +5573,8 @@ b_piensk,Piensk
 b_pietra_ligure,Pietra
 b_pieusse,Piussa
 b_pikalyovo,Voskresensly Luchensky
-b_pila_modigliana,Pila
 b_pila,Pila
+b_pila_modigliana,Pila
 b_pilistvere,Pillistfer
 b_pilsovar,Pilsuwar
 b_pilssala,Schloss Mitau
@@ -5684,10 +5686,10 @@ b_portchester,Portchester
 b_portel,Portel
 b_portella,Portella
 b_portillo,Portillo
+b_porto,Porto
 b_porto_ancona,Porto Ancona
 b_porto_de_mos,Porto de Mós
 b_porto_pisano,Porto Pisano
-b_porto,Porto
 b_portogruaro,Portogruaro
 b_portotorres,Portorres
 b_portovenere,Portovenere
@@ -5867,8 +5869,8 @@ b_radzyn,Radzyn
 b_rafaniyya,Rafaniyya
 b_ragnhildsholm,Ragnildarholmir
 b_ragnit,Ragnita
-b_ragusa_sicily,Ragusa
 b_ragusa,Dubrovnik
+b_ragusa_sicily,Ragusa
 b_raguseo,Raguseo
 b_rahachow,Rogachev
 b_raidestos,Raidestos
@@ -5881,8 +5883,8 @@ b_rakka,ar-Raqqa
 b_rakkada,Raqqáda
 b_rakvere,Wesenbergh
 b_rala_kharmar,Rala Kharmar
-b_ram_branicevo,Ram
 b_ram,Rám
+b_ram_branicevo,Ram
 b_rambouillet,Rambouillet
 b_ramhurmuz,Ramhormúz
 b_ramitan,Rámítan
@@ -5901,16 +5903,16 @@ b_raphania,Raphania
 b_rapla,Rappel
 b_rappoltstein,Rappoltstein
 b_raron,Raron
-b_ras_el_ma,Rás el-Má
 b_ras-al-kalb,Ras-al-Kalb
+b_ras_el_ma,Rás el-Má
 b_rasbaalek,Deir Saidat ar-Ras
 b_rasbouppland,Resbo
 b_raseborg,Raseborg
 b_raseiniai,Rasseyne
 b_rases,Rasès
 b_rashid,Rashíd
-b_rasht_gilan,Rasht
 b_rasht,Rasht
+b_rasht_gilan,Rasht
 b_rask,Rásk
 b_rassidr,Rass Sidr
 b_rastarkalv,Rastarkalfr
@@ -5951,7 +5953,6 @@ b_regenstein,Regenstein
 b_reggane,Reggane
 b_reggio,Reggio
 b_reggionellemila,Reggionellemila
-b_Regneville,Regnéville
 b_regoly,Regöly
 b_reguengos,Reguengos
 b_rehna,Rehna
@@ -6105,8 +6106,8 @@ b_rots,Rots
 b_rottenburg,Rottenburg
 b_rottweil,Rottweil
 b_roucy,Roucy
-b_rougemont_greyerz,Rougemont
 b_rougemont,Rougemont
+b_rougemont_greyerz,Rougemont
 b_rougemonten,Rougemonten
 b_roumana,Roumana
 b_rovereto,Rovereto
@@ -6139,8 +6140,8 @@ b_rusa,Rusa
 b_rushen,Rushen
 b_rusne,Rusné
 b_rusokastro,Rusokastro
-b_rustaq_nizwa,Rustaq
 b_rustaq,Rustaq
+b_rustaq_nizwa,Rustaq
 b_rustavi,Rustavi
 b_ruszt,Ruszt
 b_ruthen,Rüthen
@@ -6275,6 +6276,7 @@ b_sampigny,Sampigny
 b_samshvilde,Samshvilde
 b_samsoe,Samsø
 b_samundzhievo,Selin
+b_san,Sán
 b_san_bilbays,Sán
 b_san_bonifacio,San Bonifacio
 b_san_cassino,San Cassino
@@ -6290,7 +6292,6 @@ b_san_secondo,San Secondo
 b_san_severino_lucano,Lucano
 b_san_valentino,San Vanlentino
 b_san_victorian,San Victorián
-b_san,Sán
 b_sana,Sana
 b_sanaa,San'a
 b_sanabria,Sanabria
@@ -6436,8 +6437,8 @@ b_schmalkalden,Schmalkalden
 b_schmidtburg,Schmidtburg
 b_schnackenburg,Schnackenburg
 b_schoenburg,Schoenburg
-b_schonau_aachen,Schönau
 b_schonau,Schönau
+b_schonau_aachen,Schönau
 b_schouf,Schouf
 b_schuf,Schuf
 b_schulenburg,Schulenburg
@@ -6599,8 +6600,8 @@ b_shuya,Suja
 b_sianow,Zanow
 b_siauliai,Šiauliai
 b_sibenik,Sibenik
-b_sibi_india,Sibi
 b_sibi,Sibi
+b_sibi_india,Sibi
 b_side,Side
 b_siderokastron,Siderokastron
 b_siderokastronthessaly,Siderokastron
@@ -6692,8 +6693,8 @@ b_skyros,Skyros
 b_slankamen,Zalankemen
 b_slano,Slano
 b_slany,Slany
-b_slatina_zagorje,Zalathnok
 b_slatina,Slatina
+b_slatina_zagorje,Zalathnok
 b_slauharad,Propoisk
 b_slawno,Schlawe
 b_slazialea,Slazialea
@@ -6703,8 +6704,8 @@ b_sleza,Sleza
 b_sliema,Tas-Sliema
 b_sligo,Sligo
 b_slonim,Slonim
-b_slonsk_ciechocinek,Slonsk
 b_slonsk,Sonnenburg
+b_slonsk_ciechocinek,Slonsk
 b_slupsk,Stolp
 b_slutsk,Slutsk
 b_smederevo,Smederevo
@@ -6820,8 +6821,8 @@ b_st_malo,Saint-Malo
 b_st_marienstern,Sankt Marienstern
 b_st_maximin,Saint Maximin
 b_st_meen,Saint-Méen
-b_st_michael_lunbeburg,Sankt Michael
 b_st_michael,St Michael's Mount
+b_st_michael_lunbeburg,Sankt Michael
 b_st_michel,Saint-Michel
 b_st_miniato,St Miniato
 b_st_moluag,St Molaug
@@ -6918,8 +6919,8 @@ b_stonehaven,Stonehaven
 b_stormoen,Stafr
 b_stornoway,Stornoway
 b_stotel,Stotel
-b_stow_of_wedale,Stow of Wedale
 b_stow,Stow
+b_stow_of_wedale,Stow of Wedale
 b_stpaphnutiusmonestary,St. Paphnutius
 b_stpolten,Sankt Pölten
 b_stralsund,Stralsund
@@ -7088,8 +7089,8 @@ b_taha,Tahá
 b_tahiriyya,Táhiriyya
 b_tahoua,Tahoua
 b_tain,Tain
-b_tak_sistan,Táq
 b_tak,Ták
+b_tak_sistan,Táq
 b_takarkert,Takarkert
 b_takedda,Takedda
 b_takrart,Tákrárt
@@ -7155,8 +7156,8 @@ b_taroudaut,Tarudant
 b_tarqi,Tarqi
 b_tarragona,Tarragona
 b_tarshiha,Terschia
-b_tarsia_calabria,Tarsia
 b_tarsia,Tarsia
+b_tarsia_calabria,Tarsia
 b_tarsos,Tarsos
 b_tartas,Tartàs
 b_tartu,Dorpat
@@ -7214,8 +7215,8 @@ b_tenda,Tenda
 b_tendrara,Tendrara
 b_tephrike,Tephrike
 b_tepla,Tepla
-b_teplice_hre,Teplice
 b_teplice,Teplice
+b_teplice_hre,Teplice
 b_tera,Tera
 b_teramo,Teramo
 b_terebovl,Terebovl
@@ -7260,8 +7261,8 @@ b_thiviers,Tivier
 b_thoire,Thoire
 b_tholen,Tholen
 b_tholey,Tholey
-b_thorn_gelre,Thorn
 b_thorn,Torun
+b_thorn_gelre,Thorn
 b_thorney,Thorney
 b_thorso,Þórshof
 b_threave,Threave
@@ -7597,12 +7598,12 @@ b_ushmun,Al-Ushmún
 b_ushmuntan,Ushmúm Tannáh
 b_usselaosta,Ussel
 b_usson,Usson
+b_ust-onega,Änine
 b_ust_emetsk,Emetsk
 b_ust_izhma,Ust-Ižva
 b_ust_pinega,Pinega
 b_ust_vaga,Važskiy
 b_ust_vym,Jemdyn
-b_ust-onega,Änine
 b_usti,Usti
 b_ustra,Ustra
 b_ustyluh,Oustylouh
@@ -7621,8 +7622,8 @@ b_uue_kastre,Warbeck
 b_uuras,Trångsund
 b_uzens,Qaraösen
 b_uzes,Banhòus de Céser
-b_uzgend-sighnaq,Üzgend
 b_uzgend,Uzgend
+b_uzgend-sighnaq,Üzgend
 b_uzice,Užice
 b_uzpaliai,Užpaliai
 b_vaagan,Vágar
@@ -7638,8 +7639,8 @@ b_vaison,Vaison
 b_vajdahunyadi,Hunyadvár
 b_vakha,Vakha
 b_vaksala,Waxalle
-b_val_dieu,Val-Dieu
 b_val,Vál
+b_val_dieu,Val-Dieu
 b_valaam,Valaam
 b_valania,Valenia
 b_valday,Valday
@@ -7882,8 +7883,8 @@ b_volkovysk,Volkovysk
 b_volmarstein,Volmarstein
 b_volodymyrivka,Volodarev
 b_vologda,Vologda
-b_volok_slovinskij,Volok Slovinskiy
 b_volok,Dubrovka
+b_volok_slovinskij,Volok Slovinskiy
 b_volokna,Volokna
 b_volokolamsk,Volok Lamskiy
 b_volozerskij,Volozerskiy
@@ -7932,8 +7933,8 @@ b_wadrawah,Wadrawa
 b_wagadougou,Wagadougou
 b_waidhofen_an_der_thaya,Waidhofen an der Thaya
 b_waldburg,Waldburg
-b_waldeck_bayern,Waldeck
 b_waldeck,Waldeck
+b_waldeck_bayern,Waldeck
 b_walden,Walden
 b_waldenburg,Waldenburg
 b_waldsassen,Waldsassen
@@ -7979,8 +7980,8 @@ b_weimar,Weimar
 b_weingarten,Weingarten
 b_weinsberg,Weinsberg
 b_weissenau,Weissenau
-b_weissenburg_am_sand,Weissenburg-am-Sand
 b_weissenburg,Weisenburg
+b_weissenburg_am_sand,Weissenburg-am-Sand
 b_weissenohe,Weissenohe
 b_weissensfels,Weissensfels
 b_weldibba,Weldibba
@@ -8271,6 +8272,1663 @@ b_zweitina,Meshtaye
 b_zwettl,Zwettl
 b_zwickau,Zwickau
 b_zwolle,Zwolle
+c_aachen,Aachen
+c_aalst,Aalst
+c_aargau,Aargau
+c_abauj,Abauj
+c_abensberg,Abensberg
+c_abivard,Abívard
+c_abkhazia,Abkhazia
+c_absheron,Abšaran
+c_abuhammad,Abu Hammad
+c_abydos,Troád
+c_achaia,Achaía
+c_acre,Acre
+c_adana,Adana
+c_aden,Aden
+c_adramyttion,Aiolía
+c_adrianopolis,Adrianopol
+c_adulis,Adulis
+c_agades,Agades
+c_agder,Egðafylki
+c_agen,Agen
+c_agrigento,Butera
+c_ahwaz,Ahwaz
+c_ainazawa,Ain Azawa
+c_aintab,Ravendal
+c_ajadabiya,Ajadabiya
+c_ajayameru,Ajayameru
+c_akershus,Vingulmörk
+c_akhyraous,Mysía
+c_akjoujt,Akjoujt
+c_akordat,Sera'é
+c_aksu,Aqsu
+c_aksum,Aksum
+c_al_alamayn,Sullum
+c_al_amarah,Nahrawan
+c_al_bichri,Rahba
+c_al_djazair,Al-Jazáir
+c_al_hasa,Al-Ahsa
+c_al_jawf,Fayd
+c_al_jazira,Jazírat ibn 'Umar
+c_al_nadjaf,Qádisiyya
+c_al_nasiryah,Al-Batíha
+c_aland,Åland
+c_alania,Alania
+c_alava,Alava
+c_albania,Layzan
+c_albarracin,Albarracín
+c_albi,Albi
+c_albret,Labrit
+c_alcacer_do_sal,Alcacer do Sal
+c_alcantara,Alcantara
+c_alcaraz,Alcaraz
+c_alencon,Alencon
+c_aleppo,Halab
+c_alexandretta,Alexandrou
+c_alexandria,Iskandaríya
+c_algeciras,Algeciras
+c_alife,Alife
+c_allaqi,Allaqi
+c_almansa,Villena
+c_almeria,Almeria
+c_altmark,Altmark
+c_alto_aragon,Alto Aragón
+c_alwa,Alwa
+c_amadiya,Amádiya
+c_amalfi,Amalfi
+c_amasia,Amaseia
+c_amastris,Amastris
+c_amida,Amida
+c_amiens,Amiens
+c_amisos,Amisos
+c_amman,Balqa
+c_amol,Ámol
+c_amorion,Amorion
+c_anamur,Anemourion
+c_ancona,Ancona
+c_andechs,Andechs
+c_andria,Andria
+c_angermanland,Ångermanland
+c_anglesey,Anglesey
+c_angot,Angot
+c_angouleme,Angouleme
+c_anhalt,Anhalt
+c_ani,Ani
+c_anjou,Anjou
+c_ankober,Damot
+c_ankyra,Ankyra
+c_annaba,Búna
+c_antalo,Amhara
+c_anti-atlas,Tinmallál
+c_antibes,Antibes
+c_antiocheia,Antiocheia
+c_aosta,Aosta
+c_aoudaghost,Aoudaghost
+c_aprutium,Aprutio
+c_apulia,Melfi
+c_aqtobe,Op
+c_aquileia,Aquileia
+c_aquino,Aquino
+c_ar_ar,Al-Jawf
+c_aracena,Mérida
+c_araouane,Araouane
+c_arbanon,Arbanon
+c_arborea,Arborea
+c_arcadia,Arkadia
+c_archa,Berzieh
+c_archelais,Archelaïs
+c_arezzo,Arezzo
+c_arghiyan,Arghiyán
+c_argyll,Argyll
+c_arigh,Arigh
+c_arlon,Arlon
+c_armagnac,Armagnac
+c_arnsberg,Arnsberg
+c_aror,Aror
+c_arques,Arques
+c_arrajan,Arrajan
+c_arran,Arran
+c_arta,Nikopolis
+c_artaani,Artaani
+c_artois,Artois
+c_artsakh,Artsakh
+c_asas,Ar-Raqqa
+c_ascalon,Ascalon
+c_ashli,Ashli
+c_asir,Asir
+c_asirgarh,Asirgarh
+c_asmena,Asmena
+c_asni,Asni
+c_asosa,Asosa
+c_assab,Assab
+c_asti,Asti
+c_astorga,Astorga
+c_asturias_de_oviedo,Asturias de Oviedo
+c_asturias_de_santillana,Asturias de Santillana
+c_aswan,Aswan
+c_asyut,Asyut
+c_atbara,Atbara
+c_atheniai,Attika
+c_atholl,Atholl
+c_atlas_mnt,Táhart
+c_attaleia,Attáleia
+c_attundaland,Attundaland
+c_atzele,Atzele
+c_augsburg,Augsburg
+c_aukshayts,Lietuva
+c_aunis,Aunis
+c_austisland,Austurland
+c_auvergne,Auvèrnhe
+c_auxerre,Auxerre
+c_auxois,Auxois
+c_avila,Avila
+c_avranches,Avranches
+c_awkar,Awkar
+c_ayaguz,Ayaguz
+c_aydhab,Aydhab
+c_az_zarqa,Azraq
+c_azerbaijan,Muqan
+c_azov,Azaq
+c_baalbek,Bekaa
+c_bacau,Bacau
+c_bacs,Bodrog
+c_badajoz,Badajoz
+c_badakhshan,Badakhshán
+c_baden,Baden
+c_badghis,Bádghís
+c_baghdad,Baghdad
+c_baghk,Baghk
+c_bagirmi,Bagirmi
+c_bagnacavallo,Bagnacavallo
+c_bagrewand,Bagrewand
+c_bahnasa,Bahnasa
+c_bahrein,Bahrayn
+c_bahriya,Bahriya
+c_bakharz,Bákharz
+c_balasaghun,Balasaghun
+c_balkh,Balkh
+c_balkhash,Balkhash
+c_bamberg,Bamberg
+c_bambuk,Bambuk
+c_bamiyan,Bamiyan
+c_bandava,Bandava
+c_bannu,Bannu
+c_bar,Bar
+c_barcelona,Barcelona
+c_bari,Conversano
+c_bars,Bars
+c_barskhan,Barskhan
+c_barth,Barth
+c_bartia,Bartia
+c_basel,Basel
+c_bashkirs,Aghidhel
+c_basra,Basra
+c_bayda,al-Ma'afir
+c_bayeux,Bayeux
+c_bearn,Bearn
+c_beauvais,Beauvais
+c_bedford,Bedford
+c_beersheb,Naples
+c_begemder,Begemdir
+c_beirut,Beirut
+c_beja,Beja
+c_bejaija,Bidjáya
+c_bekes,Bekes
+c_belgard,Belgard
+c_belgorod,Tighina
+c_belgrade,Belgrad
+c_beloozero,Beloozero
+c_belz,Belz
+c_benevento,Buonalbergo
+c_benghazi,Barqa
+c_beni_yanni,Jíjil
+c_bentheim,Bentheim
+c_berbera,Berbera
+c_bereg,Somogy
+c_beresty,Berestye
+c_berg,Berg
+c_bergamo,Bergamo
+c_bergenshus,Horðaland
+c_berks,Berkshire
+c_bertinoro,Bertinoro
+c_besancon,Besançon
+c_bezhetsky_verh,Ladoga
+c_beziers,Béziers
+c_bhakkar,Bhakkar
+c_bhera,Bhera
+c_bhumilka,Bhumilka
+c_bigorre,Bigorre
+c_bihar,Bihar
+c_bilbays,Bilbays
+c_bilma,Bilma
+c_bilyar,Bilär
+c_binduku,Binduku
+c_bira,Nasíbín
+c_birlad,Bârlad
+c_biserno,Volterra
+c_biskra,Biskra
+c_biyar,Biyár
+c_bizerte,Banzart
+c_bjarmia,Pinega
+c_blamont,Blâmont
+c_blankenburg,Blankenburg
+c_blekinge,Blekyngh
+c_blois,Blois
+c_bod,Bod
+c_boleslav,Kladsko
+c_bologna,Romagna
+c_bordeaux,Bordeaux
+c_borgovalle,Borgovalle
+c_bornholm,Burghændæholm
+c_bornu,Bornu
+c_bosco,Bosco
+c_boulogne,Boulogne
+c_bourbon,Bourbon
+c_bourges,Bourges
+c_brabant,Leuven
+c_braga,Braga
+c_braganza,Braganza
+c_brandenburg,Mittelmark
+c_branicevo,Branicevo
+c_braslaw,Braslaw
+c_braunschweig,Braunschweig
+c_breda,Antwerpen
+c_brega,Brega
+c_brehna,Brehna
+c_breifne,Leitrim
+c_breisgau,Breisgau
+c_bremen,Bremen
+c_brescia,Brescia
+c_bresse,Bresse
+c_bribir,Bribir
+c_brie,Brie
+c_brno,Brno
+c_brugge,Brugge
+c_brussel,Brussel
+c_bryansk,Bryansk
+c_brycheiniog,Brycheiniog
+c_buchan,Buchan
+c_bucks,Buckinghamshire
+c_buellt,Buellt
+c_buhairya,Hawf Gharbí
+c_bukhara,Bukhárá
+c_bulgar,Bolgar
+c_bur,Bur
+c_bure,Bure
+c_burgos,Burgos
+c_burhanpur,Burhanpur
+c_burtasy,Barysh
+c_burzenland,Burzenland
+c_busaso,Busaso
+c_butana,Butana
+c_buzachi,Buzachi
+c_buzau,Buzau
+c_byzantion,Konstantinoupolis
+c_bznunik,Bznunik
+c_caceres,Talavera
+c_cadiz,Carmona
+c_cadota,Niya
+c_caesarea,Caesarea
+c_cagliari,Cagliari
+c_cairo,Cairo
+c_caithness,Katanes
+c_calatayud,Calatayud
+c_calatrava,Calatrava
+c_calw,Calw
+c_cambrai,Cambrai
+c_cambridge,Cambridge
+c_camerino,Camerino
+c_canarias,Gran Canaria
+c_candhoba,Candhoba
+c_capua,Aversa
+c_carcassonne,Carcassona
+c_carlades,Carlades
+c_carrick,Carrick
+c_casentino,Casentino
+c_caspe,Caspe
+c_castellon,Castellon
+c_castelo_branco,Castelo Branco
+c_catanzaro,Catanzaro
+c_cavan,Cavan
+c_cayor,Cayor
+c_cebta,Sebta
+c_ceccano,Ceccano
+c_celje,Cilli
+c_central_jylland,Central Jylland
+c_cephalonia,Kephallenia
+c_cerdanya,Cerdanya
+c_ceredigion,Ceredigion
+c_ceva,Ceva
+c_chablais,Chablais
+c_chaghaniyan,Chaghániyán
+c_chaldea,Chaldia
+c_chalkidike,Chalkidike
+c_chalons,Chalons
+c_champagne,Troyes
+c_chandax,Khándax
+c_chanderi,Chanderi
+c_charolais,Charolais
+c_charpete,Charpete
+c_chartres,Chartres
+c_chateaudun,Chateaudun
+c_chauragarh,Chauragarh
+c_chelm,Chelm
+c_chelminskie,Chelmno
+c_chernigov,Chernigov
+c_cherson,Cherson
+c_chester,Chester
+c_chiny,Chiny
+c_chios,Chios
+c_chitrakut,Chitrakut
+c_chortitza,Aq Samar
+c_chrysopolis,Skoutarion
+c_chud,Vaga
+c_chur,Chur
+c_chuvash,Sura
+c_cieszyn,Racibórz
+c_cinarca,Cinarca
+c_cinnchardainn,Cinn Chardainn
+c_clydesdale,Clydesdale
+c_coimbra,Coimbra
+c_comminges,Comminges
+c_connacht,Mayo
+c_consenza,Tarsia
+c_constantia,Konstanta
+c_constantine,Qustantína
+c_cordoba,Cordoba
+c_corfu,Kérkyra
+c_cork,Cork
+c_cornouaille,Gernev
+c_cornwall,Cornwall
+c_coruna,Trastámara
+c_coustance,Coustance
+c_cremona,Camisano
+c_crimea,Qirim
+c_csanad,Csanad
+c_cuenca,Cuenca
+c_cumberland,Cumberland
+c_czersk,Czersk
+c_dadhipadra,Dadhipadra
+c_dagsburg,Dagsburg
+c_dakhila,Dakhila
+c_dal,Dal
+c_dalarna,Järnbäraland 
+c_daman,Daman
+c_damascus,Ghúta
+c_damman,Al-Qatif
+c_damoh,Damoh
+c_danakil,Danakil
+c_dannenberg,Dannenberg
+c_danzig,Danzig
+c_darabjird,Darábjírd
+c_darum,Darom
+c_dasapura,Dasapura
+c_dauphine_viennois,Viennois
+c_dauphinedeauvergne,Dauphinedeauvergne
+c_debul,Debul
+c_deir,Anbar
+c_delhi,Delhi
+c_delta,Dimyát
+c_deltuva,Deltuva
+c_demetrias,Demetrias
+c_denia,Denia
+c_derbent,Derbent
+c_derby,Derby
+c_desht-i-kipchak,Vskol'
+c_desmond,Kerry
+c_devagiri,Devagiri
+c_devon,Devon
+c_dhamalpur,Dhamalpur
+c_dhara,Dhara
+c_dhofar,Zufar
+c_dhu_zabi,Julfar
+c_diafunu,Diafunu
+c_dihistan,Dehestán
+c_dijon,Dijon
+c_dipalpur,Dipalpur
+c_dithmarschen,Dithmarschen
+c_djado,Djado
+c_djanet,Djanet
+c_djarma,Djarma
+c_djenne,Djenné
+c_djerba,Djerba
+c_djolof,Djolof
+c_dole,Dole
+c_domazlice,Doudleby
+c_don_portage,Terk
+c_dongola,Dongola
+c_donjikraji,Donji Kraji
+c_dorogobuzh,Ostrog
+c_dorostotum,Preslav
+c_dorpat,Ugaunia
+c_dorset,Dorset
+c_dorylaion,Dorylaion
+c_draa,Draa
+c_dreux,Dreux
+c_druck,Druck
+c_druz,Takrit
+c_dublin,Dublin
+c_dunbar,Dunbar
+c_dunbreatainn,Dun Breatainn
+c_dunphris,Dun Phris
+c_duqm,Duqm
+c_durham,Durham
+c_duvzare,Duvzare
+c_dvaraka,Dvaraka
+c_dwin,Dwin
+c_dyfed,Dyfed
+c_dyrrachion,Dyrrakhiou
+c_dzopk,Dzopk
+c_eastern_skane,Eastern skane
+c_edessa,Edessa
+c_eilat,Jabal Katrina
+c_el-arish,El-Arish
+c_el_rif,El-Ríf
+c_elgolea,El Golea
+c_ely,Ely
+c_emil,Emil
+c_empuries,Empuries
+c_epeiros,Epeiros
+c_ephesos,Ionía
+c_eppenstein,Eppenstein
+c_erbil,Erbil
+c_esfahan,Isfahan
+c_essex,Essex
+c_este,Este
+c_esztergom,Visegrád
+c_eu,Eu
+c_euboia,Euripos
+c_eukhaita,Euchaita
+c_euphrates,Sámarrá
+c_everstein,Everstein
+c_evora,Évora
+c_evreux,Evreux
+c_faereyar,Færeyar
+c_famagusta,Ammókhõstos
+c_farah,Faráh
+c_faro,Faro
+c_fayyum,Fayyum
+c_feher,Fehér
+c_fejer,Fejér
+c_ferghana,Ferghana
+c_ferrara,Rovigo
+c_fes,Fás
+c_fife,Fife
+c_figuig,Figuig
+c_finale,Finale
+c_finland,Finland
+c_finnmark,Rauðeyja
+c_finnveden,Finnveden
+c_firenze,Firenze
+c_fjadrundaland,Fjadrundaland
+c_foerde,Foerde
+c_foggia,Monte Sant' Angelo
+c_foix,Fois
+c_fondi,Fondi
+c_forcalquier,Forcalquier
+c_forez,Forez
+c_french_leon,Leon
+c_frignano,Frignano
+c_frisia,Friesland
+c_furstenberg,Fürstenberg
+c_fyn,Fyun
+c_gabes,Gabes
+c_gabiyaha,Nastaráwa
+c_galam,Galam
+c_galatia,Galatía
+c_galaz,Basarabia
+c_galich,Galich
+c_galich_mersky,Galich Mersky
+c_galindia,Galindia
+c_galloway,Galloway
+c_gallura,Gallura
+c_gangra,Gangra
+c_ganj-rustaq,Ganj Rustáq
+c_gao,Gao
+c_gar,Gar
+c_gardman,Gardman
+c_garhwal,Garhwal
+c_gastrikland,Gästrikland
+c_gatinas,Gatinas
+c_gavi,Bobbio
+c_gegyai,Gegyai
+c_gelre,Wassenberg
+c_gemer,Gyõr
+c_geneve,Geneve
+c_genoa,Genoa
+c_gent,Gent
+c_gevaudan,Gavaudan
+c_ghadames,Ghadames
+c_ghana,Ghana
+c_gharchistan,Gharchistán
+c_ghat,Ghat
+c_ghazna,Ghazna
+c_ghor,Ghór
+c_gibelet,Gibelet
+c_gilan,Gilan
+c_gilgit,Gilgit
+c_girona,Girona
+c_gizeh,Gíza
+c_glamorgan,Glywysing
+c_gleiberg,Gleiberg
+c_glogow,Glogów
+c_gloucester,Gloucester
+c_gnieznienskie,Gniezno
+c_gobir,Gobir
+c_godwad,Godwad
+c_goghtn,Goghtn
+c_gojjam,Gojjam
+c_gomel,Gomel
+c_gondar,Dembiya
+c_gorodez,Gorodets-Radilov
+c_gorz,Görz
+c_gotland,Gotland
+c_gottingen,Northeim
+c_gowrie,Gowrie
+c_graisivaudan,Graisvaudan
+c_granada,Granada
+c_grassland_cheremisa,Vütla
+c_gravina,Gravina
+c_groitzsch,Groitzsch
+c_gruyere,Gruyère
+c_guadalajara,Guadalajara
+c_gudbrandzdalar,Gudbrandzdalar
+c_gudensberg,Gudensberg
+c_guines,Guines
+c_guipuzcoa,Guipuzcoa
+c_gurgan,Gurgán
+c_guria,Guria
+c_gurjaratra,Gurjaratra
+c_gurma,Gurma
+c_guryev,Saray-Jük
+c_gutzkow,Gützkow
+c_guzgan,Guzgán
+c_gwalior,Gwalior
+c_gwent,Gwent
+c_gwynedd,Gwynedd
+c_gwyr,Gwyr
+c_haband,Haband
+c_hail,Hail
+c_hainaut,Mons
+c_hajar,Nizwa
+c_hajr,Al-Yamáma
+c_halaban,Ranyá
+c_halland,Syndræ Halland
+c_halogaland,Hereyja
+c_halsingland,Alir
+c_hama,Hama
+c_hamadan,Hamadan
+c_hamaland,Hamaland
+c_hamburg,Stormarn
+c_hanau,Hanau
+c_hanyan,Hunayn
+c_harer,Adal
+c_harran,Harran
+c_hastinapura,Hastinapura
+c_hayya,Bádi
+c_hazarasp,Hazárasp
+c_hazart,Hazart
+c_hebron,St-Abraham
+c_hedmark,Heiðmørk
+c_helfenstein,Helfenstein
+c_hellas,Naupaktos
+c_henneberg,Henneberg
+c_herakleia,Herakleia
+c_hereford,Hereford
+c_hereti,Hereti
+c_herjedalen,Herjárdalr
+c_hertford,Hertford
+c_heves,Heves
+c_hijaz,Al-Ula
+c_hirschberg,Hirschberg
+c_hisar,Hisar
+c_hisn_kayf,Hisn Kayf
+c_hlynov,Vice
+c_hoggar,Hoggar
+c_hohenlohe,Hohenlohe
+c_holland,Holland
+c_holstein,Rendsburg
+c_homs,Hims
+c_hont,Hont
+c_hormuz,Hormuz
+c_hoya,Hoya
+c_hradec,Hradec
+c_huesca,Huesca
+c_hum,Podrinje
+c_huntingdon,Huntingdon
+c_hunza,Hunza
+c_hvar,Hvar
+c_hy_many,Hy Many
+c_ialomita,Ialomita
+c_iasi,Iasi
+c_idhaj,Idhaj
+c_idjil,Idjil
+c_ifat,Ifat
+c_ifni,Núl
+c_igharayn,Igharayn
+c_ikhmin,Akhmim
+c_ikonion,Ikonion
+c_ile,Ile
+c_ile_de_france,Paris
+c_imeretia,Imereti
+c_inbhirnis,Inbhir Nis
+c_infa,Shalla
+c_innse_gall,Suðreyar
+c_inowroclaw,Inowroclaw
+c_intarta,Intarta
+c_irgiz,Irgiz
+c_iskorosten,Iskorosten
+c_isle_of_man,Isle of Man
+c_istria,Istria
+c_itfih,Itfih
+c_itil,Itil
+c_jacwiez,Volkovysk
+c_jaen,Jaen
+c_jafara,Jafara
+c_jaffa,Jaffa
+c_jamtland,Jamtaland
+c_jand,Jand
+c_jarva,Jarva
+c_javakheti,Javakheti
+c_jeriska,Jeriska
+c_jersey,Jersey
+c_jerusalem,Jérusalem
+c_jiqeti,Jiqeti
+c_jiruft,Jiruft
+c_julich,Jülich
+c_jylland,Abosysæl
+c_kabul,Kábul
+c_kadom,Kadom
+c_kafirkot,Kafirkot
+c_kafrtab,Kafrtab
+c_kagha,Kagha
+c_kairwan,Qayrawán
+c_kaisereia,Kaisareia
+c_kaisun,Kaisun
+c_kakheti,Kakheti
+c_kala,Kala
+c_kalanjara,Kalanjara
+c_kaliopolis,Kallipolis
+c_kaliskie,Kalisz
+c_kalpi,Kalpi
+c_kandail,Kandabil
+c_kandalax,Kandalax
+c_kaneia,Khanià
+c_kanem,Kanem
+c_kangra,Kahlur
+c_kano,Kano
+c_kanyakubja,Kanyakubja
+c_karachev,Karachev
+c_karashar,Qarashahr
+c_karasu,Karasu
+c_karbala,Karbala
+c_karelen,Karjala
+c_karin,Derdjan
+c_karnten,Kärnten
+c_karor,Karor
+c_kartli,Kartli
+c_karur,Karur
+c_karvuna,Karvuna
+c_kashgar,Kashgar
+c_kasmira,Kasmira
+c_kasogs,Cherkezistan
+c_kassala,Kassala
+c_katehar,Katehar
+c_kath,Khwárazm
+c_kathiri,Hadramawt
+c_katsina,Katsina
+c_katzenelnbogen,Katzenelbogen
+c_kebbi,Kebbi
+c_kemi,Kvänland
+c_kent,Kent
+c_kerak,Kerak
+c_kerder,Kerder
+c_kerman,Kermán
+c_kermanshah,Kermanshah 
+c_kexholm,Kexholm
+c_khantia,Samar
+c_kharija,Kharija
+c_kharraqan,Kharraqan
+c_khaylam,Khaylam
+c_khetaka,Khetaka
+c_khojand,Khojand
+c_khopyor,Khoper
+c_khotan,Khotan
+c_khuttal,Khuttal
+c_kiel,Kiel
+c_kiev,Kiev
+c_kildare,Kildare
+c_kingui,Kingui
+c_kintyre,Kintyre
+c_kiri,Kiri
+c_kirkuk,Daquqa
+c_klarjeti,Klarjeti
+c_kleve,Kleve
+c_knin,Knin
+c_kokshaga,Kokshaga
+c_kol,Kol
+c_kola,Olonec
+c_koln,Köln
+c_kolomna,Kolomna
+c_koloneia,Koloneia
+c_komarom,Komarom
+c_komi,Inva
+c_koporje,Koporje
+c_kopsis,Kopsis
+c_korchev,Kerch
+c_korcula,Korcula
+c_kordofan,Kordofan
+c_korinthos,Korinthos
+c_korsun,Ros’
+c_kostroma,Kostroma
+c_kota,Kota
+c_kozelsk,Kozelsk
+c_kraiburg,Kraiburg
+c_krain,Krain
+c_krakowskie,Krakow
+c_krasso,Krasso
+c_krizevci,Vukova
+c_kuban,Cuba
+c_kucha,Kucha
+c_kuenring,Kuenring
+c_kufa,Al-Kúfa
+c_kujawy,Brzesc
+c_kuma,Kuma
+c_kumis,Kúmis
+c_kunlun,Kunlun
+c_kurmanchal,Kurmanchal
+c_kurs,Vredecuren
+c_kursk,Kursk
+c_kutch,Kutch
+c_kyunglung,Kyunglung
+c_kyzikos,Kyzikos
+c_la_mancha,Alarcón
+c_la_marche,La Marche
+c_laanemaa,Laanemaa
+c_labourd,Labourd
+c_lahur,Lahur
+c_lakhnau,Lakhnau
+c_lamghan,Lamghán
+c_lancaster,Lancaster
+c_landsberg,Landsberg
+c_langres,Langres
+c_laodikeia,Karía
+c_laranda,Laranda
+c_larestan,Larestan
+c_laroche,La Roche
+c_lasta,Lasta
+c_lausitz,Oberlausitz
+c_lecce,Lecce
+c_leczyca,Leczyca
+c_ledesma,Ledesma
+c_legnica,Legnica
+c_leh,Leh
+c_leicester,Leicester
+c_leiningen,Leiningen
+c_leinster,Wexford
+c_leiria,Leiria
+c_lekia,Lekia
+c_lemdiyya,Ashír
+c_lemos,Lemos
+c_leodhas,Leodhas
+c_leon,Leon
+c_lepiel,Lepiel aka Lahoysk
+c_leptis_magna,Misrata
+c_lesbos,Nisia Aigaiou
+c_lettigalians,Tholowa
+c_leuchtenberg,Leuchtenberg
+c_lida,Lida
+c_liege,Liege
+c_lienz,Lienz
+c_lille,Lille
+c_limburg,Limburg
+c_limerick,Limerick
+c_limisol,Lemesos
+c_limousin,Limousin
+c_lincoln,Lincoln
+c_lippe,Lippe
+c_lisboa,Lisboa
+c_litomerice,Litomerice
+c_livs,Saccalia
+c_lleida,Lleida
+c_logrono,Logrono
+c_logudoro,Logudoro
+c_lolland,Lolland
+c_lombardia,Burgaria
+c_loon,Loon
+c_lori,Lori
+c_loritello,Loritello
+c_lothian,Lothian
+c_lower_dniepr,Özü
+c_lower_don,Orel
+c_lower_volga,Qaratayak
+c_lubeck,Lübeck
+c_lubny,Lubny
+c_lubusz,Küstrin
+c_lucca,Lucca
+c_ludrava,Ludrava
+c_lugo,Lugo
+c_lukomorie,Tokmak
+c_luneburg,Lüneburg
+c_luni,Luni
+c_luristan,Luristan
+c_lusignan,Lusignan
+c_lutsk,Lutsk
+c_luxembourg,Luxembourg
+c_lykandos,Lykandos
+c_lykia,Lykía
+c_lyon,Lyon
+c_lyubech,Lyubech
+c_maan,Ma'an
+c_macon,Macon
+c_macva,Macva
+c_madaba,Jarash
+c_mafaza,Mafáza
+c_magdeburg,Magdeburg
+c_mahoba,Mahoba
+c_mahra,Mahra
+c_maikele_bahr,Maikele Bahr
+c_maine,Maine
+c_mainz,Mainz
+c_makran,Tíz
+c_makuria,Makouria
+c_malaga,Malaga
+c_malal,Malal
+c_mali,Mali
+c_malkhicho,Malkhicho
+c_mallorca,Mallorca
+c_malta,Malta
+c_manbij,Manbij
+c_mandapika,Mandapika
+c_mandavyapura,Mandavyapura
+c_mandistan,Mandistan
+c_manfalut,Manfalut
+c_mangyshlak,Mangyshlak
+c_manopello,Manopello
+c_mansfeld,Mansfeld
+c_mansia,Polum
+c_mansura,Mansura
+c_mantua,San Martino
+c_manupura,Manúf
+c_manych,Ugru
+c_manzikert,Manzikert
+c_maragheh,Maragheh
+c_mardin,Mardin
+c_marienburg,Warmia
+c_mark,Mark
+c_marmaros,Szatmár
+c_marrakech,Marrákush
+c_marsan,Marsan
+c_marsciano,Marsciano
+c_marseille,Marseille
+c_marsi,Marsica
+c_marsico,Marsico
+c_marya,Marya
+c_mashkel,Mashkél
+c_masin,Masin
+c_maskat,Maskat
+c_massat,Asfí
+c_massina,Massina
+c_masyaf,Altair
+c_matamma,Agaw
+c_mathura,Mathura
+c_mazandaran,Ámol
+c_mecca,Makka
+c_mecklemburg,Mecklemburg
+c_medantaka,Medantaka
+c_medapata,Medapata
+c_medelpad,Sunded
+c_medina,Madína
+c_medina_del_campo,Medina del Campo
+c_medjerda,Súsa
+c_meissen,Meissen
+c_melitene,Melitene
+c_mema,Mema
+c_memel,Karšuva
+c_menorca,Menorca
+c_mertola,Mértola
+c_merv,Merv
+c_merya,Šošma
+c_mesembria,Zagore
+c_messina,Geraci
+c_methone,Messinia
+c_metsepole,Metsepole
+c_metz,Metz
+c_middlesex,Middlesex
+c_milau,Milau
+c_minsk,Minsk
+c_modena,Modena
+c_modica,Modica
+c_modigliana,Modigliana
+c_modrus,Modrus
+c_mohadavasaka,Mohadavasaka
+c_molina,Molina
+c_molise,Molise
+c_mologa,Mologa
+c_monemvasia,Lakonia
+c_monferrand,Monferrand
+c_monreal,Monreal
+c_montbeliard,Montbéliard
+c_montefeltro,Montefeltro
+c_montfort,Montfort
+c_montpellier,Melguèlh
+c_mora,Mora
+c_moray,Moray
+c_mordva,Moksha
+c_more,Möre
+c_mortain,Mortain
+c_moskva,Moskva
+c_mosul,Mosul
+c_mosynopolis,Mosynopolis
+c_mountain_cheremisa,Alatyr'
+c_moylurg,Moylurg
+c_mozhaysk,Mozhaysk
+c_mstislavl,Mstislavl
+c_muile,Muile
+c_multan,Multan
+c_munio,Munio
+c_munster,Münster
+c_murcia,Murcia
+c_murom,Murom
+c_muscat,Masqat
+c_mylasa,Mylasa
+c_mzab,Al-Aghwat
+c_nadruvia,Nadruvia
+c_nafusa,Nafusa
+c_nafzawa,Nafzawa
+c_nagauda,Nagauda
+c_naimisa,Naimisa
+c_naissus,Niš
+c_najera,Nájera
+c_nakhshab,Nakhshab
+c_nakur,Nakur
+c_namur,Namur
+c_nandana,Nandana
+c_nandurbar,Nandurbar
+c_nantes,Naoned
+c_napoli,Acerra
+c_narbonne,Narbona
+c_narke,Nerike
+c_narva,Vironia
+c_naryn,Naryn
+c_nasikya,Nasikya
+c_nassau,Nassau
+c_nasya,Nasyá
+c_naumadal,Naumdœlfylki
+c_navarra,Navarra
+c_navasarika,Navasarika
+c_naxos,Kykládes
+c_nellenburg,Nellenburg
+c_neokaisareia,Neokaisareia
+c_neopatras,Neai Patrai
+c_neuchatel,Neuchâtel
+c_neumark,Neumark
+c_nevers,Nevers
+c_nicosia,Nicosia
+c_niebla,Niebla
+c_niederbayern,Bogen
+c_niederlausitz,Niederlausitz
+c_nikaea,Nikaia
+c_nikomedeia,Nikomedeia
+c_nikopolis,Kran
+c_nimes,Nimes
+c_nineveh,Ninawa
+c_nishapur,Níshápúr
+c_nitra,Nyitra
+c_nizhny_novgorod,Nizhny Novgorod
+c_nordgau,Nordgau
+c_nordisland,Norðurland
+c_nordland,Norðmœri
+c_norfolk,Norfolk
+c_north_dvina,Výnva
+c_north_frisia,North Frisia
+c_northampton,Northampton
+c_northeastern_jylland,Northeastern Jylland
+c_northern_halland,Northern Halland
+c_northern_jylland,Northern Jylland
+c_northern_skane,Northern Skane
+c_northumberland,Northumberland
+c_nottingham,Nottingham
+c_novgorod,Novgorod
+c_novgorod_seversky,Novgorod Seversky
+c_novosil,Novosil
+c_nubia,Nubia
+c_nurnberg,Nürnberg
+c_nyland,Nyland
+c_nyssa,Nyssa
+c_obardheathain,Obar Dheathain
+c_oberbayern,Scheyern
+c_ochrid,Ohrid
+c_odishi,Odishi
+c_oettingen,Öttingen
+c_offaly,Offaly
+c_okic,Okic
+c_oland,Öland
+c_oldenburg,Oldenburg
+c_oleshye,Boh
+c_olomouc,Olomuc
+c_olvia,Yedisan
+c_omis,Omis
+c_onega,Änine
+c_opava,Opava
+c_opole,Opole
+c_oppland,Hringaríki
+c_orania,Wahrán
+c_orava,Árva
+c_orbetello,Pitigliano
+c_oriel,Oriel
+c_orkney,Orkneyar
+c_orleans,Orleans
+c_ormond,Waterford
+c_oromieh,Oromieh
+c_orsha,Krasen
+c_ortenberg,Ortenberg
+c_orvieto,Vico
+c_osel,Osilia
+c_osnabruck,Ravensberg
+c_ossory,Ossory
+c_osterbotten,Österbotten
+c_ostergotland,Östergötland
+c_osterreich,Österreich
+c_ostfriesland,Ostfriesland
+c_otrar,Otrár
+c_ouadane,Ouadane
+c_oualata,Oualata
+c_ouled_nail,Bú Sa'íd
+c_oversticht,Oversticht
+c_oxford,Oxford
+c_padova,Padua
+c_palencia,Palencia
+c_palermo,Palermo
+c_pallars,Pallars
+c_palmyra,Palmyra
+c_pandjgur,Pandjgúr
+c_panjikend,Panjikend
+c_paphlagonia,Paphlagonia
+c_parma,Parma
+c_passau,Passau
+c_pavia,Pavia
+c_pecheneg,Haqmar
+c_pecs,Tolna
+c_pelusia,Ushmún Tannáh
+c_penthievre,Turnagoued
+c_perche,Perche
+c_peremyshl,Peremyshl
+c_peresechen,Podolya
+c_pereyaslavl,Pereyaslavl
+c_pereyaslavl_zalessky,Pereyaslavl'-Zalesskiy
+c_perfeddwlad,Perfeddwlad
+c_perigord,Perigord
+c_perm,Viser
+c_persarmenia,Persarmenia
+c_pest,Veszprém
+c_petra,Elim
+c_pfalz,Pfalz
+c_philadelphia,Philadelpheia
+c_philan,Philan
+c_philippopolis,Plovdiv
+c_piacenza,Piacenza
+c_pinsk,Pinsk
+c_piombino,Santafiora
+c_pisa,Pisa
+c_pitten,Pitten
+c_plasencia,Plasencia
+c_plauen,Voigtland
+c_plock,Plock
+c_plzen,Plzen
+c_podlasie,Belsk
+c_pogesania,Pogesania
+c_poitiers,Poitiers
+c_polimlje,Polimlje
+c_polotsk,Polotsk
+c_polybotos,Phrygía
+c_pombia,Pombia
+c_pomesania,Pomesania
+c_ponthieu,Ponthieu
+c_porcien,Porcien
+c_porhoet,Porhoet
+c_porkhov,Porkhov
+c_porto,Oporto
+c_powys,Maelor
+c_powys_wenwynwyn,Powys Wenwynwyn
+c_pozega,Pozega
+c_poznanskie,Poznan
+c_praha,Praha
+c_prato,Prato
+c_pressburg,Pozsony
+c_prignitz,Prignitz
+c_primorje,Primorje
+c_prizren,Prizren
+c_pronsk,Pronsk
+c_provence,Provence
+c_prusa,Prousa
+c_pskov,Pskov
+c_purang,Purang
+c_purushapura,Purushapura
+c_qashtiliya,Qashtiliya
+c_qasribrim,Qasr Ibrim
+c_qatar,Qatar
+c_qazan,Qazan
+c_qazwin,Kazvín
+c_qohistan,Káin
+c_qom,Qom
+c_quattara,Santariya
+c_quena,Qusayr
+c_quercy,Quercy
+c_qus,Qus
+c_racha,Racha
+c_rafha,Sa'da
+c_ragusa,Dubrovnik
+c_rajanpur,Rajanpur
+c_rama,Rama
+c_ranikot,Ranikot
+c_ranthambore,Ranthambore
+c_rashka,Raška
+c_rasht,Rasht
+c_ratzeburg,Ratzeburg
+c_raumrike,Raumrike
+c_ravenna,Ravenna
+c_rawamazovia,Rawa
+c_rayy,Rayy
+c_reggio,Gerace
+c_reggionellemilia,Reggio
+c_reims,Reims
+c_reni,Reni
+c_rennes,Roazhon
+c_rethel,Réthel
+c_reval,Harria
+c_rheinfelden,Rheinfelden
+c_rhodos,Dodekánisa
+c_rhwng,Rhwng Gwy A Hafren
+c_ribagorza,Ribagorza
+c_richmond,Richmond
+c_rilsk,Rilsk
+c_rimini,Rimini
+c_rinnfriu,Rinn Friu
+c_risiom,Risiom
+c_rivsharan,Rívshárán
+c_rizaion,Rizaion
+c_rogaland,Rygjafylki
+c_rogliano,Rogliano
+c_roma,Roma
+c_romny,Latša
+c_romny_ukraine,Romny Ukraine
+c_romsdal,Romsdal
+c_rosello,Rosello
+c_roslavl,Roslavl
+c_ross,Ross
+c_rostock,Rostock
+c_rostov,Rostov
+c_rouergue,Roergue
+c_roufra,Roufra 
+c_rudbar,Rudbar
+c_rugen,Rügen
+c_rukhadj,Rukhádj
+c_rummah,Hafar
+c_russa,Russa
+c_rutland,Rutland
+c_rutog,Rutog
+c_ruyan,Ruyan
+c_ryazan,Riazan'
+c_sa,Sa
+c_saarbrucken,Saarbrücken
+c_sabina,Sabina
+c_sabionetta,Sabionetta
+c_sacz,Sandec
+c_safed,Toron
+c_saintonge,Saintonge
+c_saintpol,Saintpol
+c_sakala,Sakala
+c_sala,Sala
+c_salamanca,Salamanca
+c_salamiyah,Salamiyah
+c_salerno,Principato
+c_salm,Salm
+c_saluzzo,Auriate
+c_salzburg,Salzburg
+c_samarqand,Samarqand
+c_sambhal,Sambhal
+c_sambia,Sambi
+c_samoyeds,Ižva
+c_samsoe,Samsoe
+c_samtskhe,Samtskhe
+c_sanaa,Sanaa
+c_sancerre,Sancerre
+c_sandomierskie,Sandomierz
+c_sangarios,Sangários
+c_santiago,Santiago
+c_santok,Zantoch
+c_saone,Saone
+c_sarakhs,Sarakhs
+c_sarangpur,Sarangpur
+c_sarasvata_mandala,Anahilapataka
+c_sarasvati,Sarasvati
+c_saray,Saray
+c_sari,Sari
+c_sarir,Sarir
+c_saris,Borsod
+c_sarisu,Sarisu
+c_sarkel,Sharkel
+c_sarpa,Sarpa
+c_sarqihya,Qulzum
+c_satakunta,Satakunda
+c_satyapura,Satyapura
+c_savoie,Savoie
+c_savolaks,Savolax
+c_say,Say
+c_sayn,Sayn
+c_scalovia,Skalva
+c_schaumburg,Schauenburg
+c_schaunberg,Schaunberg
+c_schelklingen,Schelklingen
+c_schwarzburg,Schwarzburg
+c_schwerin,Schwerin
+c_schwyz,Schwyz
+c_scialenga,Scialenga
+c_sebastia,Sebasteia
+c_segni,Segni
+c_segovia,Segovia
+c_seleukeia,Seleukeia
+c_selija,Selija
+c_semender,Semender
+c_semien,Semien
+c_semna,Semna
+c_senj,Lika
+c_sennar,Sennar
+c_senoussi,Awjíla
+c_sens,Sens
+c_seprio,Seprio
+c_serdica,Sredets
+c_setif,Setif
+c_setubal,Setubal
+c_severin,Severin
+c_sevilla,Sevilla
+c_sfax,Sfax
+c_shahrazur,Shahrazur
+c_sharukan,Uda
+c_shash,Shásh
+c_shetland,Hjaltland
+c_shewa,Shewa
+c_shibam,Shibam
+c_shiraz,Shíráz
+c_shirvan,Shirvan
+c_shorkot,Shorkot
+c_shrewsbury,Shrewsbury
+c_sibi,Sibi
+c_sibir,Tobol
+c_sibiridugu,Sibiridugu
+c_siena,Siena
+c_sieradzko-leczyckie,Sieradz
+c_sighnaq,Sighnaq
+c_sijilmasa,Sijilmasa
+c_sikasso,Sikasso
+c_silla,Silla
+c_silves,Silves
+c_simsir,Simsir
+c_sinai,Nekhel
+c_sinjar,Sinjar
+c_sinope,Sinópe
+c_siracusa,Paterno
+c_siraf,Irahistan
+c_sirjan,Sírján
+c_sis,Sision
+c_sistan,Zaranj
+c_siwistan,Siwistan
+c_sjaelland,Nørræ Syaland
+c_skane,Væstær Skane
+c_skara,Skara
+c_skardu,Skardu
+c_skopje,Skopje
+c_slesvig,Istathesysæl
+c_slupsk,Stolp
+c_slutsk,Slutsk
+c_smaland,Njudung
+c_smolensk,Smolensk
+c_smyrna,Smyrna
+c_snassen,Tanas
+c_soba,Soba
+c_sobrarbe,Sobrarbe
+c_socotra,Socotra 
+c_sodermanland,Södermanland
+c_sogn,Sogn
+c_soli,Soli
+c_somerset,Somerset
+c_somnath,Somnath
+c_sonda,Sonda
+c_sonneberg,Sonneberg
+c_sopron,Sopron
+c_soria,Soria
+c_soso,Soso
+c_sous,Sous
+c_southern_jylland,Southern Jylland
+c_southern_sjaelland,Southern Sjaelland
+c_southisland,Southisland
+c_southvexin,Southvexin
+c_sozopolis,Pisidía
+c_sper,Sper
+c_split,Cetina
+c_spoleto,Assisi
+c_sponheim,Sponheim
+c_sripatha,Sripatha
+c_stade,Stade
+c_stafford,Stafford
+c_staufen,Staufen
+c_steiermark,Steiermark
+c_steinkjer,Steinkjer
+c_stettin,Stettin
+c_sthanisvara,Sthanisvara
+c_sticht,Sticht
+c_strathearn,Strathearn
+c_strumica,Strumica
+c_strymon,Strymonos
+c_suakin,Suakin
+c_sudovia,Sùduva
+c_suenik,Suenik
+c_suffolk,Suffolk
+c_sugrov,Duna-Jük
+c_suhar,Suhar
+c_sulzbach,Sulzbach
+c_sundgau,Sundgau
+c_sunmore,Sunmore
+c_surrey,Surrey
+c_susa,Susa
+c_sussex,Sussex
+c_sutherland,Sutherland
+c_suwaida,Hauran
+c_suzdal,Suzdal
+c_svaneti,Svaneti
+c_swiecie,Swiecie
+c_syria,Bathaniyya
+c_syrj,Jemva
+c_syrmia,Syrmia
+c_syrt,Syrt
+c_syrte,Syrte
+c_szekelyfold,Torda
+c_szekezfehervar,Csongrád
+c_szepes,Szepes
+c_tabassa,Tabassa
+c_tabriz,Tabriz
+c_tabuk,Tabuk
+c_tadjoura,Tadjoura
+c_tadmekka,Tadmekka
+c_tadmor,Al-Hilla
+c_tagant,Tagant
+c_taghaza,Taghaza
+c_tahoua,Tahoua
+c_taizz,Taizz
+c_takrur,Takrur
+c_talas,Talas
+c_talekan,Tálekán
+c_tana,Vorskla
+c_tangiers,Tandja
+c_tao,Tao
+c_taranto,Taranto
+c_targujiu,Targujiu
+c_taron,Tarawn
+c_tarragona,Tortosa
+c_tarsos,Tarsos
+c_tarusa,Tarusa
+c_tashkurgan,Tashkurgan
+c_tassarahla,Tassarahla
+c_tavasts,Tavastland
+c_tazerbo,Tazerbo
+c_tbilisi,Tbilisi
+c_teck,Teck
+c_tecklenburg,Tecklenburg
+c_telemark,Þelamørk
+c_tell_atlas,Tabna
+c_tell_bashir,Turbessel
+c_teluch,Marash
+c_temes,Temes
+c_tenerife,Tenerife
+c_tephrike,Tephrike
+c_terebovl,Terebovl
+c_teruel,Teruel
+c_tessalit,Tessalit
+c_tethbae,Tethbae
+c_teviotdale,Teviotdale
+c_thalner,Thalner
+c_tharasset,Tarúdant
+c_thebai,Boiotía
+c_theodoro,Theodoro
+c_theodosia,Theodosia
+c_theodosiopolis,Karin
+c_thessalia,Thessalía
+c_thessalonike,Thessaloníke
+c_thomar,Thomar
+c_thomond,Clare
+c_thouars,Thouars
+c_thrake,Thráke
+c_thurgau,Thurgau
+c_thuringen,Thüringen
+c_thyateira,Lydía
+c_tiberias,Tiberias
+c_tigre,Tigre
+c_tigris,Wasit
+c_tihama,Tihama
+c_timbuktu,Timbuktu
+c_tindouf,Tindouf
+c_tipperary,Thiobraid Arann
+c_tirgoviste,Tirgoviste
+c_tirol,Tirol
+c_tjust,Tjust
+c_tlemcen,Tilimsán
+c_tmutarakan,Tamatarkha
+c_tobruk,Tubrúk
+c_tokharestan,Tokharestán
+c_toledo,Toledo
+c_tonnerre,Tonnerre
+c_toreida,Toreida
+c_torki,Suceava
+c_toro,Toro
+c_toropets,Toropets
+c_tortosa,Tortosa
+c_torzhok,Torzhok
+c_toulouse,Tolosa
+c_tourraine,Tourraine
+c_traianopolis,Traianopolis
+c_trakai,Trakai
+c_trancoso,Trancoso
+c_trans-portage,Pomorye
+c_trapani,Aderno
+c_trapezous,Trapezous
+c_traungau,Traungau
+c_travunija,Travunija
+c_trencin,Trencsén
+c_trent,Trient
+c_treviso,Treviso
+c_tribandapura,Tribandapura
+c_trier,Trier
+c_trieste,Duino
+c_trigarta,Trigarta
+c_tripoli,Trípolis
+c_tripolitana,Tripolitana
+c_tripuri,Tripuri
+c_trondelag,Ytriþrœndalóg
+c_truhendingen,Truhendingen
+c_tsaparang,Tsaparang
+c_tuat,Tuat
+c_tudela,Tudela
+c_tunis,Túnis
+c_turan,Turán
+c_turgay,Turgay
+c_turnu,Turnu
+c_turov,Turov
+c_tus,Tus
+c_tusculum,Tusculum
+c_tusheti,Tusheti
+c_tver,Tver
+c_tweedale,Tweedale
+c_tyana,Tyana
+c_tyrconnell,Tyrconnell
+c_tyrnovo,Tarnovo
+c_tyrone,Tyrone
+c_tyrus,Sidon
+c_tyumen,Suar
+c_tzamandos,Tzamandos
+c_uch,Uch
+c_udabhanda,Udabhanda
+c_uglich,Uglich
+c_ugra,Mozyn
+c_uibhist,Uibhist
+c_ujjayini,Ujjayini
+c_ulster,Antrim
+c_upper_wallachia,Megále Vlachia
+c_uppland,Tiundaland
+c_upyte,Upyte
+c_ural,Chusovaya
+c_urbino,Piobbico
+c_urgell,Urgell
+c_uri,Uri
+c_usora,Usora
+c_ustrushana,Ustrushana
+c_ustyurt,Ust-Yurt
+c_ustyuzhna,Ustyug_Zhelezny
+c_utena,Nalshia
+c_utik,Utik
+c_uzboy,Uzboy
+c_uzens,Usens
+c_vadodara,Vadodara
+c_vaiga,Vaiga
+c_vairata,Vairata
+c_valabhi,Valabhi
+c_valais,Valais
+c_valassina,Valassina
+c_valencia,Valencia
+c_valenciennes,Valenciennes
+c_valentinois,Valentinois
+c_valladolid,Valladolid
+c_valois,Valois
+c_valona,Valona
+c_vanand,Vanand
+c_vannes,Gwened
+c_varadzin,Zagorje
+c_varazhnunik,Varazhnunik
+c_vardhamana,Vardhamana
+c_varmland,Värmilland
+c_vas,Kolon
+c_vaspurakan,Vaspurakan
+c_vasterbotten,Norrland
+c_vastergotland,Lödöse
+c_vastmanland,Västmanland
+c_vaud,Vaud
+c_vaudemont,Vaudémont
+c_veglia,Krk
+c_velay,Velay
+c_velbazhd,Velbazhd
+c_velikiye_luki,Luki
+c_veliky_ustug,Veliky Ustyug
+c_venaissin,Venaissin
+c_vendome,Vendome
+c_venezia,Venezia
+c_ventadour,Ventadour
+c_ventimiglia,Ventimiglia
+c_vercelli,Vercelli
+c_verdun,Verdun
+c_veria,Verroia
+c_vermandois,Vermandois
+c_verona,Verona
+c_vertus,Vertus
+c_vesoul,Vesoul
+c_vestfold,Vestfold
+c_vestisland,Vesturland
+c_vexin,Vexin
+c_vianden,Vianden
+c_vicenza,Vicenza
+c_vidin,Vidin
+c_vidisa,Vidisa
+c_viipuri,Viipuri
+c_vijnot,Vijnot
+c_viken,Ránríki
+c_vikramapura,Vikramapura
+c_viscaya,Viscaya
+c_viseu,Viseu
+c_vitebsk,Vitebsk
+c_vithynion,Bithyníõn
+c_viviers,Vivarés
+c_vladimir,Vladimir
+c_vladimir_volynsky,Vladimir Volynsky
+c_vodamayutja,Vodamayuta
+c_vodi,Vodi
+c_vodica,Vodica
+c_vologda,Vologda
+c_volokolamsk,Volokolamsk
+c_vorotynsk,Vorortynsk
+c_votyaki,Otš
+c_vrbas,Vrbas
+c_vrhbosna,Vrhbosna
+c_vyazma,Vyazma
+c_wadai,Wadai
+c_waddan,Waddan
+c_waldburg,Waldburg
+c_wallen,Wallen
+c_wana,Wana 
+c_wargla,Wargla
+c_warwick,Warwick
+c_weimar,Weimar
+c_werle,Werle
+c_wertheim,Wertheim
+c_west_dvina,Rositten
+c_western_jylland,Western Jylland
+c_western_sjaelland,Western Sjaelland
+c_westfriesland,Westfriesland
+c_westmorland,Westmorland
+c_wicklow,Wicklow
+c_wiltshire,Wiltshire
+c_winchester,Winchester
+c_windische_mark,Windische Mark
+c_wislica,Wislica
+c_wittenberg,Wittenberg
+c_wolgast,Wolgast
+c_wolqayt,Wolqayt
+c_worcester,Worcester
+c_wroclaw,Wroclaw
+c_wurttemberg,Württemberg
+c_wurzburg,Würzburg
+c_yaik,Yaik
+c_yanbu,Yanbu
+c_yarkand,Yarkand
+c_yaroslavl,Yaroslavl
+c_yatvyagi,Dainava
+c_yauri,Yauri
+c_yazd,Yazd
+c_yegorlyk,Yegorlyk
+c_yeti-su,Yeti-su
+c_york,The West Riding
+c_york_moors,York Moors
+c_york_wolds,York Wolds
+c_yperen,Yperen
+c_ystrad_tywi,Ystrad Tywi
+c_yulduz,Yulduz
+c_zachlumia,Podgorje
+c_zadar,Zadar
+c_zagreb,Zagreb
+c_zaila,Zaila
+c_zamfara,Zamfara
+c_zamindavar,Zamíndávar
+c_zamora,Zamora
+c_zaozerye,Tudozerskiy
+c_zaragoza,Zaragoza
+c_zarand,Zarand
+c_zarma,Zarma
+c_zaslawye,Zaslawye
+c_zatec,Zatec
+c_zavrsje,Zavrsje
+c_zawila,Zawila
+c_zaysan,Zaysan
+c_zeeland,Zeeland
+c_zemigalians,Opemele
+c_zemplen,Zemplen
+c_zeta,Duklja
+c_zhmud,Žëmaitëjë
+c_zhytomyr,Zhytomyr
+c_ziegenhain,Ziegenhain
+c_znojmo,Znojmo
+c_zollern,Zollern
+c_zutphen,Zutphen
+c_zweibrucken,Zweibrücken
+c_zyriane,Ežva
 d_aberdeen,Aberdeen
 d_abkhazia,Apkhazeti
 d_achaia,Peloponnesou
@@ -8316,8 +9974,8 @@ d_archberry,Berry
 d_archreims,Reims
 d_arezzo_republic,Comune di Arezzo
 d_arles,Arles
-d_armenia_minor,Kilikía
 d_armenia,Hayk
+d_armenia_minor,Kilikía
 d_armeniacon,Armeniakon
 d_artois,Artois
 d_artsakh,Khachen
@@ -8483,8 +10141,8 @@ d_esztergom,Visegrád
 d_faereyar,Faereyar
 d_fars,Párs
 d_ferghana,Ferghána
-d_ferrara_republic,Comune di Ferrara
 d_ferrara,Ferrara
+d_ferrara_republic,Comune di Ferrara
 d_fes,Fas
 d_fezzan,Fezzan
 d_finland,Suomi
@@ -8599,12 +10257,12 @@ d_kufichi,Kufichi
 d_kumis,Kúmis
 d_kurdistan,Kurdistan
 d_kuyavia,Kujawy
-d_kvens_birkarls,Bircharlaboa
 d_kvens,Kveanatlaš
+d_kvens_birkarls,Bircharlaboa
 d_kylfings,Kylfingilaš
 d_la_mancha,La Mancha
-d_lamta_east,Lamta
 d_lamta,Lamta
+d_lamta_east,Lamta
 d_lamtuna,Lamtúna
 d_lancaster,Lancaster
 d_lauenburg,Lauenburg
@@ -8629,8 +10287,8 @@ d_lothian,Lothian
 d_lower_lorraine,Niederlothringen
 d_lowerbrittany,Breizh Izel
 d_lubusz,Lebus
-d_lucca_republic,Comune di Lucca
 d_lucca,Lucca
+d_lucca_republic,Comune di Lucca
 d_lunkini,Glinjani
 d_lusatians,Lusitzi
 d_lykandos,Lykàndou
@@ -8642,10 +10300,10 @@ d_mainz,Mainz
 d_makran,Makrán
 d_mali,Mali
 d_mallorca,Mallorca
-d_mantua_republic,Comune di Mantova
 d_mantua,Mantua
-d_maris_vetluga,Vütla Mari
+d_mantua_republic,Comune di Mantova
 d_maris,Vice Mari
+d_maris_vetluga,Vütla Mari
 d_marrakech,Marrákush
 d_masila,Masila
 d_massa,Massa
@@ -8654,8 +10312,8 @@ d_mazata,Mazáta
 d_mazovia,Mazowsze
 d_mazovians,Mazowszanie
 d_meath,Mide
-d_medina_sidonia,Medina Sidonia
 d_medina,Hijaz
+d_medina_sidonia,Medina Sidonia
 d_medinaceli,Medinaceli
 d_melitene,Malatya
 d_mema,Mema
@@ -8668,15 +10326,15 @@ d_milano_republic,Comune di Milano
 d_milceni,Milcani
 d_mingrelia,Samegrelo
 d_minsk,Minsk
-d_modena_republic,Comune di Modena
 d_modena,Modena
+d_modena_republic,Comune di Modena
 d_moldau,Tara de Sus
 d_monferrato,Monferrato
 d_moravia,Morawske
 d_moray,Moray
 d_mordva,Mokša
-d_mordvins_erza,Erzyät
 d_mordvins,Mokshet
+d_mordvins_erza,Erzyät
 d_more,Mœri
 d_morgannwg,Glamorgan
 d_moskva,Moskva
@@ -8712,8 +10370,8 @@ d_norfolk,East Anglia
 d_norman_apulia,Apulia
 d_northumberland,Northumberland
 d_novara_republic,Comune di Novara
-d_novgorod-seversk,Sivershchyna
 d_novgorod,Novgorod
+d_novgorod-seversk,Sivershchyna
 d_novosil,Verhovye
 d_nubia,Noubia
 d_nudzici,Nudici
@@ -8747,16 +10405,16 @@ d_oualata,Walata
 d_padova_republic,Comune di Padova
 d_pagania,Neretljani
 d_paphlagonia,Paphlagonias
-d_parma_republic,Comune di Parma
 d_parma,Parma
+d_parma_republic,Comune di Parma
 d_paulicians,Paulikianoi
 d_pavia_republic,Comune di Pavia
 d_pechora,Pechöra
 d_pecs,Somogyország
 d_pelym,Polum
 d_pereyaslavl,Pereyaslavl
-d_perm_vychegda,Ežva
 d_perm,Perym
+d_perm_vychegda,Ežva
 d_pest,Biharország
 d_pfalz,Pfalzgrafschaft bei Rhein
 d_piacenza_republic,Comune di Piacenza
@@ -8797,6 +10455,7 @@ d_ratien,Rätien
 d_ravenna,Ravenna
 d_rayy,Rayy
 d_readrians,Ratari
+d_rebel_coa,CoA: Rebels
 d_reggio_republic,Comune di Reggio
 d_rethel,Rethel
 d_rheinfranken,Westfranken
@@ -8852,8 +10511,8 @@ d_shash,Shásh
 d_shewa,Shewa
 d_shirvan,Shirwan
 d_sicily,Sicilia
-d_siena_republic,Comune di Siena
 d_siena,Siena
+d_siena_republic,Comune di Siena
 d_sijilmasa,Sijilmása
 d_silesia,Slask
 d_silesians,Slezanie
@@ -8970,8 +10629,8 @@ d_veleti,Wilci
 d_venice,Venezia
 d_venosa,Venosa
 d_vercelli_republic,Comune di Vercelli
-d_verona_republic,Comune di Verona
 d_verona,Verona
+d_verona_republic,Comune di Verona
 d_vestlandet,Biorgvin
 d_vicenza_republic,Comune di Vicenza
 d_vidin,Vidin
@@ -9017,13 +10676,18 @@ d_zitizi,Zitici
 d_zunbil,Rutbils
 d_zurich,Zürichgau
 d_zyriane,Zyriana
+e_abyssinia,Abyssinia
 e_africa,Africa
+e_baltic_empire,Balti
 e_britannia,Britannia
+e_bulgaria,Bulgarian Empire
 e_byzantium,Basileia Rhõmaiõn
 e_carpathia,Magyarország
 e_egypt,Misr
 e_france,France
+e_germany,Germania
 e_hre,Heiliges Römisches Reich
+e_hre_french,Saint-Empire Romain
 e_italy,Italia
 e_kaleva,Kalevala
 e_khazaria,Qasarstan
@@ -9038,7 +10702,6 @@ e_russia,Rus
 e_scandinavia,Nordmannia
 e_spain,España
 e_ulm,Ulm
-EAST_FRANCIA,Francia Orientalis
 k_abkhazia,Apkhazeti
 k_achaea,Moréos
 k_adal,Adal
@@ -9053,8 +10716,8 @@ k_andalusia,Al-Andalus
 k_antioch,Antioche
 k_arabia,Arabiyya
 k_aragon,Aragón
-k_armenia_minor,Mikrá Armenia
 k_armenia,Hayk
+k_armenia_minor,Mikrá Armenia
 k_austria,Österreich
 k_awlil,Awlil
 k_bagratid_grand_principality,Hayk
@@ -9074,6 +10737,7 @@ k_carinthia,Kärnten
 k_castille,Castilla
 k_catalunya,Catalunya
 k_caucasian_albania,Shirwan
+k_cilicia,Cilicia
 k_cilician,Kilikia
 k_croatia,Hrvatska
 k_cuman,Kumanlar
@@ -9088,6 +10752,15 @@ k_east_anglia,Eastengle
 k_egypt,Misr
 k_elfasher,El Fasher
 k_ellan_vannin,Man
+k_emf_barcelona_aragon,CoA: Aragon: de Barcelona
+k_emf_bavaria,Baiern
+k_emf_english_england,CoA: England
+k_emf_franconia,Franken
+k_emf_lower_lorraine,Lothringen
+k_emf_norman_england,CoA: England: norman
+k_emf_saxon_england,CoA: England: saxon/anglonorse
+k_emf_saxony,Sachsen
+k_emf_schwaben,Schwaben
 k_epirus,Epeiros
 k_fezzan,Fezzan
 k_finland,Suomi
@@ -9114,8 +10787,8 @@ k_iceland,Ísland
 k_ifat,Ifat
 k_imereti,Imereti
 k_insalah,In Salah
-k_ireland_titular,Tara
 k_ireland,Éire
+k_ireland_titular,Tara
 k_italy,Lombardia
 k_kafarestan,Kábulistán
 k_kakheti,Kakheti
@@ -9147,7 +10820,7 @@ k_moldau,Moldova
 k_moravia,Velká Morava
 k_mzab,Mzab
 k_navarra,Navarra
-k_nikaea,Nikaia
+k_nikaea,Nikaea
 k_norman_england,England
 k_northumberland,Northymbraland
 k_norway,Norégr
@@ -9197,6 +10870,7 @@ k_takrur,Takrur
 k_taurica,Qirim
 k_tekkada,Tekkeda
 k_terra,Livonia
+k_thessalonika,Thessalonika
 k_thrace,Thessalonika
 k_tiaret,Tiáret
 k_tibesti,Tibesti
@@ -9213,12 +10887,11 @@ k_valencia,Valencia
 k_vaspurakan,Vaspurakan
 k_venice,Venezia
 k_vladimir,Vladimir
+k_volga_bulgaria,Bolgar
 k_volga_bulgaria_hungarian,Dentü-Mogyerian
 k_volga_bulgaria_russian,Povolzhye
-k_volga_bulgaria,Bolgar
 k_wales,Wales
 k_wallachia,Wallachia
 k_wessex,Westseaxe
 k_yemen,Yaman
 k_york,Jórvik
-WEST_FRANCIA,Francia Occidentalis
