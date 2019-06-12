@@ -234,6 +234,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                     string normalisedName = nameCleaner.Normalise(name);
                     string normalisedToponymName = nameCleaner.Normalise(toponymName);
+                    string cleanName = nameCleaner.Clean(name);
 
                     if (normalisedName.Equals(normalisedSearchName) ||
                         normalisedName.Equals(normalisedToponymName))
@@ -244,7 +245,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     // TODO: I shouldn't search for it each time
                     string cultureId = CultureLanguages.First(x => x.Value.Contains(language)).Key;
                     
-                    if (nameValidator.IsNameValid(name, cultureId))
+                    if (nameValidator.IsNameValid(cleanName, cultureId))
                     {
                         return name;
                     }
@@ -298,12 +299,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             string normalisedName1 = nameCleaner.Normalise(name1);
             string normalisedName2 = nameCleaner.Normalise(name2);
 
-            if (normalisedName1.Contains(normalisedName2))
-            {
-                return true;
-            }
-
-            return false;
+            return normalisedName1.Equals(normalisedName2);
         }
 
         string BuildRequestUrl(string searchName)
@@ -322,7 +318,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 //"&featureClass=H" +
                 //"&featureClass=T" +
                 "&isNameRequired=true" +
-                "&maxRows=15" +
+                "&maxRows=30" +
                 "&orderby=relevance" +
                 "&style=FULL";
         }
@@ -427,7 +423,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             //{ "egyptian_arabic", new string[] { "egx", "arz", "avl" } }, // non-latin
             //{ "georgian", new string[] { "oge", ka" } }, // non-latin
             //{ "gothic", new string[] { "got" } }, // doesn't work
-            //{ "greek", new string[] { "grc", "el" } }, // non-latin
+            { "greek", new string[] { "grc" } },//, "el" } }, // non-latin
             //{ "han", new string[] { "ltc", "zh" } }, // non-latin
             //{ "hijazi", new string[] { "acv" } }, // non-latin
             //{ "hindustani", new string[] { "hi" } }, // non-latin
@@ -442,13 +438,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
             //{ "oriya", new string[] { "or" } }, // non-latin
             //{ "panjabi", new string[] { "pa" } }, // non-latin
             //{ "persian", new string[] { "fa" } }, // non-latin
-            //{ "russian", new string[] { "orv", ru" } }, // non-latin
+            //{ "russian", new string[] { "orv", "ru" } }, // non-latin
             //{ "sindhi", new string[] { "sd" } }, // non-latin
             //{ "sinhala", new string[] { "si" } }, // non-latin
             //{ "tajik", new string[] { "tg" } }, // non-latin
-            //{ "tamil", new string[] { "oty", ta" } }, // non-latin
+            //{ "tamil", new string[] { "oty", "ta" } }, // non-latin
             //{ "telugu", new string[] { "te" } }, // non-latin
-            //{ "uyghur", new string[] { "oui", ug" } }, // non-latin
+            //{ "uyghur", new string[] { "oui", "ug" } }, // non-latin
         };
     }
 }

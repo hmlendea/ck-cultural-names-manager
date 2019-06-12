@@ -337,7 +337,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 3000; i < 4000; i++)
+            for (int i = 5000; i < 6000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 string localisation = localisationProvider.GetLocalisation(title.Id);
@@ -595,7 +595,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
                 "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian"),
 
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "norsegaelic" ),
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "irish", "norsegaelic" ),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "scottish", "welsh"),
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "scottish", "cumbric", "pictish"),
             new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"),
@@ -610,8 +610,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "arpitan"),
 
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "croatian", "serbian", "bosnian", "carantanian"),
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "croatian", "bosnian", "carantanian"),
+            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "croatian", "serbian" ),
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "croatian", "bosnian", "carantanian"),
+            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "bosnian", "carantanian"),
             new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "slovieni"),
             new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"),
 
