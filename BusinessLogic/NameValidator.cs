@@ -37,21 +37,29 @@ namespace CK2LandedTitlesManager.BusinessLogic
         }
         
         readonly string AllowedCharacters =
-            "\",'‘’“”`÷×- " +
+            "\".,'‘’“”`÷×- " +
             "ßÞþð" +
             "AÁÀÂÅÄÃÆBCÇDÐEÉÈÊËFGHIÍÌÎÏJKLMNÑOÓÒÔÖÕØŒPQRSŠTUÚÙÛÜVWXYÝŸZŽ" +
             "aáàâåäãæbcçdeéèêëfghiíìîïjklmnñoóòôöõøœpqrsštuúùûüvwxyýÿzž";
         
         readonly IDictionary<string, string> DisallowedCharactersPerCulture = new Dictionary<string, string>()
         {
-            { "romanian", "üåæçðžøœšñßžÞýþçší" },
+            { "bavarian", "ížšñçã" },
             { "bosnian", "üåæíñßþçã" },
             { "bulgarian", "üåæíñßþçã" },
             { "carantanian", "üåæíñßþçã" },
             { "croatian", "üåæíñßþçã" },
+            { "german", "ížšñçã" },
             { "italian", "üåæçðžøœšñßžÞýþçãš" },
+            { "langobardisch", "ížšñçã" },
+            { "low_frankish", "ížšñçã" },
+            { "low_german", "ížšñçã" },
+            { "low_saxon", "ížšñçã" },
+            { "romanian", "üåæçðžøœšñßžÞýþçší" },
             { "serbian", "üåæíñßþçã" },
+            { "swabian", "ížšñçã" },
             { "swedish", "ížšñçã" },
+            { "thuringian", "ížšñçã" },
         };
     }
 }
