@@ -148,7 +148,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             Dictionary<string, string> violations = new Dictionary<string, string>();
 
-            foreach(LandedTitle title in landedTitles)
+            foreach (LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
                 string localisation = localisationProvider.GetLocalisation(title.Id);
@@ -176,11 +176,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
                         masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
                     {
-                        AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
+                        AddReasonToViolations(violations, title.Id, $"Dynamic name for '{cultureId}' is already defined with the same value");
                     }
                     else if (localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
                     {
-                        AddReasonToViolations(violations, title.Id, $"Redundant dynamic name ({cultureId})");
+                        AddReasonToViolations(violations, title.Id, $"Dynamic name for '{cultureId}' is the same as the default localisation");
                     }
 
                     if (title.DynamicNames[cultureId].Contains('?'))
@@ -337,7 +337,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
 
             //foreach (LandedTitle title in landedTitles)
-            for (int i = 5000; i < 6000; i++)
+            for (int i = 8000; i < 9000; i++)
             {
                 LandedTitle title = landedTitles[i];
                 string localisation = localisationProvider.GetLocalisation(title.Id);
@@ -351,10 +351,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
                         continue;
                     }
 
-                    string exonym = geoNamesCommunicator.TryGatherExonym(localisation, cultureId).Result; // TODO: Broken async
+                    string exonym = GatherExonym(title, cultureId);
 
-                    if (string.IsNullOrWhiteSpace(exonym) ||
-                        !nameValidator.IsNameValid(exonym, cultureId))
+                    if (exonym is null)
                     {
                         continue;
                     }
@@ -536,6 +535,30 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                                             return a;
                                         }));
+        }
+
+        string GatherExonym(LandedTitle title, string cultureId)
+        {
+            string localisation = localisationProvider.GetLocalisation(title.Id);
+            string exonym = geoNamesCommunicator.TryGatherExonym(localisation, cultureId).Result; // TODO: Broken async
+            
+            if (nameValidator.IsNameValid(exonym, cultureId) && !exonym.Equals(localisation))
+            {
+                return exonym;
+            }
+            /*
+            foreach (string dynamicCultureId in title.DynamicNames.Keys)
+            {
+                string dynamicName = title.DynamicNames[dynamicCultureId];
+                exonym = geoNamesCommunicator.TryGatherExonym(dynamicName, cultureId).Result;
+ 
+                if (nameValidator.IsNameValid(exonym, cultureId) && !exonym.Equals(localisation))
+                {
+                    return exonym;
+                }
+            }
+            */
+            return null;
         }
 
         void RemoveDynamicNames(IEnumerable<LandedTitle> landedTitlesToRemove)

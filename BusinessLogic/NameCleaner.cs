@@ -358,7 +358,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
             " by$",
             " i$",
             "^[d]*[eo] ",
-            "^[Ll][ae] ",
+            "^l[ae] ",
         };
     }
 }
