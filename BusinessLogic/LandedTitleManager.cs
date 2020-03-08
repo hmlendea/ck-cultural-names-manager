@@ -260,6 +260,47 @@ namespace CK2LandedTitlesManager.BusinessLogic
                 .ToDictionary(x => x.Key, x => x.Value);
         }
 
+        public IEnumerable<OverwrittenDynamicName> GetOverwrittenDynamicNames(string fileName)
+        {
+            List<LandedTitle> masterTitles = LandedTitlesFile
+                .ReadAllTitles(fileName)
+                .ToDomainModels()
+                .ToList();
+
+            IList<OverwrittenDynamicName> overwrittenNames = new List<OverwrittenDynamicName>();
+
+            foreach (LandedTitle title in landedTitles)
+            {
+                LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
+                string localisation = localisationProvider.GetLocalisation(title.Id);
+
+                if (masterTitle == null)
+                {
+                    continue;
+                }
+
+                foreach (string cultureId in title.DynamicNames.Keys)
+                {
+                    if (!masterTitle.DynamicNames.ContainsKey(cultureId) ||
+                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
+                    {
+                        continue;
+                    }
+
+                    OverwrittenDynamicName overwrittenName = new OverwrittenDynamicName();
+                    overwrittenName.TitleId = title.Id;
+                    overwrittenName.Localisation = localisation;
+                    overwrittenName.CultureId = cultureId;
+                    overwrittenName.OriginalName = masterTitle.DynamicNames[cultureId];
+                    overwrittenName.FinalName = title.DynamicNames[cultureId];
+
+                    overwrittenNames.Add(overwrittenName);
+                }
+            }
+            
+            return overwrittenNames;
+        }
+
         public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(bool autoAddThem = false)
         {
             List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();

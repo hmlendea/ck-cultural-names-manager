@@ -6,6 +6,7 @@ using NuciCLI;
 using NuciCLI.Menus;
 
 using CK2LandedTitlesManager.BusinessLogic;
+using CK2LandedTitlesManager.BusinessLogic.Models;
 using CK2LandedTitlesManager.Models;
 
 namespace CK2LandedTitlesManager.Menus
@@ -106,6 +107,11 @@ namespace CK2LandedTitlesManager.Menus
                 "get-cultural-names",
                 "Gets the names of all titles that contain all specified cultures",
                 delegate { GetNamesOfCultures(); });
+
+            AddCommand(
+                "get-overwritten-dynamic-names",
+                "Gets the names that were ovewritten",
+                delegate { GetOverwrittenDynamicNames(); });
 
             AddCommand(
                 "integrity-check",
@@ -385,6 +391,43 @@ namespace CK2LandedTitlesManager.Menus
             NuciConsole.WriteLine("A grand total of :");
             NuciConsole.WriteLine($"   {titlesCount} titles");
             NuciConsole.WriteLine($"   {perfectMatches} perfect matches");
+        }
+
+        private void GetOverwrittenDynamicNames()
+        {
+            string fileName = NuciConsole.ReadLine("Master file to check compatibility with = ");
+
+            IEnumerable<OverwrittenDynamicName> overwrittenNames = landedTitleManager.GetOverwrittenDynamicNames(fileName);
+            IEnumerable<string> titlesWithOverwrittenNames = overwrittenNames.Select(x => x.TitleId).Distinct().Reverse();
+
+            int titleColWidth = overwrittenNames.Select(x => x.TitleId).Max(x => x.Length);
+
+            if (overwrittenNames.Count() == 0)
+            {
+                NuciConsole.WriteLine("There are no overwritten names!");
+            }
+
+            foreach (string titleId in titlesWithOverwrittenNames)
+            {
+                IEnumerable<OverwrittenDynamicName> overwrittenNamesForTitle = overwrittenNames
+                    .Where(x => x.TitleId == titleId)
+                    .OrderBy(x => x.CultureId);
+                
+                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
+
+                NuciConsole.Write("Overwritten names for ");
+                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
+                NuciConsole.Write(" (");
+                NuciConsole.Write(overwrittenNamesForTitle.First().Localisation, NuciConsoleColour.White);
+                NuciConsole.WriteLine(") :");
+
+                foreach (OverwrittenDynamicName overwrittenName in overwrittenNamesForTitle)
+                {
+                    NuciConsole.WriteLine(
+                        $"{indentation}{overwrittenName.CultureId} = \"{overwrittenName.FinalName}\"" +
+                        $" # Overwrites \"{overwrittenName.OriginalName}\"");
+                }
+            }
         }
 
         private void IntegrityCheck()
