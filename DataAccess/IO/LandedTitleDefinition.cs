@@ -39,6 +39,17 @@ namespace CK2LandedTitlesManager.DataAccess.IO
                     parser.ReadInsideBrackets((p) => { });
                     break;
 
+                // TODO: Implement these
+                case "can_be_claimed":
+                case "can_be_usurped":
+                case "pentarchy":
+                case "rebel":
+                case "replace_captain_on_death":
+                case "top_de_jure_capital":
+                case "used_for_dynasty_names":
+                    parser.ReadString();
+                    break;
+
                 case "assimilate":
                     LandedTitleEntity.AllowsAssimilation = parser.ReadBool();
                     break;
