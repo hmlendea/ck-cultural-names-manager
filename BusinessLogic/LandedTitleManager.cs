@@ -204,45 +204,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return violations.Count == 0;
         }
 
-        public void ApplySuggestions()
-        {
-            IEnumerable<CulturalGroupSuggestion> suggestions = GetCulturalGroupSuggestions();
-
-            foreach (CulturalGroupSuggestion suggestion in suggestions)
-            {
-                LandedTitle landedTitle = landedTitles.First(x => x.Id == suggestion.TitleId);
-
-                string name = $"{suggestion.SuggestedName}\" # Copied from {suggestion.SourceCultureId}. \"Cultural group match";
-
-                landedTitle.DynamicNames.Add(suggestion.TargetCultureId, name);
-            }
-        }
-
-        public void ApplySuggestions(string fileName)
-        {
-            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
-            landedTitles = new List<LandedTitle>();
-            landedTitles = LoadTitlesFromFile(fileName).ToList();
-            landedTitles.AddRange(oldLandedTitles);
-            landedTitles = MergeTitles(landedTitles).ToList();
-
-            IEnumerable<CulturalGroupSuggestion> suggestions = GetCulturalGroupSuggestions();
-
-            landedTitles = oldLandedTitles;
-
-            foreach (CulturalGroupSuggestion suggestion in suggestions)
-            {
-                LandedTitle landedTitle = landedTitles.First(x => x.Id == suggestion.TitleId);
-
-                string name = $"{suggestion.SuggestedName}\" # Copied from {suggestion.SourceCultureId}. \"Cultural group match";
-
-                if (!landedTitle.DynamicNames.ContainsKey(suggestion.TargetCultureId))
-                {
-                    landedTitle.DynamicNames.Add(suggestion.TargetCultureId, name);
-                }
-            }
-        }
-
         public IDictionary<string, int> GetDynamicNamesCount()
         {
             IDictionary<string, int> dynamicNamesCount = new Dictionary<string, int>();
@@ -305,77 +266,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
             
             return overwrittenNames;
-        }
-
-        public IEnumerable<CulturalGroupSuggestion> GetCulturalGroupSuggestions(bool autoAddThem = false)
-        {
-            List<CulturalGroupSuggestion> suggestions = new List<CulturalGroupSuggestion>();
-
-            foreach (LandedTitle title in landedTitles)
-            {
-                if (title.DynamicNames.Count == 0)
-                {
-                    continue;
-                }
-
-                string localisation = localisationProvider.GetLocalisation(title.Id);
-
-                foreach (CultureGroup cultureGroup in cultureGroups)
-                {
-                    string foundTitleCultureId = cultureGroup.CultureIds.FirstOrDefault(x => title.DynamicNames.ContainsKey(x));
-
-                    if (string.IsNullOrEmpty(foundTitleCultureId))
-                    {
-                        continue;
-                    }
-
-                    if (cultureGroup.MatchingMode == CulturalGroupMatchingMode.FirstOnlyPriority &&
-                        foundTitleCultureId != cultureGroup.CultureIds.First())
-                    {
-                        continue;
-                    }
-
-                    foreach (string cultureId in cultureGroup.CultureIds)
-                    {
-                        if (title.DynamicNames.ContainsKey(cultureId))
-                        {
-                            continue;
-                        }
-
-                        if (cultureGroup.MatchingMode == CulturalGroupMatchingMode.AscendingPriority &&
-                            cultureGroup.CultureIds.IndexOf(foundTitleCultureId) > cultureGroup.CultureIds.IndexOf(cultureId))
-                        {
-                            continue;
-                        }
-
-                        string name = title.DynamicNames[foundTitleCultureId];
-
-                        if (localisation.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                            !nameValidator.IsNameValid(name, cultureId))
-                        {
-                            continue;
-                        }
-
-                        CulturalGroupSuggestion suggestion = new CulturalGroupSuggestion
-                        {
-                            TitleId = title.Id,
-                            Localisation = localisation,
-                            SourceCultureId = foundTitleCultureId,
-                            TargetCultureId = cultureId,
-                            SuggestedName = name
-                        };
-
-                        suggestions.Add(suggestion);
-
-                        if (autoAddThem)
-                        {
-                            title.DynamicNames.Add(cultureId, name);
-                        }
-                    }
-                }
-            }
-
-            return suggestions;
         }
 
         // TODO: This parameter shouldn't exist
@@ -653,51 +543,5 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             return titles;
         }
-
-        readonly List<CultureGroup> cultureGroups = new List<CultureGroup>
-        {
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority,
-                "maghreb_arabic", "andalusian_arabic", "bedouin_arabic", "egyptian_arabic", "levantine_arabic", "hijazi", "yemeni"),
-
-            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
-                "italian", "dalmatian", "sardinian", "langobardisch", "laziale", "ligurian", "neapolitan", "sicilian", "tuscan", "umbrian", "venetian"),
-
-            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority,
-                "german", "bavarian", "franconian", "low_frankish", "low_german", "low_saxon", "swabian", "thuringian"),
-
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "irish", "norsegaelic" ),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "irish", "scottish", "welsh"),
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "scottish", "cumbric", "pictish"),
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "welsh", "breton", "cornish"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "norse", "icelandic"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "finnish", "komi", "lappish", "livonian", "ugricbaltic"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "lithuanian", "prussian", "lettigallish"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "khanty", "mari", "vepsian", "mordvin", "karelian", "samoyed"),
-
-            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "greek", "crimean_gothic"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "frankish", "norman", "arpitan"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "croatian", "serbian" ),
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "croatian", "bosnian", "carantanian"),
-            new CultureGroup(CulturalGroupMatchingMode.AscendingPriority, "serbian", "bosnian", "carantanian"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "bohemian", "slovieni"),
-            new CultureGroup(CulturalGroupMatchingMode.FirstOnlyPriority, "polish", "pommeranian"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "hungarian", "szekely"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "turkish", "turkmen", "oghuz", "pecheneg"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "avar", "bolghar", "khazar"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "afghan", "baloch", "qufs"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "tuareg", "tagelmust", "sanhaja", "masmuda", "zanata"),
-
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "persian", "tajik", "khwarezmi", "adhari", "khorasani"),
-            new CultureGroup(CulturalGroupMatchingMode.EqualPriority, "sogdian", "daylamite", "khalaj")
-        };
     }
 }

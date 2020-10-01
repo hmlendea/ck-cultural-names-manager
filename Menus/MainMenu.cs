@@ -73,29 +73,14 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { RemoveUnlocalisedTitles(); });
 
             AddCommand(
-                "get-suggestions-cultural-groups",
-                "Suggests names for cultures in the same group",
-                delegate { GetCulturalGroupSuggestions(); });
-
-            AddCommand(
                 "get-suggestions-geonames",
                 "Suggests names from GeoNames",
                 delegate { GetGeoNamesSuggestions(); });
 
             AddCommand(
-                "get-suggestions",
-                "Suggests names using all sources",
-                delegate { GetSuggestions(); });
-
-            AddCommand(
                 "count-dynamic-names",
                 "Gets the number of dynamic names for each culture",
                 delegate { CountDynamicNames(); });
-
-            AddCommand(
-                "apply-suggestions",
-                "Applies all suggestions",
-                delegate { ApplySuggestions(); });
 
             AddCommand(
                 "copy-names-from-culture",
@@ -200,76 +185,6 @@ namespace CK2LandedTitlesManager.Menus
             landedTitleManager.RemoveUnlocalisedTitles();
         }
 
-        private void ApplySuggestions()
-        {
-            //string fileName = Input("File = ");
-
-            landedTitleManager.ApplySuggestions();//(fileName);
-        }
-
-        private void GetSuggestions()
-        {
-            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion(true);
-            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
-            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
-            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
-            IEnumerable<string> titlesWithSuggestions = titlesWithCulturalGroupSuggestions.Union(titlesWithGeoNameSuggestions).Distinct();
-
-            NuciConsole.WriteLine("THIS OPERATION WILL MODIFY THE LOADED TITLES!");
-
-            int titleColWidth = culturalGroupSuggestions
-                .Select(x => x.TitleId)
-                .Union(geoNameSuggestions.Select(x => x.TitleId))
-                .Max(x => x.Length);
-
-            if (culturalGroupSuggestions.Count() + geoNameSuggestions.Count() == 0)
-            {
-                NuciConsole.WriteLine("There are no suggestions!");
-                return;
-            }
-            
-            foreach (string titleId in titlesWithGeoNameSuggestions.Reverse())
-            //foreach (string titleId in titlesWithSuggestions)
-            {
-                IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestionForTitle = culturalGroupSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.TargetCultureId);
-
-                IEnumerable<GeoNamesSuggestion> geoNamesSuggestionsForTitle = geoNameSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.CultureId);
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(geoNamesSuggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                IList<string> suggestionPrints = new List<string>();
-
-                foreach (GeoNamesSuggestion suggestion in geoNamesSuggestionsForTitle)
-                {
-                    suggestionPrints.Add($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
-                }
-
-                foreach (CulturalGroupSuggestion suggestion in culturalGroupSuggestionForTitle)
-                {
-                    suggestionPrints.Add(
-                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
-                }
-
-                foreach (string print in suggestionPrints.OrderBy(x => x))
-                {
-                    NuciConsole.WriteLine(print);
-                }
-            }
-
-            NuciConsole.WriteLine("LOADED TITLES HAVE BEEN MODIFIED!");
-        }
-
         private void CountDynamicNames()
         {
             IDictionary<string, int> dynamicNamesCount = landedTitleManager.GetDynamicNamesCount();
@@ -281,42 +196,6 @@ namespace CK2LandedTitlesManager.Menus
 
             NuciConsole.WriteLine();
             NuciConsole.WriteLine($"TOTAL {dynamicNamesCount.Sum(x => x.Value)}");
-        }
-
-        private void GetCulturalGroupSuggestions()
-        {
-            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
-            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
-
-            int titleColWidth = culturalGroupSuggestions.Select(x => x.TitleId).Max(x => x.Length);
-
-            if (culturalGroupSuggestions.Count() == 0)
-            {
-                NuciConsole.WriteLine("There are no suggestions!");
-                return;
-            }
-
-            foreach (string titleId in titlesWithCulturalGroupSuggestions)
-            {
-                IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = culturalGroupSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.TargetCultureId);
-
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
-                {
-                    NuciConsole.WriteLine(
-                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
-                }
-            }
         }
 
         private void GetGeoNamesSuggestions()
