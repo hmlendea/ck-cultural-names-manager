@@ -10,12 +10,12 @@ namespace CK2LandedTitlesManager.DataAccess.DataObjects
 
         public IList<LandedTitleEntity> Children { get; set; }
 
-        public IDictionary<string, string> DynamicNames { get; set; }
+        public IDictionary<string, string> Names { get; set; }
 
         public LandedTitleEntity()
         {
             Children = new List<LandedTitleEntity>();
-            DynamicNames = new Dictionary<string, string>();
+            Names = new Dictionary<string, string>();
         }
     }
 }

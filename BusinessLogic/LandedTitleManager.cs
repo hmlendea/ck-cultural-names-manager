@@ -296,10 +296,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                                 .Concat(o.Names)
                                                 .GroupBy(e => e.Key)
                                                 .ToDictionary(d => d.Key, d => d.First().Value);
-                                            a.ReligiousValues = a.ReligiousValues
-                                                .Concat(o.ReligiousValues)
-                                                .GroupBy(e => e.Key)
-                                                .ToDictionary(d => d.Key, d => d.First().Value);
 
                                             return a;
                                         }));
