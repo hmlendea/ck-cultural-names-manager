@@ -192,9 +192,7 @@ namespace CK2LandedTitlesManager.Menus
 
                 NuciConsole.Write("Overwritten names for ");
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(overwrittenNamesForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
+                NuciConsole.WriteLine(":");
 
                 foreach (OverwrittenDynamicName overwrittenName in overwrittenNamesForTitle)
                 {

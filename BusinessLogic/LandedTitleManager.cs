@@ -18,15 +18,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
     {
         List<LandedTitle> landedTitles;
 
-        readonly IRepository<TitleLocalisation> localisationRepository;
-        readonly ILocalisationProvider localisationProvider;
         readonly INameValidator nameValidator;
 
         public LandedTitleManager()
         {
             landedTitles = new List<LandedTitle>();
-            localisationRepository = new CsvRepository<TitleLocalisation>("localisations.csv");
-            localisationProvider = new LocalisationProvider(localisationRepository);
             nameValidator = new NameValidator();
         }
 
@@ -76,7 +72,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach (LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
-                string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 if (landedTitles.Count(x => x.Id == title.Id) > 1)
                 {
@@ -143,7 +138,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach (LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
-                string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 if (masterTitle == null)
                 {
@@ -160,7 +154,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                     OverwrittenDynamicName overwrittenName = new OverwrittenDynamicName();
                     overwrittenName.TitleId = title.Id;
-                    overwrittenName.Localisation = localisation;
                     overwrittenName.CultureId = cultureId;
                     overwrittenName.OriginalName = masterTitle.DynamicNames[cultureId];
                     overwrittenName.FinalName = title.DynamicNames[cultureId];
