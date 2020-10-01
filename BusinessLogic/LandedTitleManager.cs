@@ -115,6 +115,12 @@ namespace CK2LandedTitlesManager.BusinessLogic
             foreach (LandedTitle title in landedTitles)
             {
                 LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
+
+                if (masterTitle is null)
+                {
+                    continue;
+                }
+
                 string localisation = localisationProvider.GetLocalisation(title.Id);
 
                 IList<string> cultureIdsToRemove = new List<string>();
