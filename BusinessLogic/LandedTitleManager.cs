@@ -179,21 +179,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                 foreach (string cultureId in title.DynamicNames.Keys)
                 {
-                    if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
-                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
-                    {
-                        AddReasonToViolations(violations, title.Id, $"Dynamic name for '{cultureId}' is already defined with the same value");
-                    }
-                    else if (localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        AddReasonToViolations(violations, title.Id, $"Dynamic name for '{cultureId}' is the same as the default localisation");
-                    }
-
-                    if (title.DynamicNames[cultureId].Contains('?'))
-                    {
-                        AddReasonToViolations(violations, title.Id, $"Invalid character in title name ({cultureId})");
-                    }
-
                     if (!nameValidator.IsNameValid(title.DynamicNames[cultureId]))
                     {
                         AddReasonToViolations(violations, title.Id, $"Invalid name for {cultureId}");

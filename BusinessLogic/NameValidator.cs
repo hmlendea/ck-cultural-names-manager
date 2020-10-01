@@ -11,10 +11,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
             {
                 return false;
             }
-
+            
             if (!name.All(c => AllowedCharacters.Contains(c)))
             {
-                System.Console.WriteLine($"Invalid name \"{name}\"");
                 return false;
             }
 
