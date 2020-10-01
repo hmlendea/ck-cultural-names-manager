@@ -73,11 +73,6 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { RemoveUnlocalisedTitles(); });
 
             AddCommand(
-                "get-suggestions-geonames",
-                "Suggests names from GeoNames",
-                delegate { GetGeoNamesSuggestions(); });
-
-            AddCommand(
                 "count-dynamic-names",
                 "Gets the number of dynamic names for each culture",
                 delegate { CountDynamicNames(); });
@@ -196,39 +191,6 @@ namespace CK2LandedTitlesManager.Menus
 
             NuciConsole.WriteLine();
             NuciConsole.WriteLine($"TOTAL {dynamicNamesCount.Sum(x => x.Value)}");
-        }
-
-        private void GetGeoNamesSuggestions()
-        {
-            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion();
-            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
-
-            int titleColWidth = geoNameSuggestions.Select(x => x.TitleId).Max(x => x.Length);
-
-            if (geoNameSuggestions.Count() == 0)
-            {
-                NuciConsole.WriteLine("There are no suggestions!");
-            }
-
-            foreach (string titleId in titlesWithGeoNameSuggestions)
-            {
-                IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.CultureId);
-                
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
-                {
-                    NuciConsole.WriteLine($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
-                }
-            }
         }
 
         private void CopyNamesFromCulture()

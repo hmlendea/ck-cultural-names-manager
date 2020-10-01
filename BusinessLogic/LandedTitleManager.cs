@@ -19,12 +19,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
         List<LandedTitle> landedTitles;
 
         readonly IRepository<TitleLocalisation> localisationRepository;
-
         readonly ILocalisationProvider localisationProvider;
-
         readonly INameValidator nameValidator;
-
-        readonly IGeoNamesCommunicator geoNamesCommunicator;
 
         public LandedTitleManager()
         {
@@ -32,7 +28,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             localisationRepository = new CsvRepository<TitleLocalisation>("localisations.csv");
             localisationProvider = new LocalisationProvider(localisationRepository);
             nameValidator = new NameValidator();
-            geoNamesCommunicator = new GeoNamesCommunicator(localisationProvider, nameValidator);
         }
 
         public LandedTitle Get(string id)
@@ -253,53 +248,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return overwrittenNames;
         }
 
-        // TODO: This parameter shouldn't exist
-        public IEnumerable<GeoNamesSuggestion> GetGeoNamesSuggestion(bool autoAddThem = false)
-        {
-            List<GeoNamesSuggestion> suggestions = new List<GeoNamesSuggestion>();
-
-            //foreach (LandedTitle title in landedTitles)
-            for (int i = 8000; i < 9000; i++)
-            {
-                LandedTitle title = landedTitles[i];
-                string localisation = localisationProvider.GetLocalisation(title.Id);
-                
-                Console.WriteLine($"{i} - {title.Id} ({localisation})");
-
-                foreach (string cultureId in geoNamesCommunicator.CultureLanguages.Keys)
-                {
-                    if (title.DynamicNames.ContainsKey(cultureId))
-                    {
-                        continue;
-                    }
-
-                    string exonym = GatherExonym(title, cultureId);
-
-                    if (exonym is null)
-                    {
-                        continue;
-                    }
-
-                    GeoNamesSuggestion suggestion = new GeoNamesSuggestion
-                    {
-                        TitleId = title.Id,
-                        Localisation = localisation,
-                        CultureId = cultureId,
-                        SuggestedName = exonym
-                    };
-
-                    suggestions.Add(suggestion);
-
-                    if (autoAddThem)
-                    {
-                        title.DynamicNames.Add(cultureId, exonym);
-                    }
-                }
-            }
-
-            return suggestions;
-        }
-
         public void CopyNamesFromCulture(string sourceCultureId, string targetCultureId)
         {
             foreach (LandedTitle title in landedTitles)
@@ -457,30 +405,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                                             return a;
                                         }));
-        }
-
-        string GatherExonym(LandedTitle title, string cultureId)
-        {
-            string localisation = localisationProvider.GetLocalisation(title.Id);
-            string exonym = geoNamesCommunicator.TryGatherExonym(localisation, cultureId).Result; // TODO: Broken async
-            
-            if (nameValidator.IsNameValid(exonym, cultureId) && !exonym.Equals(localisation))
-            {
-                return exonym;
-            }
-            /*
-            foreach (string dynamicCultureId in title.DynamicNames.Keys)
-            {
-                string dynamicName = title.DynamicNames[dynamicCultureId];
-                exonym = geoNamesCommunicator.TryGatherExonym(dynamicName, cultureId).Result;
- 
-                if (nameValidator.IsNameValid(exonym, cultureId) && !exonym.Equals(localisation))
-                {
-                    return exonym;
-                }
-            }
-            */
-            return null;
         }
 
         void RemoveDynamicNames(IEnumerable<LandedTitle> landedTitlesToRemove)
