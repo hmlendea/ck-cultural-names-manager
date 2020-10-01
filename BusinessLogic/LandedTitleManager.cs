@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using NuciDAL.Repositories;
 using NuciExtensions;
 
 using CK2LandedTitlesManager.BusinessLogic.Mapping;
@@ -44,19 +43,19 @@ namespace CK2LandedTitlesManager.BusinessLogic
             landedTitles = MergeTitles(landedTitles).ToList();
         }
 
-        public void RemoveDynamicNamesFromFile(string fileName)
+        public void RemoveNamesFromFile(string fileName)
         {
             IEnumerable<LandedTitle> landedTitlesToRemove = LoadTitlesFromFile(fileName);
 
             MergeTitles(landedTitlesToRemove);
-            RemoveDynamicNames(landedTitlesToRemove);
+            RemoveNames(landedTitlesToRemove);
         }
 
-        public void RemoveDynamicNames()
+        public void RemoveNames()
         {
             foreach (LandedTitle title in landedTitles)
             {
-                title.DynamicNames.Clear();
+                title.Names.Clear();
             }
         }
 
@@ -91,9 +90,9 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     continue;
                 }
 
-                foreach (string cultureId in title.DynamicNames.Keys)
+                foreach (string cultureId in title.Names.Keys)
                 {
-                    if (!nameValidator.IsNameValid(title.DynamicNames[cultureId]))
+                    if (!nameValidator.IsNameValid(title.Names[cultureId]))
                     {
                         AddReasonToViolations(violations, title.Id, $"Invalid name for {cultureId}");
                     }
@@ -103,37 +102,37 @@ namespace CK2LandedTitlesManager.BusinessLogic
             return violations.Count == 0;
         }
 
-        public IDictionary<string, int> GetDynamicNamesCount()
+        public IDictionary<string, int> GetNamesCount()
         {
-            IDictionary<string, int> dynamicNamesCount = new Dictionary<string, int>();
+            IDictionary<string, int> namesCount = new Dictionary<string, int>();
 
             foreach (LandedTitle title in landedTitles)
             {
-                foreach (string cultureId in title.DynamicNames.Keys)
+                foreach (string cultureId in title.Names.Keys)
                 {
-                    if (!dynamicNamesCount.ContainsKey(cultureId))
+                    if (!namesCount.ContainsKey(cultureId))
                     {
-                        dynamicNamesCount.Add(cultureId, 0);
+                        namesCount.Add(cultureId, 0);
                     }
 
-                    dynamicNamesCount[cultureId] += 1;
+                    namesCount[cultureId] += 1;
                 }
             }
 
-            return dynamicNamesCount
+            return namesCount
                 .OrderBy(x => x.Value)
                 .Reverse()
                 .ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public IEnumerable<OverwrittenDynamicName> GetOverwrittenDynamicNames(string fileName)
+        public IEnumerable<OverwrittenName> GetOverwrittenNames(string fileName)
         {
             List<LandedTitle> masterTitles = LandedTitlesFile
                 .ReadAllTitles(fileName)
                 .ToDomainModels()
                 .ToList();
 
-            IList<OverwrittenDynamicName> overwrittenNames = new List<OverwrittenDynamicName>();
+            IList<OverwrittenName> overwrittenNames = new List<OverwrittenName>();
 
             foreach (LandedTitle title in landedTitles)
             {
@@ -144,19 +143,19 @@ namespace CK2LandedTitlesManager.BusinessLogic
                     continue;
                 }
 
-                foreach (string cultureId in title.DynamicNames.Keys)
+                foreach (string cultureId in title.Names.Keys)
                 {
-                    if (!masterTitle.DynamicNames.ContainsKey(cultureId) ||
-                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
+                    if (!masterTitle.Names.ContainsKey(cultureId) ||
+                        masterTitle.Names[cultureId] == title.Names[cultureId])
                     {
                         continue;
                     }
 
-                    OverwrittenDynamicName overwrittenName = new OverwrittenDynamicName();
+                    OverwrittenName overwrittenName = new OverwrittenName();
                     overwrittenName.TitleId = title.Id;
                     overwrittenName.CultureId = cultureId;
-                    overwrittenName.OriginalName = masterTitle.DynamicNames[cultureId];
-                    overwrittenName.FinalName = title.DynamicNames[cultureId];
+                    overwrittenName.OriginalName = masterTitle.Names[cultureId];
+                    overwrittenName.FinalName = title.Names[cultureId];
 
                     overwrittenNames.Add(overwrittenName);
                 }
@@ -251,7 +250,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
         // TODO: Better name
         // TODO: Proper return type
-        public List<string> GetNamesOfTitlesWithAllCultures(List<string> cultureIds)
+        public List<string> GetNamesOfCultures(List<string> cultureIds)
         {
             List<string> findings = new List<string>();
 
@@ -259,11 +258,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
             foreach (LandedTitle title in landedTitles)
             {
-                if (cultureIds.All(title.DynamicNames.ContainsKey))
+                if (cultureIds.All(title.Names.ContainsKey))
                 {
                     string prefix = " ";
 
-                    List<string> uniqueNames = title.DynamicNames
+                    List<string> uniqueNames = title.Names
                         .Where(x => cultureIds.Contains(x.Key))
                         .Select(x => x.Value)
                         .Distinct()
@@ -276,7 +275,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                     foreach (string cultureId in cultureIds)
                     {
-                        string finding = $"{prefix} {title.Id}\t{cultureId.PadRight(cultureColumnWidth + 1, ' ')}{title.DynamicNames[cultureId]}";
+                        string finding = $"{prefix} {title.Id}\t{cultureId.PadRight(cultureColumnWidth + 1, ' ')}{title.Names[cultureId]}";
                         findings.Add(finding);
                     }
                 }
@@ -293,8 +292,8 @@ namespace CK2LandedTitlesManager.BusinessLogic
                               .Aggregate(g.First(),
                                         (a, o) =>
                                         {
-                                            a.DynamicNames = a.DynamicNames
-                                                .Concat(o.DynamicNames)
+                                            a.Names = a.Names
+                                                .Concat(o.Names)
                                                 .GroupBy(e => e.Key)
                                                 .ToDictionary(d => d.Key, d => d.First().Value);
                                             a.ReligiousValues = a.ReligiousValues
@@ -306,7 +305,7 @@ namespace CK2LandedTitlesManager.BusinessLogic
                                         }));
         }
 
-        void RemoveDynamicNames(IEnumerable<LandedTitle> landedTitlesToRemove)
+        void RemoveNames(IEnumerable<LandedTitle> landedTitlesToRemove)
         {
             foreach (LandedTitle landedTitle in landedTitles)
             {
@@ -314,13 +313,13 @@ namespace CK2LandedTitlesManager.BusinessLogic
 
                 if (landedTitleToRemove != null)
                 {
-                    List<string> cultureIds = landedTitle.DynamicNames.Keys.ToList();
+                    List<string> cultureIds = landedTitle.Names.Keys.ToList();
 
                     foreach(string cultureId in cultureIds)
                     {
-                        if (landedTitleToRemove.DynamicNames.ContainsKey(cultureId))
+                        if (landedTitleToRemove.Names.ContainsKey(cultureId))
                         {
-                            landedTitle.DynamicNames.Remove(cultureId);
+                            landedTitle.Names.Remove(cultureId);
                         }
                     }
                 }

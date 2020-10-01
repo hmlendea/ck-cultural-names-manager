@@ -25,7 +25,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 Id = landedTitleEntity.Id,
                 ParentId = landedTitleEntity.ParentId,
                 //Children = landedTitleEntity.Children.ToDomainModels().ToList(),
-                DynamicNames = landedTitleEntity.DynamicNames.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                Names = landedTitleEntity.Names.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
             };
 
             return landedTitle;
@@ -57,7 +57,7 @@ namespace CK2LandedTitlesManager.BusinessLogic.Mapping
                 Id = landedTitle.Id,
                 ParentId = landedTitle.ParentId,
                 //Children = landedTitle.Children.ToEntities().ToList(),
-                DynamicNames = landedTitle.DynamicNames,
+                Names = landedTitle.Names,
             };
 
             return landedTitleEntity;

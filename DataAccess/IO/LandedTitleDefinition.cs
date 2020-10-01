@@ -90,7 +90,7 @@ namespace CK2LandedTitlesManager.DataAccess.IO
 
                     if (!int.TryParse(stringValue, out intValue)) // If it's not a relivious value
                     {
-                        LandedTitleEntity.DynamicNames.AddOrUpdate(token, stringValue);
+                        LandedTitleEntity.Names.AddOrUpdate(token, stringValue);
                     }
 
                     break;
@@ -99,11 +99,11 @@ namespace CK2LandedTitlesManager.DataAccess.IO
         
         public void Write(ParadoxStreamWriter writer)
         {
-            List<KeyValuePair<string, string>> sortedDynamicNames = LandedTitleEntity.DynamicNames.ToList().OrderBy(x => x.Key).ToList();
+            List<KeyValuePair<string, string>> sortedNames = LandedTitleEntity.Names.ToList().OrderBy(x => x.Key).ToList();
 
-            foreach(var dynamicName in sortedDynamicNames)
+            foreach(var name in sortedNames)
             {
-                writer.WriteLine(dynamicName.Key, dynamicName.Value, ValueWrite.Quoted);
+                writer.WriteLine(name.Key, name.Value, ValueWrite.Quoted);
             }
 
             foreach (LandedTitleEntity landedTitle in LandedTitleEntity.Children)

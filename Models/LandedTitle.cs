@@ -44,10 +44,10 @@ namespace CK2LandedTitlesManager.Models
         public IList<string> HolySites { get; set; }
 
         /// <summary>
-        /// Gets or sets the dynamic names.
+        /// Gets or sets the names.
         /// </summary>
-        /// <value>The dynamic names.</value>
-        public IDictionary<string, string> DynamicNames { get; set; }
+        /// <value>The cultural names.</value>
+        public IDictionary<string, string> Names { get; set; }
 
         /// <summary>
         /// Gets or sets the religious values.
@@ -124,7 +124,7 @@ namespace CK2LandedTitlesManager.Models
             MaleNames = new List<string>();
             HolySites = new List<string>();
 
-            DynamicNames = new Dictionary<string, string>();
+            Names = new Dictionary<string, string>();
             ReligiousValues = new Dictionary<string, int>();
         }
 
