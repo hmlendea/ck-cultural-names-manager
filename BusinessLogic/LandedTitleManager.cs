@@ -56,87 +56,11 @@ namespace CK2LandedTitlesManager.BusinessLogic
             RemoveDynamicNames(landedTitlesToRemove);
         }
 
-        public void RemoveDynamicNames() => RemoveDynamicNames(new List<string>());
-        public void RemoveDynamicNames(IEnumerable<string> cultureIdExceptions)
+        public void RemoveDynamicNames()
         {
             foreach (LandedTitle title in landedTitles)
             {
-                title.DynamicNames = title.DynamicNames
-                    .Where(x => cultureIdExceptions.Contains(x.Key))
-                    .ToDictionary(x => x.Key, x => x.Value);
-            }
-        }
-
-        public void RemoveTitle(string titleId)
-        {
-            LandedTitle title = landedTitles.First(x => x.Id == titleId);
-
-            if (!string.IsNullOrWhiteSpace(title.ParentId))
-            {
-                LandedTitle parentTitle = landedTitles.First(x => x.Id == title.ParentId);
-
-                parentTitle.Children.Remove(title);
-            }
-
-            List<LandedTitle> children = landedTitles.Where(x => x.ParentId == title.Id).ToList();
-
-            foreach (LandedTitle childTitle in children)
-            {
-                RemoveTitle(childTitle.Id);
-            }
-        }
-
-        public void RemoveUnlocalisedTitles()
-        {
-            // TODO: Approach this issue better
-            char[] titleLevels = new char[] { 'b', 'c', 'd', 'k', 'e' };
-
-            foreach (char titleLevel in titleLevels)
-            {
-                landedTitles.RemoveAll(x =>
-                    x.DynamicNames.Count == 0 &&
-                    x.Id.StartsWith(titleLevel) &&
-                    landedTitles.All(y => y.ParentId != x.Id));
-            }
-        }
-
-        public void RemoveRedundantDynamicNames(string fileName)
-        {
-            List<LandedTitle> masterTitles = LandedTitlesFile
-                .ReadAllTitles(fileName)
-                .ToDomainModels()
-                .ToList();
-
-            foreach (LandedTitle title in landedTitles)
-            {
-                LandedTitle masterTitle = masterTitles.FirstOrDefault(x => x.Id == title.Id);
-
-                if (masterTitle is null)
-                {
-                    continue;
-                }
-
-                string localisation = localisationProvider.GetLocalisation(title.Id);
-
-                IList<string> cultureIdsToRemove = new List<string>();
-
-                foreach (string cultureId in title.DynamicNames.Keys)
-                {
-                    if (masterTitle.DynamicNames.ContainsKey(cultureId) &&
-                        masterTitle.DynamicNames[cultureId] == title.DynamicNames[cultureId])
-                    {
-                        cultureIdsToRemove.Add(cultureId);
-                    }
-                    else if (localisation.Equals(title.DynamicNames[cultureId], StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        cultureIdsToRemove.Add(cultureId);
-                    }
-                }
-
-                foreach (string cultureIdToRemove in cultureIdsToRemove)
-                {
-                    title.DynamicNames.Remove(cultureIdToRemove);
-                }
+                title.DynamicNames.Clear();
             }
         }
 
@@ -246,24 +170,6 @@ namespace CK2LandedTitlesManager.BusinessLogic
             }
             
             return overwrittenNames;
-        }
-
-        public void CopyNamesFromCulture(string sourceCultureId, string targetCultureId)
-        {
-            foreach (LandedTitle title in landedTitles)
-            {
-                if (!title.DynamicNames.ContainsKey(sourceCultureId))
-                {
-                    continue;
-                }
-
-                if (title.DynamicNames.ContainsKey(targetCultureId))
-                {
-                    continue;
-                }
-
-                title.DynamicNames.Add(targetCultureId, title.DynamicNames[sourceCultureId]);
-            }
         }
 
         public void CleanFile(string fileName)

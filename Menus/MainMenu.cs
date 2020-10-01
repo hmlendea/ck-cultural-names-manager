@@ -48,41 +48,15 @@ namespace CK2LandedTitlesManager.Menus
                 delegate { RemoveNames(); });
 
             AddCommand(
-                "remove-names-except",
-                "Removes all of the dynamic names except those of specified cultures",
-                delegate { RemoveNamesExcept(); });
-
-            AddCommand(
                 "remove-names-from-file",
                 "Removes the dynamic names contained in the specified file",
                 delegate { RemoveNamesFromFile(); });
-
-            AddCommand(
-                "remove-redundant-names",
-                "Removes the redundant names already contained in the specified file, or default names",
-                delegate { RemoveRedundantNames(); });
-
-            AddCommand(
-                "remove-title",
-                "Removes the specified title",
-                delegate { RemoveTitle(); });
-
-            AddCommand(
-                "remove-unlocalised-titles",
-                "Removes the titles that contain no dynamic names",
-                delegate { RemoveUnlocalisedTitles(); });
 
             AddCommand(
                 "count-dynamic-names",
                 "Gets the number of dynamic names for each culture",
                 delegate { CountDynamicNames(); });
 
-            AddCommand(
-                "copy-names-from-culture",
-                "Copies the names from a culture to another where they don't exist already",
-                delegate { CopyNamesFromCulture(); });
-
-            // TODO: Better command name and description, etc
             AddCommand(
                 "get-cultural-names",
                 "Gets the names of all titles that contain all specified cultures",
@@ -136,19 +110,6 @@ namespace CK2LandedTitlesManager.Menus
             landedTitleManager.RemoveDynamicNames();
         }
 
-        private void RemoveNamesExcept()
-        {
-            string cultures = NuciConsole.ReadLine("Cultures to keep = ");
-            List<string> cultureIds = cultures
-                .Replace("\"", "")
-                .Replace(",", "")
-                .Trim()
-                .Split(' ')
-                .ToList();
-
-            landedTitleManager.RemoveDynamicNames(cultureIds);
-        }
-
         private void RemoveNamesFromFile()
         {
             string fileName = NuciConsole.ReadLine("File containing the names to remove = ");
@@ -159,25 +120,6 @@ namespace CK2LandedTitlesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             NuciConsole.WriteLine($"OK");
-        }
-
-        private void RemoveRedundantNames()
-        {
-            string fileName = NuciConsole.ReadLine("Master file to check against = ");
-
-            landedTitleManager.RemoveRedundantDynamicNames(fileName);
-        }
-
-        private void RemoveTitle()
-        {
-            string titleId = NuciConsole.ReadLine("Title to remove = ");
-
-            landedTitleManager.RemoveTitle(titleId);
-        }
-
-        private void RemoveUnlocalisedTitles()
-        {
-            landedTitleManager.RemoveUnlocalisedTitles();
         }
 
         private void CountDynamicNames()
@@ -191,14 +133,6 @@ namespace CK2LandedTitlesManager.Menus
 
             NuciConsole.WriteLine();
             NuciConsole.WriteLine($"TOTAL {dynamicNamesCount.Sum(x => x.Value)}");
-        }
-
-        private void CopyNamesFromCulture()
-        {
-            string sourceCultureId = NuciConsole.ReadLine("Culture from which to copy = ");
-            string targetCultureId = NuciConsole.ReadLine("Culture to which to copy to = ");
-
-            landedTitleManager.CopyNamesFromCulture(sourceCultureId, targetCultureId);
         }
 
         private void GetNamesOfCultures()
