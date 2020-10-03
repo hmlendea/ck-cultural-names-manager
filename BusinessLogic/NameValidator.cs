@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CK2LandedTitlesManager.BusinessLogic  
+namespace CKCulturalNamesManager.BusinessLogic  
 {
     public sealed class NameValidator : INameValidator
     {

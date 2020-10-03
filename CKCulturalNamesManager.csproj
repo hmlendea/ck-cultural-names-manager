@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>CK2LandedTitlesManager</RootNamespace>
+    <RootNamespace>CKCulturalNamesManager</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,8 @@
-﻿using CK2LandedTitlesManager.Menus;
+﻿using CKCulturalNamesManager.Menus;
 
 using NuciCLI.Menus;
 
-namespace CK2LandedTitlesManager
+namespace CKCulturalNamesManager
 {
     public class Program
     {

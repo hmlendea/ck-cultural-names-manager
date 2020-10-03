@@ -1,4 +1,4 @@
-namespace CK2LandedTitlesManager.BusinessLogic
+namespace CKCulturalNamesManager.BusinessLogic
 {
     public interface INameValidator
     {

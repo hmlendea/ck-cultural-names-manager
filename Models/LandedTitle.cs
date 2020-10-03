@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CK2LandedTitlesManager.Models
+namespace CKCulturalNamesManager.Models
 {
     /// <summary>
     /// The title entity.
