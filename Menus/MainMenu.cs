@@ -44,74 +44,28 @@ namespace CK2LandedTitlesManager.Menus
 
             AddCommand(
                 "remove-names",
-                "Removes all of the dynamic names",
+                "Removes all of the names",
                 delegate { RemoveNames(); });
 
             AddCommand(
-                "remove-names-except",
-                "Removes all of the dynamic names except those of specified cultures",
-                delegate { RemoveNamesExcept(); });
-
-            AddCommand(
                 "remove-names-from-file",
-                "Removes the dynamic names contained in the specified file",
+                "Removes the names contained in the specified file",
                 delegate { RemoveNamesFromFile(); });
 
             AddCommand(
-                "remove-redundant-names",
-                "Removes the redundant names already contained in the specified file, or default names",
-                delegate { RemoveRedundantNames(); });
+                "count-names",
+                "Gets the number of names for each culture",
+                delegate { CountNames(); });
 
             AddCommand(
-                "remove-title",
-                "Removes the specified title",
-                delegate { RemoveTitle(); });
-
-            AddCommand(
-                "remove-unlocalised-titles",
-                "Removes the titles that contain no dynamic names",
-                delegate { RemoveUnlocalisedTitles(); });
-
-            AddCommand(
-                "get-suggestions-cultural-groups",
-                "Suggests names for cultures in the same group",
-                delegate { GetCulturalGroupSuggestions(); });
-
-            AddCommand(
-                "get-suggestions-geonames",
-                "Suggests names from GeoNames",
-                delegate { GetGeoNamesSuggestions(); });
-
-            AddCommand(
-                "get-suggestions",
-                "Suggests names using all sources",
-                delegate { GetSuggestions(); });
-
-            AddCommand(
-                "count-dynamic-names",
-                "Gets the number of dynamic names for each culture",
-                delegate { CountDynamicNames(); });
-
-            AddCommand(
-                "apply-suggestions",
-                "Applies all suggestions",
-                delegate { ApplySuggestions(); });
-
-            AddCommand(
-                "copy-names-from-culture",
-                "Copies the names from a culture to another where they don't exist already",
-                delegate { CopyNamesFromCulture(); });
-
-            // TODO: Better command name and description, etc
-            AddCommand(
-                "get-cultural-names",
+                "get-names",
                 "Gets the names of all titles that contain all specified cultures",
                 delegate { GetNamesOfCultures(); });
 
             AddCommand(
-                "get-overwritten-dynamic-names",
+                "get-overwritten-names",
                 "Gets the names that were ovewritten",
-                delegate { GetOverwrittenDynamicNames(); });
+                delegate { GetOverwrittenNames(); });
 
             AddCommand(
                 "integrity-check",
@@ -139,41 +93,28 @@ namespace CK2LandedTitlesManager.Menus
                 return;
             }
 
-            if (landedTitle.DynamicNames.Count == 0)
+            if (landedTitle.Names.Count == 0)
             {
-                NuciConsole.WriteLine($"There are no dynamic titles for {id}!");
+                NuciConsole.WriteLine($"There are no names for {id}!");
                 return;
             }
 
-            foreach (var dynamicName in landedTitle.DynamicNames)
+            foreach (var name in landedTitle.Names)
             {
-                NuciConsole.WriteLine($"{landedTitle.Id}.{dynamicName.Key} = \"{dynamicName.Value}\"");
+                NuciConsole.WriteLine($"{landedTitle.Id}.{name.Key} = \"{name.Value}\"");
             }
         }
 
         private void RemoveNames()
         {
-            landedTitleManager.RemoveDynamicNames();
-        }
-
-        private void RemoveNamesExcept()
-        {
-            string cultures = NuciConsole.ReadLine("Cultures to keep = ");
-            List<string> cultureIds = cultures
-                .Replace("\"", "")
-                .Replace(",", "")
-                .Trim()
-                .Split(' ')
-                .ToList();
-
-            landedTitleManager.RemoveDynamicNames(cultureIds);
+            landedTitleManager.RemoveNames();
         }
 
         private void RemoveNamesFromFile()
         {
             string fileName = NuciConsole.ReadLine("File containing the names to remove = ");
 
-            landedTitleManager.RemoveDynamicNamesFromFile(fileName);
+            landedTitleManager.RemoveNamesFromFile(fileName);
 
             IEnumerable<LandedTitle> landedTitles = landedTitleManager.GetAll();
             int titlesCount = landedTitleManager.GetAll().Count();
@@ -181,183 +122,17 @@ namespace CK2LandedTitlesManager.Menus
             NuciConsole.WriteLine($"OK");
         }
 
-        private void RemoveRedundantNames()
+        private void CountNames()
         {
-            string fileName = NuciConsole.ReadLine("Master file to check against = ");
+            IDictionary<string, int> namesCount = landedTitleManager.GetNamesCount();
 
-            landedTitleManager.RemoveRedundantDynamicNames(fileName);
-        }
-
-        private void RemoveTitle()
-        {
-            string titleId = NuciConsole.ReadLine("Title to remove = ");
-
-            landedTitleManager.RemoveTitle(titleId);
-        }
-
-        private void RemoveUnlocalisedTitles()
-        {
-            landedTitleManager.RemoveUnlocalisedTitles();
-        }
-
-        private void ApplySuggestions()
-        {
-            //string fileName = Input("File = ");
-
-            landedTitleManager.ApplySuggestions();//(fileName);
-        }
-
-        private void GetSuggestions()
-        {
-            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion(true);
-            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
-            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
-            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
-            IEnumerable<string> titlesWithSuggestions = titlesWithCulturalGroupSuggestions.Union(titlesWithGeoNameSuggestions).Distinct();
-
-            NuciConsole.WriteLine("THIS OPERATION WILL MODIFY THE LOADED TITLES!");
-
-            int titleColWidth = culturalGroupSuggestions
-                .Select(x => x.TitleId)
-                .Union(geoNameSuggestions.Select(x => x.TitleId))
-                .Max(x => x.Length);
-
-            if (culturalGroupSuggestions.Count() + geoNameSuggestions.Count() == 0)
+            foreach (string cultureId in namesCount.Keys)
             {
-                NuciConsole.WriteLine("There are no suggestions!");
-                return;
-            }
-            
-            foreach (string titleId in titlesWithGeoNameSuggestions.Reverse())
-            //foreach (string titleId in titlesWithSuggestions)
-            {
-                IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestionForTitle = culturalGroupSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.TargetCultureId);
-
-                IEnumerable<GeoNamesSuggestion> geoNamesSuggestionsForTitle = geoNameSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.CultureId);
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(geoNamesSuggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                IList<string> suggestionPrints = new List<string>();
-
-                foreach (GeoNamesSuggestion suggestion in geoNamesSuggestionsForTitle)
-                {
-                    suggestionPrints.Add($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
-                }
-
-                foreach (CulturalGroupSuggestion suggestion in culturalGroupSuggestionForTitle)
-                {
-                    suggestionPrints.Add(
-                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
-                }
-
-                foreach (string print in suggestionPrints.OrderBy(x => x))
-                {
-                    NuciConsole.WriteLine(print);
-                }
-            }
-
-            NuciConsole.WriteLine("LOADED TITLES HAVE BEEN MODIFIED!");
-        }
-
-        private void CountDynamicNames()
-        {
-            IDictionary<string, int> dynamicNamesCount = landedTitleManager.GetDynamicNamesCount();
-
-            foreach (string cultureId in dynamicNamesCount.Keys)
-            {
-                NuciConsole.WriteLine($"{cultureId.PadRight(20, ' ')}{dynamicNamesCount[cultureId]}");
+                NuciConsole.WriteLine($"{cultureId.PadRight(20, ' ')}{namesCount[cultureId]}");
             }
 
             NuciConsole.WriteLine();
-            NuciConsole.WriteLine($"TOTAL {dynamicNamesCount.Sum(x => x.Value)}");
-        }
-
-        private void GetCulturalGroupSuggestions()
-        {
-            IEnumerable<CulturalGroupSuggestion> culturalGroupSuggestions = landedTitleManager.GetCulturalGroupSuggestions().Reverse();
-            IEnumerable<string> titlesWithCulturalGroupSuggestions = culturalGroupSuggestions.Select(x => x.TitleId).Distinct();
-
-            int titleColWidth = culturalGroupSuggestions.Select(x => x.TitleId).Max(x => x.Length);
-
-            if (culturalGroupSuggestions.Count() == 0)
-            {
-                NuciConsole.WriteLine("There are no suggestions!");
-                return;
-            }
-
-            foreach (string titleId in titlesWithCulturalGroupSuggestions)
-            {
-                IEnumerable<CulturalGroupSuggestion> suggestionsForTitle = culturalGroupSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.TargetCultureId);
-
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                foreach (CulturalGroupSuggestion suggestion in suggestionsForTitle)
-                {
-                    NuciConsole.WriteLine(
-                        $"{indentation}{suggestion.TargetCultureId} = \"{suggestion.SuggestedName}\" " +
-                        $"# Historical? Copied from {GetCultureNameFromId(suggestion.SourceCultureId)}");
-                }
-            }
-        }
-
-        private void GetGeoNamesSuggestions()
-        {
-            IEnumerable<GeoNamesSuggestion> geoNameSuggestions = landedTitleManager.GetGeoNamesSuggestion();
-            IEnumerable<string> titlesWithGeoNameSuggestions = geoNameSuggestions.Select(x => x.TitleId).Distinct();
-
-            int titleColWidth = geoNameSuggestions.Select(x => x.TitleId).Max(x => x.Length);
-
-            if (geoNameSuggestions.Count() == 0)
-            {
-                NuciConsole.WriteLine("There are no suggestions!");
-            }
-
-            foreach (string titleId in titlesWithGeoNameSuggestions)
-            {
-                IEnumerable<GeoNamesSuggestion> suggestionsForTitle = geoNameSuggestions
-                    .Where(x => x.TitleId == titleId)
-                    .OrderBy(x => x.CultureId);
-                
-                string indentation = string.Empty.PadRight(TitleLevelIndentation[titleId[0]], ' ');
-
-                NuciConsole.Write("Suggestions for ");
-                NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(suggestionsForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
-
-                foreach (GeoNamesSuggestion suggestion in suggestionsForTitle)
-                {
-                    NuciConsole.WriteLine($"{indentation}{suggestion.CultureId} = \"{suggestion.SuggestedName}\"");
-                }
-            }
-        }
-
-        private void CopyNamesFromCulture()
-        {
-            string sourceCultureId = NuciConsole.ReadLine("Culture from which to copy = ");
-            string targetCultureId = NuciConsole.ReadLine("Culture to which to copy to = ");
-
-            landedTitleManager.CopyNamesFromCulture(sourceCultureId, targetCultureId);
+            NuciConsole.WriteLine($"TOTAL {namesCount.Sum(x => x.Value)}");
         }
 
         private void GetNamesOfCultures()
@@ -370,7 +145,7 @@ namespace CK2LandedTitlesManager.Menus
                 .Split(' ')
                 .ToList();
 
-            List<string> findings = landedTitleManager.GetNamesOfTitlesWithAllCultures(cultureIds);
+            List<string> findings = landedTitleManager.GetNamesOfCultures(cultureIds);
 
             int titlesCount = findings.Count / cultureIds.Count;
             int perfectMatches = 0;
@@ -393,11 +168,11 @@ namespace CK2LandedTitlesManager.Menus
             NuciConsole.WriteLine($"   {perfectMatches} perfect matches");
         }
 
-        private void GetOverwrittenDynamicNames()
+        private void GetOverwrittenNames()
         {
             string fileName = NuciConsole.ReadLine("Master file to check compatibility with = ");
 
-            IEnumerable<OverwrittenDynamicName> overwrittenNames = landedTitleManager.GetOverwrittenDynamicNames(fileName);
+            IEnumerable<OverwrittenName> overwrittenNames = landedTitleManager.GetOverwrittenNames(fileName);
             IEnumerable<string> titlesWithOverwrittenNames = overwrittenNames.Select(x => x.TitleId).Distinct().Reverse();
 
             int titleColWidth = overwrittenNames.Select(x => x.TitleId).Max(x => x.Length);
@@ -409,7 +184,7 @@ namespace CK2LandedTitlesManager.Menus
 
             foreach (string titleId in titlesWithOverwrittenNames)
             {
-                IEnumerable<OverwrittenDynamicName> overwrittenNamesForTitle = overwrittenNames
+                IEnumerable<OverwrittenName> overwrittenNamesForTitle = overwrittenNames
                     .Where(x => x.TitleId == titleId)
                     .OrderBy(x => x.CultureId);
                 
@@ -417,11 +192,9 @@ namespace CK2LandedTitlesManager.Menus
 
                 NuciConsole.Write("Overwritten names for ");
                 NuciConsole.Write(titleId, NuciConsoleColour.Yellow);
-                NuciConsole.Write(" (");
-                NuciConsole.Write(overwrittenNamesForTitle.First().Localisation, NuciConsoleColour.White);
-                NuciConsole.WriteLine(") :");
+                NuciConsole.WriteLine(":");
 
-                foreach (OverwrittenDynamicName overwrittenName in overwrittenNamesForTitle)
+                foreach (OverwrittenName overwrittenName in overwrittenNamesForTitle)
                 {
                     NuciConsole.WriteLine(
                         $"{indentation}{overwrittenName.CultureId} = \"{overwrittenName.FinalName}\"" +
@@ -489,25 +262,6 @@ namespace CK2LandedTitlesManager.Menus
             NuciConsole.Write("Writing output... ");
             SaveLandedTitles(fileName);
             NuciConsole.WriteLine("OK");
-        }
-
-        private string GetCultureNameFromId(string cultureId)
-        {
-            string cultureName = char.ToUpper(cultureId[0]).ToString();
-
-            for (int i = 1; i < cultureId.Length; i++)
-            {
-                if (cultureId[i] == '_')
-                {
-                    cultureName += char.ToUpper(cultureId[i + 1]);
-                    i++;
-                    continue;
-                }
-
-                cultureName += cultureId[i];
-            }
-
-            return cultureName;
         }
 
         readonly IDictionary<char, int> TitleLevelIndentation = new Dictionary<char, int>

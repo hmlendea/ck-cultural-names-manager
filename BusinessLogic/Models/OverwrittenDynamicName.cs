@@ -1,10 +1,8 @@
 namespace CK2LandedTitlesManager.BusinessLogic.Models
 {
-    public class OverwrittenDynamicName
+    public class OverwrittenName
     {
         public string TitleId { get; set; }
-
-        public string Localisation { get; set; }
 
         public string CultureId { get; set; }
 
