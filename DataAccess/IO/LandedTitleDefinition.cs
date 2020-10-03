@@ -4,9 +4,9 @@ using System.Linq;
 using Pdoxcl2Sharp;
 using NuciExtensions;
 
-using CK2LandedTitlesManager.DataAccess.DataObjects;
+using CKCulturalNamesManager.DataAccess.DataObjects;
 
-namespace CK2LandedTitlesManager.DataAccess.IO
+namespace CKCulturalNamesManager.DataAccess.IO
 {
     public sealed class LandedTitleDefinition : IParadoxRead, IParadoxWrite
     {

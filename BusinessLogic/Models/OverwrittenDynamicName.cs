@@ -1,4 +1,4 @@
-namespace CK2LandedTitlesManager.BusinessLogic.Models
+namespace CKCulturalNamesManager.BusinessLogic.Models
 {
     public class OverwrittenName
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-using CK2LandedTitlesManager.DataAccess.DataObjects;
-using CK2LandedTitlesManager.Models;
+using CKCulturalNamesManager.DataAccess.DataObjects;
+using CKCulturalNamesManager.Models;
 
-namespace CK2LandedTitlesManager.BusinessLogic.Mapping
+namespace CKCulturalNamesManager.BusinessLogic.Mapping
 {
     /// <summary>
     /// LandedTitle mapping extensions for converting between entities and domain models.

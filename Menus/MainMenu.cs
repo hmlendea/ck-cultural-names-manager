@@ -5,11 +5,11 @@ using System.Linq;
 using NuciCLI;
 using NuciCLI.Menus;
 
-using CK2LandedTitlesManager.BusinessLogic;
-using CK2LandedTitlesManager.BusinessLogic.Models;
-using CK2LandedTitlesManager.Models;
+using CKCulturalNamesManager.BusinessLogic;
+using CKCulturalNamesManager.BusinessLogic.Models;
+using CKCulturalNamesManager.Models;
 
-namespace CK2LandedTitlesManager.Menus
+namespace CKCulturalNamesManager.Menus
 {
     /// <summary>
     /// Main menu.
@@ -25,7 +25,7 @@ namespace CK2LandedTitlesManager.Menus
         {
             landedTitleManager = new LandedTitleManager();
 
-            Title = "CK2 Landed Titles Extractor";
+            Title = "Crusader Kings Cultural Names Manager";
 
             AddCommand(
                 "load",

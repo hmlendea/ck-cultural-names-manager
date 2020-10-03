@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 
 using NuciExtensions;
 
-using CK2LandedTitlesManager.BusinessLogic.Mapping;
-using CK2LandedTitlesManager.BusinessLogic.Models;
-using CK2LandedTitlesManager.DataAccess.IO;
-using CK2LandedTitlesManager.Models;
+using CKCulturalNamesManager.BusinessLogic.Mapping;
+using CKCulturalNamesManager.BusinessLogic.Models;
+using CKCulturalNamesManager.DataAccess.IO;
+using CKCulturalNamesManager.Models;
 
-namespace CK2LandedTitlesManager.BusinessLogic
+namespace CKCulturalNamesManager.BusinessLogic
 {
     public sealed class LandedTitleManager
     {

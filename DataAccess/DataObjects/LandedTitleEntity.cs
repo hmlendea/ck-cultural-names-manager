@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CK2LandedTitlesManager.DataAccess.DataObjects
+namespace CKCulturalNamesManager.DataAccess.DataObjects
 {
     public class LandedTitleEntity
     {

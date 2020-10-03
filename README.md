@@ -1,3 +1,3 @@
 # About
 
-This is a tool that extracts the landed title names from CK2 landed title files
+This is a tool that can manipulate the cultural names from `Crusader Kings 2` landed title files
