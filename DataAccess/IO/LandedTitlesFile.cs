@@ -8,18 +8,18 @@ using CKCulturalNamesManager.DataAccess.DataObjects;
 
 namespace CKCulturalNamesManager.DataAccess.IO
 {
-    public sealed class LandedTitlesFile : IParadoxRead, IParadoxWrite
+    public sealed class LandedTitlesFile<TLandedTitleDefinition> : IParadoxRead, IParadoxWrite where TLandedTitleDefinition : CKLandedTitleDefinition, new()
     {
-        public IList<LandedTitleDefinition> LandedTitles { get; set; }
+        public IList<TLandedTitleDefinition> LandedTitles { get; set; }
 
         public LandedTitlesFile()
         {
-            LandedTitles = new List<LandedTitleDefinition>();
+            LandedTitles = new List<TLandedTitleDefinition>();
         }
 
         public void TokenCallback(ParadoxParser parser, string token)
         {
-            LandedTitleDefinition landedTitle = new LandedTitleDefinition();
+            TLandedTitleDefinition landedTitle = new TLandedTitleDefinition();
             landedTitle.LandedTitleEntity.Id = token;
 
             LandedTitles.Add(parser.Parse(landedTitle));
@@ -27,7 +27,7 @@ namespace CKCulturalNamesManager.DataAccess.IO
         
         public void Write(ParadoxStreamWriter writer)
         {
-            foreach (LandedTitleDefinition landedTitle in LandedTitles)
+            foreach (TLandedTitleDefinition landedTitle in LandedTitles)
             {
                 writer.Write(landedTitle.LandedTitleEntity.Id, landedTitle);
             }
@@ -35,10 +35,10 @@ namespace CKCulturalNamesManager.DataAccess.IO
 
         public static IEnumerable<LandedTitleEntity> ReadAllTitles(string fileName)
         {
-            LandedTitlesFile landedTitlesFile;
+            LandedTitlesFile<TLandedTitleDefinition> landedTitlesFile;
             using (FileStream fs = new FileStream(fileName, FileMode.Open))
             {
-                landedTitlesFile = ParadoxParser.Parse(fs, new LandedTitlesFile());
+                landedTitlesFile = ParadoxParser.Parse(fs, new LandedTitlesFile<TLandedTitleDefinition>());
             }
             
             return landedTitlesFile.LandedTitles.Select(x => x.LandedTitleEntity);
@@ -46,9 +46,9 @@ namespace CKCulturalNamesManager.DataAccess.IO
 
         public static void WriteAllTitles(string fileName, IEnumerable<LandedTitleEntity> landedTitles)
         {
-            LandedTitlesFile landedTitlesFile = new LandedTitlesFile
+            LandedTitlesFile<TLandedTitleDefinition> landedTitlesFile = new LandedTitlesFile<TLandedTitleDefinition>
             {
-                LandedTitles = landedTitles.Select(x => new LandedTitleDefinition { LandedTitleEntity = x }).ToList()
+                LandedTitles = landedTitles.Select(x => new TLandedTitleDefinition { LandedTitleEntity = x }).ToList()
             };
 
             using (FileStream fs = new FileStream(fileName, FileMode.Create))

@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 using NuciExtensions;
 
+using CKCulturalNamesManager.DataAccess.IO;
 using CKCulturalNamesManager.BusinessLogic.Mapping;
 using CKCulturalNamesManager.BusinessLogic.Models;
-using CKCulturalNamesManager.DataAccess.IO;
 using CKCulturalNamesManager.Models;
 
 namespace CKCulturalNamesManager.BusinessLogic
@@ -61,7 +61,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public bool CheckIntegrity(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile
+            List<LandedTitle> masterTitles = LandedTitlesFile<CK2LandedTitleDefinition>
                 .ReadAllTitles(fileName)
                 .ToDomainModels()
                 .ToList();
@@ -127,7 +127,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public IEnumerable<OverwrittenName> GetOverwrittenNames(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile
+            List<LandedTitle> masterTitles = LandedTitlesFile<CK2LandedTitleDefinition>
                 .ReadAllTitles(fileName)
                 .ToDomainModels()
                 .ToList();
@@ -233,7 +233,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public void SaveTitles(string fileName)
         {
-            LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
+            LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
             string content = File.ReadAllText(fileName);
 
             content = Regex.Replace(content, "\t", "    ");
@@ -338,7 +338,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         IEnumerable<LandedTitle> LoadTitlesFromFile(string fileName)
         {
-            IEnumerable<LandedTitle> titles = LandedTitlesFile
+            IEnumerable<LandedTitle> titles = LandedTitlesFile<CK2LandedTitleDefinition>
                 .ReadAllTitles(fileName)
                 .ToDomainModels();
 
