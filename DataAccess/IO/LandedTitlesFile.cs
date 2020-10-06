@@ -22,7 +22,15 @@ namespace CKCulturalNamesManager.DataAccess.IO
             TLandedTitleDefinition landedTitle = new TLandedTitleDefinition();
             landedTitle.LandedTitleEntity.Id = token;
 
-            LandedTitles.Add(parser.Parse(landedTitle));
+            if (token.StartsWith('@') ||
+                token.StartsWith("ï»¿"))
+            {
+                parser.ReadString();
+            }
+            else
+            {
+                LandedTitles.Add(parser.Parse(landedTitle));
+            }
         }
         
         public void Write(ParadoxStreamWriter writer)
@@ -36,6 +44,7 @@ namespace CKCulturalNamesManager.DataAccess.IO
         public static IEnumerable<LandedTitleEntity> ReadAllTitles(string fileName)
         {
             LandedTitlesFile<TLandedTitleDefinition> landedTitlesFile;
+
             using (FileStream fs = new FileStream(fileName, FileMode.Open))
             {
                 landedTitlesFile = ParadoxParser.Parse(fs, new LandedTitlesFile<TLandedTitleDefinition>());

@@ -16,7 +16,7 @@ namespace CKCulturalNamesManager.DataAccess.IO
         
         public override void TokenCallback(ParadoxParser parser, string token)
         {
-            if (token[1] == '_') // Like e_something or c_something
+            if (token.Length >= 3 && token[1] == '_') // Like e_something or c_something
             {
                 CK3LandedTitleDefinition landedTitle = new CK3LandedTitleDefinition();
                 landedTitle.LandedTitleEntity.ParentId = LandedTitleEntity.Id;
@@ -25,14 +25,47 @@ namespace CKCulturalNamesManager.DataAccess.IO
                 LandedTitleEntity.Children.Add(parser.Parse(landedTitle).LandedTitleEntity);
                 return;
             }
-            else if (token == "cultural_names")
+
+            switch (token)
             {
-                CK3CulturalNamesDefinition culturalNames = parser.Parse(new CK3CulturalNamesDefinition());
+                case "cultural_names":
+                    CK3CulturalNamesDefinition culturalNames = parser.Parse(new CK3CulturalNamesDefinition());
+                    
+                    foreach (var culturalName in culturalNames.Names)
+                    {
+                        LandedTitleEntity.Names.AddOrUpdate(culturalName.Key, culturalName.Value);
+                    }
+
+                    break;
+
+                // TODO: Skip brackets
+                case "ai_primary_priority":
+                case "allow":
+                case "can_create":
+                case "female_names":
+                case "male_names":
+                    parser.ReadInsideBrackets((p) => { });
+                    break;
+
+                case "color":
+                case "color2":
+                    string method = parser.ReadString();
+
+                    if (method == "hsv")
+                    {
+                        parser.ReadFloat();
+                    }
+                    else
+                    {
+                        parser.ReadInt16();
+                        parser.ReadInt16();
+                    }
+
+                    break;
                 
-                foreach (var culturalName in culturalNames.Names)
-                {
-                    LandedTitleEntity.Names.AddOrUpdate(culturalName.Key, culturalName.Value);
-                }
+                default:
+                    parser.ReadString();
+                    break;
             }
         }
         
