@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 using NuciExtensions;
 
+using CKCulturalNamesManager.DataAccess.DataObjects;
 using CKCulturalNamesManager.DataAccess.IO;
 using CKCulturalNamesManager.BusinessLogic.Mapping;
 using CKCulturalNamesManager.BusinessLogic.Models;
@@ -61,10 +62,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public bool CheckIntegrity(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile<CK2LandedTitleDefinition>
-                .ReadAllTitles(fileName)
-                .ToDomainModels()
-                .ToList();
+            IEnumerable<LandedTitle> masterTitles = GetTitlesFromFile(fileName);
 
             Dictionary<string, string> violations = new Dictionary<string, string>();
 
@@ -127,11 +125,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public IEnumerable<OverwrittenName> GetOverwrittenNames(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile<CK2LandedTitleDefinition>
-                .ReadAllTitles(fileName)
-                .ToDomainModels()
-                .ToList();
-
+            IEnumerable<LandedTitle> masterTitles = GetTitlesFromFile(fileName);
             IList<OverwrittenName> overwrittenNames = new List<OverwrittenName>();
 
             foreach (LandedTitle title in landedTitles)
@@ -164,74 +158,7 @@ namespace CKCulturalNamesManager.BusinessLogic
             return overwrittenNames;
         }
 
-        public void CleanFile(string fileName)
-        {
-            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
-            landedTitles = new List<LandedTitle>();
-            landedTitles = LoadTitlesFromFile(fileName).ToList();
-
-            List<string> oldLines = File
-                .ReadAllLines(fileName)
-                .Distinct()
-                .ToList();
-
-            SaveTitles(fileName);
-
-            List<string> newLines = File.ReadAllLines(fileName).ToList();
-
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-
-            for (int i = 0; i < oldLines.Count; i++)
-            {
-                string mcnLine = oldLines[i];
-
-                if (string.IsNullOrWhiteSpace(mcnLine) || !mcnLine.Contains('#'))
-                {
-                    continue;
-                }
-
-                string key = Regex
-                    .Match(mcnLine, "^([^#]*)[\t ]*#.*$")
-                    .Groups[1]
-                    .Value
-                    .TrimEnd();
-
-                if (string.IsNullOrWhiteSpace(key))
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrWhiteSpace(key) && !dict.ContainsKey(key))
-                {
-                    dict.Add(key, mcnLine);
-                }
-            }
-
-            for (int i = 0; i < newLines.Count; i++)
-            {
-                string myLine = newLines[i];
-
-                if (string.IsNullOrWhiteSpace(myLine))
-                {
-                    continue;
-                }
-
-                if (dict.ContainsKey(myLine))
-                {
-                    string myIndentation = Regex.Match(myLine, "( *)[^ ]*").Groups[1].Value;
-                    myLine = myIndentation + dict[myLine].TrimStart();
-                    newLines[i] = myLine;
-
-                    continue;
-                }
-            }
-
-            File.WriteAllLines(fileName, newLines);
-
-            landedTitles = oldLandedTitles;
-        }
-
-        public void SaveTitles(string fileName)
+        public void SaveTitlesCK2(string fileName)
         {
             LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
             string content = File.ReadAllText(fileName);
@@ -246,6 +173,11 @@ namespace CKCulturalNamesManager.BusinessLogic
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
             landedTitles = new List<LandedTitle>();
             landedTitles = LoadTitlesFromFile(fileName).ToList();
+        }
+
+        public void SaveTitlesCK3(string fileName)
+        {
+            LandedTitlesFile<CK3LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
         // TODO: Better name
@@ -338,13 +270,28 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         IEnumerable<LandedTitle> LoadTitlesFromFile(string fileName)
         {
-            IEnumerable<LandedTitle> titles = LandedTitlesFile<CK2LandedTitleDefinition>
-                .ReadAllTitles(fileName)
-                .ToDomainModels();
-
+            IEnumerable<LandedTitle> titles = GetTitlesFromFile(fileName);
             titles = MergeTitles(titles);
 
             return titles;
+        }
+
+        IEnumerable<LandedTitle> GetTitlesFromFile(string fileName)
+        {
+            string content = File.ReadAllText(fileName);
+
+            IEnumerable<LandedTitleEntity> masterTitleEntities;
+
+            if (content.Contains("cultural_names"))
+            {
+                masterTitleEntities = LandedTitlesFile<CK3LandedTitleDefinition>.ReadAllTitles(fileName);
+            }
+            else
+            {
+                masterTitleEntities = LandedTitlesFile<CK2LandedTitleDefinition>.ReadAllTitles(fileName);
+            }
+
+            return masterTitleEntities.ToDomainModels();
         }
     }
 }

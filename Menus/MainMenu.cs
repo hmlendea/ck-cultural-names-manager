@@ -71,11 +71,6 @@ namespace CKCulturalNamesManager.Menus
                 "integrity-check",
                 "Checks if a landed titles structure is compatible as a mod for a master file",
                 delegate { IntegrityCheck(); });
-
-            AddCommand(
-                "clean-file",
-                "Cleans a landed titles file",
-                delegate { CleanFile(); });
         }
 
         /// <summary>
@@ -219,20 +214,28 @@ namespace CKCulturalNamesManager.Menus
             }
         }
         
-        private void CleanFile()
+        private void SaveFile()
         {
-            string fileName = NuciConsole.ReadLine("File to clean = ");
+            string fileName = NuciConsole.ReadLine("Output file path = ");
+            string game = NuciConsole.ReadLine("Game = ");
 
-            landedTitleManager.CleanFile(fileName);
-        }
+            NuciConsole.Write("Writing output... ");
 
-        /// <summary>
-        /// Saves the landed titles to the specified file
-        /// </summary>
-        /// /// <param name="fileName">Path to the output landed_title file</param>
-        private void SaveLandedTitles(string fileName)
-        {
-            landedTitleManager.SaveTitles(fileName);
+            if (game.ToUpper() == "CK2")
+            {
+                landedTitleManager.SaveTitlesCK2(fileName);
+            }
+            else if (game.ToUpper() == "CK3")
+            {
+                landedTitleManager.SaveTitlesCK3(fileName);
+            }
+            else
+            {
+                NuciConsole.WriteLine("ERROR: Invalid game");
+                return;
+            }
+
+            NuciConsole.WriteLine("OK");
         }
 
         /// <summary>
@@ -250,18 +253,6 @@ namespace CKCulturalNamesManager.Menus
             int titlesCount = landedTitleManager.GetAll().Count();
 
             NuciConsole.WriteLine($"OK ({titlesCount} titles)");
-        }
-
-        /// <summary>
-        /// Saves the titles and names to file
-        /// </summary>
-        private void SaveFile()
-        {
-            string fileName = NuciConsole.ReadLine("Output file path = ");
-
-            NuciConsole.Write("Writing output... ");
-            SaveLandedTitles(fileName);
-            NuciConsole.WriteLine("OK");
         }
 
         readonly IDictionary<char, int> TitleLevelIndentation = new Dictionary<char, int>
