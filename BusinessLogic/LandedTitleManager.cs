@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 using NuciExtensions;
@@ -24,6 +25,9 @@ namespace CKCulturalNamesManager.BusinessLogic
         {
             landedTitles = new List<LandedTitle>();
             nameValidator = new NameValidator();
+            
+            EncodingProvider encodingProvider = CodePagesEncodingProvider.Instance;
+            Encoding.RegisterProvider(encodingProvider);
         }
 
         public LandedTitle Get(string id)
@@ -47,8 +51,6 @@ namespace CKCulturalNamesManager.BusinessLogic
         public void RemoveNamesFromFile(string fileName)
         {
             IEnumerable<LandedTitle> landedTitlesToRemove = LoadTitlesFromFile(fileName);
-
-            MergeTitles(landedTitlesToRemove);
             RemoveNames(landedTitlesToRemove);
         }
 
@@ -161,14 +163,14 @@ namespace CKCulturalNamesManager.BusinessLogic
         public void SaveTitlesCK2(string fileName)
         {
             LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
-            string content = File.ReadAllText(fileName);
+            string content = ReadWindows1252File(fileName);
 
             content = Regex.Replace(content, "\t", "    ");
             content = Regex.Replace(content, "= *(\r\n|\r|\n).*{", "={");
             content = Regex.Replace(content, "=", " = ");
             content = Regex.Replace(content, "\"(\r\n|\r|\n)( *[ekdcb]_)", "\"\n\n$2");
 
-            File.WriteAllText(fileName, content);
+            WriteWindows1252File(fileName, content);
 
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
             landedTitles = new List<LandedTitle>();
@@ -216,6 +218,21 @@ namespace CKCulturalNamesManager.BusinessLogic
             return findings;
         }
 
+        string ReadWindows1252File(string filePath)
+        {
+            Encoding encoding = Encoding.GetEncoding("windows-1252");
+            
+            return File.ReadAllText(filePath, encoding);
+        }
+
+        void WriteWindows1252File(string filePath, string content)
+        {
+            Encoding encoding = Encoding.GetEncoding("windows-1252");
+            byte[] contentBytes = encoding.GetBytes(content.ToCharArray());
+            
+            File.WriteAllBytes(filePath, contentBytes);
+        }
+
         IEnumerable<LandedTitle> MergeTitles(IEnumerable<LandedTitle> landedTitles)
         {
             return landedTitles
@@ -239,16 +256,16 @@ namespace CKCulturalNamesManager.BusinessLogic
             {
                 LandedTitle landedTitleToRemove = landedTitlesToRemove.FirstOrDefault(x => x.Id == landedTitle.Id);
 
-                if (landedTitleToRemove != null)
+                if (landedTitleToRemove == null)
                 {
-                    List<string> cultureIds = landedTitle.Names.Keys.ToList();
+                    continue;
+                }
 
-                    foreach(string cultureId in cultureIds)
+                foreach (string cultureId in landedTitle.Names.Keys)
+                {
+                    if (landedTitleToRemove.Names.ContainsKey(cultureId))
                     {
-                        if (landedTitleToRemove.Names.ContainsKey(cultureId))
-                        {
-                            landedTitle.Names.Remove(cultureId);
-                        }
+                        landedTitle.Names.Remove(cultureId);
                     }
                 }
             }
