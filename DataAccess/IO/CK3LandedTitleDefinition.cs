@@ -71,12 +71,10 @@ namespace CKCulturalNamesManager.DataAccess.IO
         
         public override void Write(ParadoxStreamWriter writer)
         {
-            List<KeyValuePair<string, string>> sortedNames = LandedTitleEntity.Names.ToList().OrderBy(x => x.Key).ToList();
+            CK3CulturalNamesDefinition culturalNames = new CK3CulturalNamesDefinition();
+            culturalNames.Names = LandedTitleEntity.Names;
 
-            foreach(var name in sortedNames)
-            {
-                writer.WriteLine(name.Key, name.Value, ValueWrite.Quoted);
-            }
+            writer.Write("cultural_names", culturalNames);
 
             foreach (LandedTitleEntity landedTitle in LandedTitleEntity.Children)
             {
