@@ -34,17 +34,19 @@ namespace CKCulturalNamesManager.DataAccess
 
         public void Write(IEnumerable<LandedTitle> landedTitles, string filePath, string game)
         {
-            if (game.Equals("ck3", StringComparison.InvariantCultureIgnoreCase))
+            switch (game.ToLowerInvariant())
             {
-                WriteCK3(landedTitles, filePath);
-            }
+                case "ck2":
+                    WriteCK2(landedTitles, filePath);
+                    break;
 
-            if (game.Equals("ck2", StringComparison.InvariantCultureIgnoreCase))
-            {
-                WriteCK3(landedTitles, filePath);
+                case "ck3":
+                    WriteCK3(landedTitles, filePath);
+                    break;
+                    
+                default:
+                    throw new ArgumentException("Invalid game");
             }
-
-            throw new ArgumentException("Invalid game");
         }
 
         void WriteCK2(IEnumerable<LandedTitle> landedTitles, string fileName)
