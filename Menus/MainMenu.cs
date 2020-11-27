@@ -221,21 +221,15 @@ namespace CKCulturalNamesManager.Menus
 
             NuciConsole.Write("Writing output... ");
 
-            if (game.ToUpper() == "CK2")
+            try
             {
-                landedTitleManager.SaveTitlesCK2(fileName);
+                landedTitleManager.SaveTitles(fileName, game);
             }
-            else if (game.ToUpper() == "CK3")
-            {
-                landedTitleManager.SaveTitlesCK3(fileName);
-            }
-            else
+            catch (ArgumentException)
             {
                 NuciConsole.WriteLine("ERROR: Invalid game");
                 return;
             }
-
-            NuciConsole.WriteLine("OK");
         }
 
         /// <summary>
