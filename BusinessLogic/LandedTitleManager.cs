@@ -162,24 +162,26 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public void SaveTitlesCK2(string fileName)
         {
-            LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
-            string content = ReadWindows1252File(fileName);
+            string filePath = NormaliseFilePath(fileName);
+            LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(filePath, landedTitles.ToEntities());
+            string content = ReadWindows1252File(filePath);
 
             content = Regex.Replace(content, "\t", "    ");
             content = Regex.Replace(content, "= *(\r\n|\r|\n).*{", "={");
             content = Regex.Replace(content, "=", " = ");
             content = Regex.Replace(content, "\"(\r\n|\r|\n)( *[ekdcb]_)", "\"\n\n$2");
 
-            WriteWindows1252File(fileName, content);
+            WriteWindows1252File(filePath, content);
 
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
             landedTitles = new List<LandedTitle>();
-            landedTitles = LoadTitlesFromFile(fileName).ToList();
+            landedTitles = LoadTitlesFromFile(filePath).ToList();
         }
 
         public void SaveTitlesCK3(string fileName)
         {
-            LandedTitlesFile<CK3LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
+            string filePath = NormaliseFilePath(fileName);
+            LandedTitlesFile<CK3LandedTitleDefinition>.WriteAllTitles(filePath, landedTitles.ToEntities());
         }
 
         // TODO: Better name
@@ -295,20 +297,31 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         IEnumerable<LandedTitle> GetTitlesFromFile(string fileName)
         {
-            string content = File.ReadAllText(fileName);
+            string filePath = NormaliseFilePath(fileName);
+            string content = File.ReadAllText(filePath);
 
             IEnumerable<LandedTitleEntity> masterTitleEntities;
 
             if (content.Contains("cultural_names"))
             {
-                masterTitleEntities = LandedTitlesFile<CK3LandedTitleDefinition>.ReadAllTitles(fileName);
+                masterTitleEntities = LandedTitlesFile<CK3LandedTitleDefinition>.ReadAllTitles(filePath);
             }
             else
             {
-                masterTitleEntities = LandedTitlesFile<CK2LandedTitleDefinition>.ReadAllTitles(fileName);
+                masterTitleEntities = LandedTitlesFile<CK2LandedTitleDefinition>.ReadAllTitles(filePath);
             }
 
             return masterTitleEntities.ToDomainModels();
+        }
+
+        string NormaliseFilePath(string filePath)
+        {
+            if (filePath.EndsWith(".txt"))
+            {
+                return filePath;
+            }
+
+            return $"{filePath}.txt";
         }
     }
 }
