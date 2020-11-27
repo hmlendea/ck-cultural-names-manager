@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 using NuciExtensions;
 
+using CKCulturalNamesManager.DataAccess.DataObjects;
+using CKCulturalNamesManager.DataAccess.IO;
 using CKCulturalNamesManager.BusinessLogic.Mapping;
 using CKCulturalNamesManager.BusinessLogic.Models;
-using CKCulturalNamesManager.DataAccess.IO;
 using CKCulturalNamesManager.Models;
 
 namespace CKCulturalNamesManager.BusinessLogic
@@ -23,6 +25,9 @@ namespace CKCulturalNamesManager.BusinessLogic
         {
             landedTitles = new List<LandedTitle>();
             nameValidator = new NameValidator();
+            
+            EncodingProvider encodingProvider = CodePagesEncodingProvider.Instance;
+            Encoding.RegisterProvider(encodingProvider);
         }
 
         public LandedTitle Get(string id)
@@ -46,8 +51,6 @@ namespace CKCulturalNamesManager.BusinessLogic
         public void RemoveNamesFromFile(string fileName)
         {
             IEnumerable<LandedTitle> landedTitlesToRemove = LoadTitlesFromFile(fileName);
-
-            MergeTitles(landedTitlesToRemove);
             RemoveNames(landedTitlesToRemove);
         }
 
@@ -61,10 +64,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public bool CheckIntegrity(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile
-                .ReadAllTitles(fileName)
-                .ToDomainModels()
-                .ToList();
+            IEnumerable<LandedTitle> masterTitles = GetTitlesFromFile(fileName);
 
             Dictionary<string, string> violations = new Dictionary<string, string>();
 
@@ -127,11 +127,7 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         public IEnumerable<OverwrittenName> GetOverwrittenNames(string fileName)
         {
-            List<LandedTitle> masterTitles = LandedTitlesFile
-                .ReadAllTitles(fileName)
-                .ToDomainModels()
-                .ToList();
-
+            IEnumerable<LandedTitle> masterTitles = GetTitlesFromFile(fileName);
             IList<OverwrittenName> overwrittenNames = new List<OverwrittenName>();
 
             foreach (LandedTitle title in landedTitles)
@@ -164,88 +160,26 @@ namespace CKCulturalNamesManager.BusinessLogic
             return overwrittenNames;
         }
 
-        public void CleanFile(string fileName)
+        public void SaveTitlesCK2(string fileName)
         {
-            List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
-            landedTitles = new List<LandedTitle>();
-            landedTitles = LoadTitlesFromFile(fileName).ToList();
-
-            List<string> oldLines = File
-                .ReadAllLines(fileName)
-                .Distinct()
-                .ToList();
-
-            SaveTitles(fileName);
-
-            List<string> newLines = File.ReadAllLines(fileName).ToList();
-
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-
-            for (int i = 0; i < oldLines.Count; i++)
-            {
-                string mcnLine = oldLines[i];
-
-                if (string.IsNullOrWhiteSpace(mcnLine) || !mcnLine.Contains('#'))
-                {
-                    continue;
-                }
-
-                string key = Regex
-                    .Match(mcnLine, "^([^#]*)[\t ]*#.*$")
-                    .Groups[1]
-                    .Value
-                    .TrimEnd();
-
-                if (string.IsNullOrWhiteSpace(key))
-                {
-                    continue;
-                }
-
-                if (!string.IsNullOrWhiteSpace(key) && !dict.ContainsKey(key))
-                {
-                    dict.Add(key, mcnLine);
-                }
-            }
-
-            for (int i = 0; i < newLines.Count; i++)
-            {
-                string myLine = newLines[i];
-
-                if (string.IsNullOrWhiteSpace(myLine))
-                {
-                    continue;
-                }
-
-                if (dict.ContainsKey(myLine))
-                {
-                    string myIndentation = Regex.Match(myLine, "( *)[^ ]*").Groups[1].Value;
-                    myLine = myIndentation + dict[myLine].TrimStart();
-                    newLines[i] = myLine;
-
-                    continue;
-                }
-            }
-
-            File.WriteAllLines(fileName, newLines);
-
-            landedTitles = oldLandedTitles;
-        }
-
-        public void SaveTitles(string fileName)
-        {
-            LandedTitlesFile.WriteAllTitles(fileName, landedTitles.ToEntities());
-            string content = File.ReadAllText(fileName);
+            LandedTitlesFile<CK2LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
+            string content = ReadWindows1252File(fileName);
 
             content = Regex.Replace(content, "\t", "    ");
             content = Regex.Replace(content, "= *(\r\n|\r|\n).*{", "={");
             content = Regex.Replace(content, "=", " = ");
             content = Regex.Replace(content, "\"(\r\n|\r|\n)( *[ekdcb]_)", "\"\n\n$2");
 
-            File.WriteAllText(fileName, content);
+            WriteWindows1252File(fileName, content);
 
             List<LandedTitle> oldLandedTitles=  landedTitles.ToList();
             landedTitles = new List<LandedTitle>();
             landedTitles = LoadTitlesFromFile(fileName).ToList();
+        }
+
+        public void SaveTitlesCK3(string fileName)
+        {
+            LandedTitlesFile<CK3LandedTitleDefinition>.WriteAllTitles(fileName, landedTitles.ToEntities());
         }
 
         // TODO: Better name
@@ -284,6 +218,21 @@ namespace CKCulturalNamesManager.BusinessLogic
             return findings;
         }
 
+        string ReadWindows1252File(string filePath)
+        {
+            Encoding encoding = Encoding.GetEncoding("windows-1252");
+            
+            return File.ReadAllText(filePath, encoding);
+        }
+
+        void WriteWindows1252File(string filePath, string content)
+        {
+            Encoding encoding = Encoding.GetEncoding("windows-1252");
+            byte[] contentBytes = encoding.GetBytes(content.ToCharArray());
+            
+            File.WriteAllBytes(filePath, contentBytes);
+        }
+
         IEnumerable<LandedTitle> MergeTitles(IEnumerable<LandedTitle> landedTitles)
         {
             return landedTitles
@@ -307,16 +256,16 @@ namespace CKCulturalNamesManager.BusinessLogic
             {
                 LandedTitle landedTitleToRemove = landedTitlesToRemove.FirstOrDefault(x => x.Id == landedTitle.Id);
 
-                if (landedTitleToRemove != null)
+                if (landedTitleToRemove == null)
                 {
-                    List<string> cultureIds = landedTitle.Names.Keys.ToList();
+                    continue;
+                }
 
-                    foreach(string cultureId in cultureIds)
+                foreach (string cultureId in landedTitle.Names.Keys)
+                {
+                    if (landedTitleToRemove.Names.ContainsKey(cultureId))
                     {
-                        if (landedTitleToRemove.Names.ContainsKey(cultureId))
-                        {
-                            landedTitle.Names.Remove(cultureId);
-                        }
+                        landedTitle.Names.Remove(cultureId);
                     }
                 }
             }
@@ -338,13 +287,28 @@ namespace CKCulturalNamesManager.BusinessLogic
 
         IEnumerable<LandedTitle> LoadTitlesFromFile(string fileName)
         {
-            IEnumerable<LandedTitle> titles = LandedTitlesFile
-                .ReadAllTitles(fileName)
-                .ToDomainModels();
-
+            IEnumerable<LandedTitle> titles = GetTitlesFromFile(fileName);
             titles = MergeTitles(titles);
 
             return titles;
+        }
+
+        IEnumerable<LandedTitle> GetTitlesFromFile(string fileName)
+        {
+            string content = File.ReadAllText(fileName);
+
+            IEnumerable<LandedTitleEntity> masterTitleEntities;
+
+            if (content.Contains("cultural_names"))
+            {
+                masterTitleEntities = LandedTitlesFile<CK3LandedTitleDefinition>.ReadAllTitles(fileName);
+            }
+            else
+            {
+                masterTitleEntities = LandedTitlesFile<CK2LandedTitleDefinition>.ReadAllTitles(fileName);
+            }
+
+            return masterTitleEntities.ToDomainModels();
         }
     }
 }

@@ -8,20 +8,17 @@ using CKCulturalNamesManager.DataAccess.DataObjects;
 
 namespace CKCulturalNamesManager.DataAccess.IO
 {
-    public sealed class LandedTitleDefinition : IParadoxRead, IParadoxWrite
+    public sealed class CK2LandedTitleDefinition : CKLandedTitleDefinition
     {
-        public LandedTitleEntity LandedTitleEntity { get; set; }
-
-        public LandedTitleDefinition()
+        public CK2LandedTitleDefinition() : base()
         {
-            LandedTitleEntity = new LandedTitleEntity();
         }
         
-        public void TokenCallback(ParadoxParser parser, string token)
+        public override void TokenCallback(ParadoxParser parser, string token)
         {
             if (token[1] == '_') // Like e_something or c_something
             {
-                LandedTitleDefinition landedTitle = new LandedTitleDefinition();
+                CK2LandedTitleDefinition landedTitle = new CK2LandedTitleDefinition();
                 landedTitle.LandedTitleEntity.ParentId = LandedTitleEntity.Id;
                 landedTitle.LandedTitleEntity.Id = token;
 
@@ -97,7 +94,7 @@ namespace CKCulturalNamesManager.DataAccess.IO
             }
         }
         
-        public void Write(ParadoxStreamWriter writer)
+        public override void Write(ParadoxStreamWriter writer)
         {
             List<KeyValuePair<string, string>> sortedNames = LandedTitleEntity.Names.ToList().OrderBy(x => x.Key).ToList();
 
@@ -108,7 +105,7 @@ namespace CKCulturalNamesManager.DataAccess.IO
 
             foreach (LandedTitleEntity landedTitle in LandedTitleEntity.Children)
             {
-                LandedTitleDefinition landedTitleDefinition = new LandedTitleDefinition
+                CK2LandedTitleDefinition landedTitleDefinition = new CK2LandedTitleDefinition
                 {
                     LandedTitleEntity = landedTitle
                 };
