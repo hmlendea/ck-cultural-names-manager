@@ -13,7 +13,7 @@
     <PackageReference Include="NuciDAL" Version="1.1.0.3" />
     <PackageReference Include="NuciExtensions" Version="1.5.0" />
     <PackageReference Include="Pdoxcl2Sharp" Version="0.6.1" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
